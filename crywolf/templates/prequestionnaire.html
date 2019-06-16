@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}
+Pre-experiment Questionnaire
+{% endblock %}
+
+{% block content %}
+    <main>
+        <header>
+            <h1>Pre-experiment Questionnaire</h1>
+            <p>Your participation in this experiment is voluntary. You may refuse to participate or may refuse to answer 
+                any questions. You may stop at any time without penalty. The data you provide will be 
+                kept secure once it is in the researcher’s possession. However, the researcher cannot 
+                guarantee security during transmission of data due to keylogging or other spyware that 
+                may exist on the computer you are using. Software will also be used to record your monitor’s 
+                display during the conduct of this experiment.</p>
+            <p>Please answer each of the following questions.</p>
+            <form action = "" method = "POST" id = "prequiz">
+                <ol>
+                    <li><h4>Which role best describes your current experience?</h4></li>                        
+                        <input type="radio" name="q1" value="a"/>Student<br>
+                        <input type="radio" name="q1" value="b"/>Researcher<br>
+                        <input type="radio" name="q1" value="c"/>IT/Network Administrator<br>
+                        <input type="radio" name="q1" value="d"/>Software Engineering (developer, tester, project management, etc.)<br>
+                        <input type="radio" name="q1" value="e"/>Cyber Security Specialist<br>
+                    
+                    <li><h4>How many years of professional experience do you have in the following (select all that apply):</h4></li>                        
+                        
+                    <li><h4>How familiar are you with Internet cyber security attacks? (select all that apply)</h4></li>     
+                        <input type="checkbox" name="q3" value="a"/>None/very little<br>
+                        <input type="checkbox" name="q3" value="b"/>I have read about how attacks work<br>
+                        <input type="checkbox" name="q3" value="c"/>I have attacked or defended against an attack in a controlled setting<br>
+                        <input type="checkbox" name="q3" value="d"/>I have defended or investigated attacks on a public network<br>
+                        <input type="checkbox" name="q3" value="e"/>I have engineered software that explicitly involves attacks or defense of network cyber security attacks<br>
+                    
+                    <li><h4>What is the subnet mask for 173.67.14.127 / 24?</h4></li>                        
+                        <input type="radio" name="q4" value="a"/>a) 173.67.14.127<br>
+                        <input type="radio" name="q4" value="b"/>b) 173.67.14.0<br>
+                        <input type="radio" name="q4" value="c"/>c) 255.255.255.0<br>
+                        <input type="radio" name="q4" value="d"/>d) 255.255.255.24<br>
+                        <input type="radio" name="q4" value="e"/>e) I don’t know<br>
+                    
+                    <li><h4>What is the network address for 173.67.14.127 / 24?</h4></li>                        
+                        <input type="radio" name="q5" value="a"/>a) 173.67.14.127<br>
+                        <input type="radio" name="q5" value="b"/>b) 173.67.14.0<br>
+                        <input type="radio" name="q5" value="c"/>c) 255.255.255.0<br>
+                        <input type="radio" name="q5" value="d"/>d) 255.255.255.24<br>
+                        <input type="radio" name="q5" value="e"/>e) I don’t know<br>
+                      
+                    <li><h4>True or False: TCP is a faster, more efficient, transfer protocol compared to UDP?</h4></li>                        
+                        <input type="radio" name="q6" value="a"/>a) True<br>
+                        <input type="radio" name="q6" value="b"/>b) False<br>
+                        <input type="radio" name="q6" value="c"/>c) I don’t know<br> 
+                        
+                    <li><h4>What port does HTTP use?</h4></li>                        
+                        <input type="radio" name="q7" value="a"/>a) 80<br>
+                        <input type="radio" name="q7" value="b"/>b) 443<br>
+                        <input type="radio" name="q7" value="c"/>c) 587<br>
+                        <input type="radio" name="q7" value="d"/>d) 5000<br>
+                        <input type="radio" name="q7" value="e"/>e) I don’t know<br>
+
+                    <li><h4>A network security device that monitors incoming and outgoing network 
+                            traffic and decides whether to allow or block specific traffic based 
+                            on a defined set of security rules is the definition of a(n):</h4></li>                        
+                        <input type="radio" name="q8" value="a"/>a) Honeypot<br>
+                        <input type="radio" name="q8" value="b"/>b) Firewall<br>
+                        <input type="radio" name="q8" value="c"/>c) Botnet<br>
+                        <input type="radio" name="q8" value="d"/>d) Intrusion Detection System<br>
+                        <input type="radio" name="q8" value="e"/>e) I don’t know<br>
+
+                    <li><h4>The combination of an IP address and the port used is called a:</h4></li>                        
+                        <input type="radio" name="q9" value="a"/>a) Socket<br>
+                        <input type="radio" name="q9" value="b"/>b) MAC Address<br>
+                        <input type="radio" name="q9" value="c"/>c) Protocol<br>
+                        <input type="radio" name="q9" value="d"/>d) Ping<br>
+                        <input type="radio" name="q9" value="e"/>e) I don’t know<br>
+
+                    <li><h4>Network, Internet, Transport, Application are the layers to what model?</h4></li>                        
+                        <input type="radio" name="q10" value="a"/>a) OSI<br>
+                        <input type="radio" name="q10" value="b"/>b) TCP/IP<br>
+                        <input type="radio" name="q10" value="c"/>c) UML<br>
+                        <input type="radio" name="q10" value="d"/>d) HTTPS<br>
+                        <input type="radio" name="q10" value="e"/>e) I don’t know<br>
+                </ol>
+                <input type="submit" value="Submit">
+            </form>
+        </header>
+    </main>
+{% endblock %}
