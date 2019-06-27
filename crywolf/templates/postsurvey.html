@@ -5,12 +5,56 @@ Post-experiment Survey
 {% endblock %}
 
 {% block content %}
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
     <main>
         <header>
             <h1>Post-experiment Survey</h1>
             <p>Please rate how you feel about the following.</p>
             <form action = "" method = "POST" id = "postsurvey">
                 <ol>
+                    <li>
+                        <table>
+                                <thead><tr><th>Title</th><th>Description</th><th>Scale</th><th>Rating</th></tr></thead>
+                                    <tbody>
+                                        <tr><td> Mental Demand</td><td> How much mental and perceptual activity was required (e.g. thinking, deciding, 
+                                                                        calculating, remembering, looking, searching, etc.)? Was the task easy or 
+                                                                        demanding, simple or complex?</td>
+                                            <td> 1 - 10 (Low / High)</td>
+                                            <td><input type="text" name = "mental" size = 2 maxlength = 2><br></td>
+                                        </tr>
+                                        <tr><td> Physical Demand</td><td> How much physical activity was required (e.g. pushing, pulling, turning, 
+                                                                          controlling, activating, etc.)? Was the task easy or demanding, slack or 
+                                                                          strenuous?</td>
+                                            <td> 1 - 10 (Low / High)</td>
+                                            <td><input type="text" name = "physical" size = 2 maxlength = 2><br></td>
+                                        </tr>
+                                        <tr><td> Temporal Demand</td><td> How much time pressure did you feel due to the rate or pace at which the 
+                                                                          tasks occurred? Was the pace slow and leisurely or rapid and frantic?</td>
+                                            <td> 1 - 10 (Low / High)</td>
+                                            <td><input type="text" name = "temporal" size = 2 maxlength = 2><br></td>
+                                        </tr>
+                                        <tr><td> Performance</td><td> How successful do you think you were in accomplishing the goals of the task set 
+                                                                      by the experimenter (or yourself)? How satisfied were you with your performance 
+                                                                      in accomplishing these goals?</td>
+                                            <td> 1 - 10 (Good / Bad)</td>
+                                            <td><input type="text" name = "performance" size = 2 maxlength = 2><br></td>
+                                        </tr>
+                                        <tr><td> Effort</td><td> How hard did you have to work (mentally and physically) to accomplish your level of performance?</td>
+                                            <td> 1 - 10 (Low / High)</td>
+                                            <td><input type="text" name = "effort" size = 2 maxlength = 2><br></td>
+                                        </tr>
+                                        <tr><td> Frustration Level</td><td> How insecure, discouraged, irritated, stressed, and annoyed versus secure, gratified, 
+                                                                            content, relaxed, and complacent did you feel during the task?</td>
+                                            <td> 1 - 10 (Low / High)</td>
+                                            <td><input type="text" name = "frustration" size = 2 maxlength = 2><br></td>
+                                        </tr>
+                                    </tbody>
+                        </table>
+                    </li>
                     <li><h4>What information was most useful in determining whether or not an alert represented malicious behavior?</h4></li> 
                         <textarea rows="4" cols="50"></textarea>
                     <li><h4>Is there any other feedback you would like to provide?</h4></li> 

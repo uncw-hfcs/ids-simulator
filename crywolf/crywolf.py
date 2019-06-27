@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
 
+
 @app.route('/index')
 @app.route('/')
 def index():
@@ -16,7 +17,7 @@ def prequestionnaire():
 def experiment():
     return render_template('experiment.html')
 
-@app.route('/postsurvey')
+@app.route('/postsurvey') 
 def postsurvey():
     return render_template('postsurvey.html')
 
