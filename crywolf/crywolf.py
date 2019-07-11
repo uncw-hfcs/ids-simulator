@@ -1,7 +1,13 @@
+import os
 from flask import Flask, render_template, url_for
+from flask_sqlalchemy import  SQLAlchemy
+from events import EventsTable, EventItem
+
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
-
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join.(basedir, 'crywolf.db')
+#db = SQLAlchemy(app)
 
 @app.route('/index')
 @app.route('/')
@@ -15,7 +21,14 @@ def prequestionnaire():
 
 @app.route('/experiment')
 def experiment():
-    return render_template('experiment.html')
+    items = []
+    with open("test_content.txt", "r") as inFile:
+        for line in inFile:
+            line = line.rstrip()
+            id,date,classification,s_ip,s_port,d_ip,d_port,description = line.split("\t")
+            items.append(EventItem(id,date,classification,s_ip,s_port,d_ip,d_port,description))
+    eventsTable = EventsTable(items)
+    return render_template('experiment.html', table = eventsTable)
 
 @app.route('/postsurvey') 
 def postsurvey():
