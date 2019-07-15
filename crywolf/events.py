@@ -23,3 +23,6 @@ class EventItem(object):
         self.destination_ip = destination_ip
         self.destination_port = destination_port
         self.description = description
+
+    def __str__(self):
+        return "{}\t{}\t{}".format(self.id, self.date, self.description)

@@ -26,13 +26,18 @@ def experiment():
         for line in inFile:
             line = line.rstrip()
             id,date,classification,s_ip,s_port,d_ip,d_port,description = line.split("\t")
-            items.append(EventItem(id,date,classification,s_ip,s_port,d_ip,d_port,description))
-    eventsTable = EventsTable(items)
-    return render_template('experiment.html', table = eventsTable)
+            items.append((id,date,classification,s_ip,s_port,d_ip,d_port,description))#EventItem(id,date,classification,s_ip,s_port,d_ip,d_port,description))
+    eventsTable = EventsTable(items, classes = ['container'], border = True)
+    return render_template('experiment.html', table = items)#eventsTable)
 
 @app.route('/postsurvey') 
 def postsurvey():
     return render_template('postsurvey.html')
+
+@app.route('/events/<eventData>')
+def events(eventData):
+    
+    return render_template('events.html', test = eventData)
 
 if __name__ == "__main__":
     app.run(debug=True)
