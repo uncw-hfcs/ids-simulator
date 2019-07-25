@@ -1,8 +1,8 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms.fields import StringField
 from wtforms.validators import DataRequired
 
-class PrequestionnaireForm(Form):
+class PrequestionnaireForm(FlaskForm):
     one = StringField("one", validators=[DataRequired()])
     twoA = StringField("twoA", validators=[DataRequired()])
     twoB = StringField("twoB", validators=[DataRequired()])
