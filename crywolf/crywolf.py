@@ -1,13 +1,14 @@
 import os
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, redirect
 from flask_sqlalchemy import  SQLAlchemy
-from events import EventsTable, EventItem
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join.(basedir, 'crywolf.db')
-#db = SQLAlchemy(app)
+app.config['SECRET_KEY'] = '+xjtZo+YaAWKhCSky9nLCubHvPCjhRRxN45niWNVaN4='
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'crywolf.db')
+db = SQLAlchemy(app)
 
 @app.route('/index')
 @app.route('/')
@@ -15,8 +16,10 @@ def index():
     return render_template('index.html', section = "Section title passed from View to Template",
                             text = "Text passed from View to Template")
 
-@app.route('/prequestionnaire')
+@app.route('/prequestionnaire', methods = ["GET", "POST"])
 def prequestionnaire():
+    #if request.method== "POST":
+    #    return redirect(url_for('index'))
     return render_template('prequestionnaire.html')
 
 @app.route('/experiment')

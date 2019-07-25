@@ -1,3 +1,4 @@
-a,b,c=[1,2,3]
+from crywolf import db
+from models import PrequestionnaireAnswers
 
-print(a,b,c)
+db.create_all()

@@ -24,103 +24,103 @@ Pre-experiment Questionnaire
             <form action = "" method = "POST" id = "prequiz">
                 <ol>
                     <li><h4>Which role best describes your current experience?</h4></li>                        
-                        <input type="radio" name="q1" value="a"/> Student<br>
-                        <input type="radio" name="q1" value="b"/> Researcher<br>
-                        <input type="radio" name="q1" value="c"/> IT/Network Administrator<br>
-                        <input type="radio" name="q1" value="d"/> Software Engineering (developer, tester, project management, etc.)<br>
-                        <input type="radio" name="q1" value="e"/> Cyber Security Specialist<br>
+                        <input type="radio" name="q1" value="0"/> Student<br>
+                        <input type="radio" name="q1" value="1"/> Researcher<br>
+                        <input type="radio" name="q1" value="2"/> IT/Network Administrator<br>
+                        <input type="radio" name="q1" value="3"/> Software Engineering (developer, tester, project management, etc.)<br>
+                        <input type="radio" name="q1" value="4"/> Cyber Security Specialist<br>
                     
                     <li><h4>How many years of professional experience do you have in the following (select all that apply):</h4></li>  
                         <table>
                             <tr>
                                 <td>Researcher</td>
-                                <td><label class="radio-inline"><input type="radio" name="researcher"> None</label></td>  
-                                <td><label class="radio-inline"><input type="radio" name="researcher"> < 1 </label></td>
-                                <td><label class="radio-inline"><input type="radio" name="researcher"> 1 - 5 </label></td>    
-                                <td><label class="radio-inline"><input type="radio" name="researcher"> 5 - 10 </label></td> 
-                                <td><label class="radio-inline"><input type="radio" name="researcher"> 10+ </label></td> 
+                                <td><label class="radio-inline"><input type="radio" name="researcher" value="0"> None</label></td>  
+                                <td><label class="radio-inline"><input type="radio" name="researcher" value="1"> < 1 </label></td>
+                                <td><label class="radio-inline"><input type="radio" name="researcher" value="2"> 1 - 5 </label></td>    
+                                <td><label class="radio-inline"><input type="radio" name="researcher" value="3"> 5 - 10 </label></td> 
+                                <td><label class="radio-inline"><input type="radio" name="researcher" value="4"> 10+ </label></td> 
                             </tr>
                             <tr>
                                 <td>IT/Network Administrator</td>
-                                <td><label class="radio-inline"><input type="radio" name="admin"> None</label></td>  
-                                <td><label class="radio-inline"><input type="radio" name="admin"> < 1 </label></td>
-                                <td><label class="radio-inline"><input type="radio" name="admin"> 1 - 5 </label></td>    
-                                <td><label class="radio-inline"><input type="radio" name="admin"> 5 - 10 </label></td> 
-                                <td><label class="radio-inline"><input type="radio" name="admin"> 10+ </label></td> 
+                                <td><label class="radio-inline"><input type="radio" name="admin" value="0"> None</label></td>  
+                                <td><label class="radio-inline"><input type="radio" name="admin" value="1"> < 1 </label></td>
+                                <td><label class="radio-inline"><input type="radio" name="admin" value="2"> 1 - 5 </label></td>    
+                                <td><label class="radio-inline"><input type="radio" name="admin" value="3"> 5 - 10 </label></td> 
+                                <td><label class="radio-inline"><input type="radio" name="admin" value="4"> 10+ </label></td> 
                             </tr>
                             <tr>
                                 <td>Software Engineering</td>
-                                <td><label class="radio-inline"><input type="radio" name="engineering"> None</label></td>  
-                                <td><label class="radio-inline"><input type="radio" name="engineering"> < 1 </label></td>
-                                <td><label class="radio-inline"><input type="radio" name="engineering"> 1 - 5 </label></td>    
-                                <td><label class="radio-inline"><input type="radio" name="engineering"> 5 - 10 </label></td> 
-                                <td><label class="radio-inline"><input type="radio" name="engineering"> 10+ </label></td> 
+                                <td><label class="radio-inline"><input type="radio" name="engineering" value="0"> None</label></td>  
+                                <td><label class="radio-inline"><input type="radio" name="engineering" value="1"> < 1 </label></td>
+                                <td><label class="radio-inline"><input type="radio" name="engineering" value="2"> 1 - 5 </label></td>    
+                                <td><label class="radio-inline"><input type="radio" name="engineering" value="3"> 5 - 10 </label></td> 
+                                <td><label class="radio-inline"><input type="radio" name="engineering" value="4"> 10+ </label></td> 
                             </tr>
                             <tr>
                                 <td>Cyber Security Specialist</td>
-                                <td><label class="radio-inline"><input type="radio" name="specialist"> None</label></td>  
-                                <td><label class="radio-inline"><input type="radio" name="specialist"> < 1 </label></td>
-                                <td><label class="radio-inline"><input type="radio" name="specialist"> 1 - 5 </label></td>    
-                                <td><label class="radio-inline"><input type="radio" name="specialist"> 5 - 10 </label></td> 
-                                <td><label class="radio-inline"><input type="radio" name="specialist"> 10+ </label></td> 
+                                <td><label class="radio-inline"><input type="radio" name="specialist" value="0"> None</label></td>  
+                                <td><label class="radio-inline"><input type="radio" name="specialist" value="1"> < 1 </label></td>
+                                <td><label class="radio-inline"><input type="radio" name="specialist" value="2"> 1 - 5 </label></td>    
+                                <td><label class="radio-inline"><input type="radio" name="specialist" value="3"> 5 - 10 </label></td> 
+                                <td><label class="radio-inline"><input type="radio" name="specialist" value="4"> 10+ </label></td> 
                             </tr>
                         </table>                      
                         
                     <li><h4> How familiar are you with Internet cyber security attacks? (select all that apply)</h4></li>     
-                        <input type="checkbox" name="q3" value="a"/> None/very little<br>
-                        <input type="checkbox" name="q3" value="b"/> I have read about how attacks work<br>
-                        <input type="checkbox" name="q3" value="c"/> I have attacked or defended against an attack in a controlled setting<br>
-                        <input type="checkbox" name="q3" value="d"/> I have defended or investigated attacks on a public network<br>
-                        <input type="checkbox" name="q3" value="e"/> I have engineered software that explicitly involves attacks or defense of network cyber security attacks<br>
+                        <input type="checkbox" name="q3" value="0"/> None/very little<br>
+                        <input type="checkbox" name="q3" value="1"/> I have read about how attacks work<br>
+                        <input type="checkbox" name="q3" value="2"/> I have attacked or defended against an attack in a controlled setting<br>
+                        <input type="checkbox" name="q3" value="3"/> I have defended or investigated attacks on a public network<br>
+                        <input type="checkbox" name="q3" value="4"/> I have engineered software that explicitly involves attacks or defense of network cyber security attacks<br>
                     
                     <li><h4>What is the subnet mask for 173.67.14.127 / 24?</h4></li>                        
-                        <input type="radio" name="q4" value="a"/> a) 173.67.14.127<br>
-                        <input type="radio" name="q4" value="b"/> b) 173.67.14.0<br>
-                        <input type="radio" name="q4" value="c"/> c) 255.255.255.0<br>
-                        <input type="radio" name="q4" value="d"/> d) 255.255.255.24<br>
-                        <input type="radio" name="q4" value="e"/> e) I don’t know<br>
+                        <input type="radio" name="q4" value="0"/> a) 173.67.14.127<br>
+                        <input type="radio" name="q4" value="1"/> b) 173.67.14.0<br>
+                        <input type="radio" name="q4" value="2"/> c) 255.255.255.0<br>
+                        <input type="radio" name="q4" value="3"/> d) 255.255.255.24<br>
+                        <input type="radio" name="q4" value="4"/> e) I don’t know<br>
                     
                     <li><h4>What is the network address for 173.67.14.127 / 24?</h4></li>                        
-                        <input type="radio" name="q5" value="a"/> a) 173.67.14.127<br>
-                        <input type="radio" name="q5" value="b"/> b) 173.67.14.0<br>
-                        <input type="radio" name="q5" value="c"/> c) 255.255.255.0<br>
-                        <input type="radio" name="q5" value="d"/> d) 255.255.255.24<br>
-                        <input type="radio" name="q5" value="e"/> e) I don’t know<br>
+                        <input type="radio" name="q5" value="0"/> a) 173.67.14.127<br>
+                        <input type="radio" name="q5" value="1"/> b) 173.67.14.0<br>
+                        <input type="radio" name="q5" value="2"/> c) 255.255.255.0<br>
+                        <input type="radio" name="q5" value="3"/> d) 255.255.255.24<br>
+                        <input type="radio" name="q5" value="4"/> e) I don’t know<br>
                       
                     <li><h4>True or False: TCP is a faster, more efficient, transfer protocol compared to UDP?</h4></li>                        
-                        <input type="radio" name="q6" value="a"/> a) True<br>
-                        <input type="radio" name="q6" value="b"/> b) False<br>
-                        <input type="radio" name="q6" value="c"/> c) I don’t know<br> 
+                        <input type="radio" name="q6" value="0"/> a) True<br>
+                        <input type="radio" name="q6" value="1"/> b) False<br>
+                        <input type="radio" name="q6" value="2"/> c) I don’t know<br> 
                         
                     <li><h4>What port does HTTP use?</h4></li>                        
-                        <input type="radio" name="q7" value="a"/> a) 80<br>
-                        <input type="radio" name="q7" value="b"/> b) 443<br>
-                        <input type="radio" name="q7" value="c"/> c) 587<br>
-                        <input type="radio" name="q7" value="d"/> d) 5000<br>
-                        <input type="radio" name="q7" value="e"/> e) I don’t know<br>
+                        <input type="radio" name="q7" value="0"/> a) 80<br>
+                        <input type="radio" name="q7" value="1"/> b) 443<br>
+                        <input type="radio" name="q7" value="2"/> c) 587<br>
+                        <input type="radio" name="q7" value="3"/> d) 5000<br>
+                        <input type="radio" name="q7" value="4"/> e) I don’t know<br>
 
                     <li><h4>A network security device that monitors incoming and outgoing network 
                             traffic and decides whether to allow or block specific traffic based 
                             on a defined set of security rules is the definition of a(n):</h4></li>                        
-                        <input type="radio" name="q8" value="a"/> a) Honeypot<br>
-                        <input type="radio" name="q8" value="b"/> b) Firewall<br>
-                        <input type="radio" name="q8" value="c"/> c) Botnet<br>
-                        <input type="radio" name="q8" value="d"/> d) Intrusion Detection System<br>
-                        <input type="radio" name="q8" value="e"/> e) I don’t know<br>
+                        <input type="radio" name="q8" value="0"/> a) Honeypot<br>
+                        <input type="radio" name="q8" value="1"/> b) Firewall<br>
+                        <input type="radio" name="q8" value="2"/> c) Botnet<br>
+                        <input type="radio" name="q8" value="3"/> d) Intrusion Detection System<br>
+                        <input type="radio" name="q8" value="4"/> e) I don’t know<br>
 
                     <li><h4>The combination of an IP address and the port used is called a:</h4></li>                        
-                        <input type="radio" name="q9" value="a"/> a) Socket<br>
-                        <input type="radio" name="q9" value="b"/> b) MAC Address<br>
-                        <input type="radio" name="q9" value="c"/> c) Protocol<br>
-                        <input type="radio" name="q9" value="d"/> d) Ping<br>
-                        <input type="radio" name="q9" value="e"/> e) I don’t know<br>
+                        <input type="radio" name="q9" value="0"/> a) Socket<br>
+                        <input type="radio" name="q9" value="1"/> b) MAC Address<br>
+                        <input type="radio" name="q9" value="2"/> c) Protocol<br>
+                        <input type="radio" name="q9" value="3"/> d) Ping<br>
+                        <input type="radio" name="q9" value="4"/> e) I don’t know<br>
 
                     <li><h4>Network, Internet, Transport, Application are the layers to what model?</h4></li>                        
-                        <input type="radio" name="q10" value="a"/> a) OSI<br>
-                        <input type="radio" name="q10" value="b"/> b) TCP/IP<br>
-                        <input type="radio" name="q10" value="c"/> c) UML<br>
-                        <input type="radio" name="q10" value="d"/> d) HTTPS<br>
-                        <input type="radio" name="q10" value="e"/> e) I don’t know<br>
+                        <input type="radio" name="q10" value="0"/> a) OSI<br>
+                        <input type="radio" name="q10" value="1"/> b) TCP/IP<br>
+                        <input type="radio" name="q10" value="2"/> c) UML<br>
+                        <input type="radio" name="q10" value="3"/> d) HTTPS<br>
+                        <input type="radio" name="q10" value="4"/> e) I don’t know<br>
                 </ol>
                 <input type="submit" value="Submit">
             </form>
