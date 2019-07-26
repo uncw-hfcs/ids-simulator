@@ -12,7 +12,8 @@ Pre-experiment Questionnaire
                     padding: 15px;
             }
             </style>
-        <header>
+        <header></header>
+        <body>
             <h1>Pre-experiment Questionnaire</h1>
             <p>Your participation in this experiment is voluntary. You may refuse to participate or may refuse to answer 
                 any questions. You may stop at any time without penalty. The data you provide will be 
@@ -21,109 +22,98 @@ Pre-experiment Questionnaire
                 may exist on the computer you are using. Software will also be used to record your monitor’s 
                 display during the conduct of this experiment.</p>
             <p>Please answer each of the following questions.</p>
+            
+            {% if form.errors %}
+            {{ form.errors }}
+            {% endif %}
+
             <form action = "" method = "POST" id = "prequiz">
-                <ol>
-                    <li><h4>Which role best describes your current experience?</h4></li>                        
-                        <input type="radio" name="q1" value="0"/> Student<br>
-                        <input type="radio" name="q1" value="1"/> Researcher<br>
-                        <input type="radio" name="q1" value="2"/> IT/Network Administrator<br>
-                        <input type="radio" name="q1" value="3"/> Software Engineering (developer, tester, project management, etc.)<br>
-                        <input type="radio" name="q1" value="4"/> Cyber Security Specialist<br>
+                    <h4>1. Which role best describes your current experience?</h4>
+                    {{ form.role }}  
                     
-                    <li><h4>How many years of professional experience do you have in the following (select all that apply):</h4></li>  
+                    <h4>2. How many years of professional experience do you have in the following (select all that apply):</h4>  
                         <table>
                             <tr>
-                                <td>Researcher</td>
-                                <td><label class="radio-inline"><input type="radio" name="researcher" value="0"> None</label></td>  
-                                <td><label class="radio-inline"><input type="radio" name="researcher" value="1"> < 1 </label></td>
-                                <td><label class="radio-inline"><input type="radio" name="researcher" value="2"> 1 - 5 </label></td>    
-                                <td><label class="radio-inline"><input type="radio" name="researcher" value="3"> 5 - 10 </label></td> 
-                                <td><label class="radio-inline"><input type="radio" name="researcher" value="4"> 10+ </label></td> 
+                                <td>{{form.exp_researcher.label}}</td>
+                                <td>{{form.exp_researcher(class_="radio-inline")}}</td>                                
                             </tr>
                             <tr>
-                                <td>IT/Network Administrator</td>
-                                <td><label class="radio-inline"><input type="radio" name="admin" value="0"> None</label></td>  
-                                <td><label class="radio-inline"><input type="radio" name="admin" value="1"> < 1 </label></td>
-                                <td><label class="radio-inline"><input type="radio" name="admin" value="2"> 1 - 5 </label></td>    
-                                <td><label class="radio-inline"><input type="radio" name="admin" value="3"> 5 - 10 </label></td> 
-                                <td><label class="radio-inline"><input type="radio" name="admin" value="4"> 10+ </label></td> 
-                            </tr>
+                                <td>{{form.exp_admin.label}}</td>
+                                <td>{{form.exp_admin(class_="radio-inline")}}</td>                                
+                            </tr>                          
                             <tr>
-                                <td>Software Engineering</td>
-                                <td><label class="radio-inline"><input type="radio" name="engineering" value="0"> None</label></td>  
-                                <td><label class="radio-inline"><input type="radio" name="engineering" value="1"> < 1 </label></td>
-                                <td><label class="radio-inline"><input type="radio" name="engineering" value="2"> 1 - 5 </label></td>    
-                                <td><label class="radio-inline"><input type="radio" name="engineering" value="3"> 5 - 10 </label></td> 
-                                <td><label class="radio-inline"><input type="radio" name="engineering" value="4"> 10+ </label></td> 
-                            </tr>
+                                <td>{{form.exp_software.label}}</td>
+                                <td>{{form.exp_software(class_="radio-inline")}}</td>                                
+                            </tr>                               
                             <tr>
-                                <td>Cyber Security Specialist</td>
-                                <td><label class="radio-inline"><input type="radio" name="specialist" value="0"> None</label></td>  
-                                <td><label class="radio-inline"><input type="radio" name="specialist" value="1"> < 1 </label></td>
-                                <td><label class="radio-inline"><input type="radio" name="specialist" value="2"> 1 - 5 </label></td>    
-                                <td><label class="radio-inline"><input type="radio" name="specialist" value="3"> 5 - 10 </label></td> 
-                                <td><label class="radio-inline"><input type="radio" name="specialist" value="4"> 10+ </label></td> 
-                            </tr>
+                                <td>{{form.exp_security.label}}</td>
+                                <td>{{form.exp_security(class_="radio-inline")}}</td>                                
+                            </tr>   
                         </table>                      
                         
-                    <li><h4> How familiar are you with Internet cyber security attacks? (select all that apply)</h4></li>     
-                        <input type="checkbox" name="q3" value="1"/> None/very little<br>
-                        <input type="checkbox" name="q3" value="1"/> I have read about how attacks work<br>
-                        <input type="checkbox" name="q3" value="1"/> I have attacked or defended against an attack in a controlled setting<br>
-                        <input type="checkbox" name="q3" value="1"/> I have defended or investigated attacks on a public network<br>
-                        <input type="checkbox" name="q3" value="1"/> I have engineered software that explicitly involves attacks or defense of network cyber security attacks<br>
+                     <h4>3. How familiar are you with Internet cyber security attacks? (select all that apply)</h4>
+                         {{ form.familiarity_none }} {{form.familiarity_none.label}}<br>
+                         {{ form.familiarity_read }} {{form.familiarity_read.label}}<br>
+                         {{ form.familiarity_controlled }} {{form.familiarity_controlled.label}}<br>
+                         {{ form.familiarity_public }} {{form.familiarity_public.label}}<br>
+                         {{ form.familiarity_engineered }} {{form.familiarity_engineered.label}}<br>
+                     <!--
                     
-                    <li><h4>What is the subnet mask for 173.67.14.127 / 24?</h4></li>                        
+                        TODO: The remainder of these will look like the "role" question at the beginning.
+
+                    <h4>What is the subnet mask for 173.67.14.127 / 24?</h4>
                         <input type="radio" name="q4" value="0"/> a) 173.67.14.127<br>
                         <input type="radio" name="q4" value="1"/> b) 173.67.14.0<br>
                         <input type="radio" name="q4" value="2"/> c) 255.255.255.0<br>
                         <input type="radio" name="q4" value="3"/> d) 255.255.255.24<br>
                         <input type="radio" name="q4" value="4"/> e) I don’t know<br>
                     
-                    <li><h4>What is the network address for 173.67.14.127 / 24?</h4></li>                        
+                    <h4>What is the network address for 173.67.14.127 / 24?</h4>
                         <input type="radio" name="q5" value="0"/> a) 173.67.14.127<br>
                         <input type="radio" name="q5" value="1"/> b) 173.67.14.0<br>
                         <input type="radio" name="q5" value="2"/> c) 255.255.255.0<br>
                         <input type="radio" name="q5" value="3"/> d) 255.255.255.24<br>
                         <input type="radio" name="q5" value="4"/> e) I don’t know<br>
                       
-                    <li><h4>True or False: TCP is a faster, more efficient, transfer protocol compared to UDP?</h4></li>                        
+                    <h4>True or False: TCP is a faster, more efficient, transfer protocol compared to UDP?</h4>                        
                         <input type="radio" name="q6" value="0"/> a) True<br>
                         <input type="radio" name="q6" value="1"/> b) False<br>
                         <input type="radio" name="q6" value="2"/> c) I don’t know<br> 
                         
-                    <li><h4>What port does HTTP use?</h4></li>                        
+                    <h4>What port does HTTP use?</h4>                        
                         <input type="radio" name="q7" value="0"/> a) 80<br>
                         <input type="radio" name="q7" value="1"/> b) 443<br>
                         <input type="radio" name="q7" value="2"/> c) 587<br>
                         <input type="radio" name="q7" value="3"/> d) 5000<br>
                         <input type="radio" name="q7" value="4"/> e) I don’t know<br>
 
-                    <li><h4>A network security device that monitors incoming and outgoing network 
+                    <h4>A network security device that monitors incoming and outgoing network 
                             traffic and decides whether to allow or block specific traffic based 
-                            on a defined set of security rules is the definition of a(n):</h4></li>                        
+                            on a defined set of security rules is the definition of a(n):</h4>                        
                         <input type="radio" name="q8" value="0"/> a) Honeypot<br>
                         <input type="radio" name="q8" value="1"/> b) Firewall<br>
                         <input type="radio" name="q8" value="2"/> c) Botnet<br>
                         <input type="radio" name="q8" value="3"/> d) Intrusion Detection System<br>
                         <input type="radio" name="q8" value="4"/> e) I don’t know<br>
 
-                    <li><h4>The combination of an IP address and the port used is called a:</h4></li>                        
+                    <h4>The combination of an IP address and the port used is called a:</h4>                        
                         <input type="radio" name="q9" value="0"/> a) Socket<br>
                         <input type="radio" name="q9" value="1"/> b) MAC Address<br>
                         <input type="radio" name="q9" value="2"/> c) Protocol<br>
                         <input type="radio" name="q9" value="3"/> d) Ping<br>
                         <input type="radio" name="q9" value="4"/> e) I don’t know<br>
 
-                    <li><h4>Network, Internet, Transport, Application are the layers to what model?</h4></li>                        
+                    <h4>Network, Internet, Transport, Application are the layers to what model?</h4>                        
                         <input type="radio" name="q10" value="0"/> a) OSI<br>
                         <input type="radio" name="q10" value="1"/> b) TCP/IP<br>
                         <input type="radio" name="q10" value="2"/> c) UML<br>
                         <input type="radio" name="q10" value="3"/> d) HTTPS<br>
                         <input type="radio" name="q10" value="4"/> e) I don’t know<br>
-                </ol>
+                 -->
+                {{ form.csrf_token }}
                 <input type="submit" value="Submit">
             </form>
-        </header>
+
+        </body>
     </main>
 {% endblock %}

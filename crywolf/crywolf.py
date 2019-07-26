@@ -20,48 +20,40 @@ def index():
                             text = "Text passed from View to Template")
 
 @app.route('/prequestionnaire', methods = ["GET", "POST"])
-def prequestionnaire():
+def prequestionnaire():    
     form = PrequestionnaireForm()
     if form.validate_on_submit():
-        one = form.one.data
-        twoA = form.twoA.data
-        twoB = form.twoB.data
-        twoC = form.twoC.data
-        twoD = form.twoD.data
-        threeA = form.threeA.data
-        threeB = form.threeB.data
-        threeC = form.threeC.data
-        threeD = form.threeD.data
-        threeE = form.threeE.data
-        four = form.four.data
-        five = form.five.data
-        six = form.six.data
-        seven = form.seven.data
-        eight = form.eight.data
-        nine = form.nine.data
-        ten = form.ten.data
         answers = models.PrequestionnaireAnswers(
-            one = one,
-            twoA = twoA,
-            twoB = twoB,
-            twoC = twoC,
-            twoD = twoD,
-            threeA = threeA,
-            threeB = threeB,
-            threeC = threeC,
-            threeD = threeD,
-            threeE = threeE,
-            four = four,
-            five = five,
-            six = six,
-            seven = seven,
-            eight = eight,
-            nine = nine,
-            ten = ten)
+            role = form.role.data,
+            exp_researcher = form.exp_researcher.data,
+            exp_admin = form.exp_admin.data,
+            exp_software = form.exp_software.data,
+            exp_security = form.exp_security.data,
+            familiarity_none = form.familiarity_none.data,
+            familiarity_read = form.familiarity_read.data,
+            familiarity_controlled = form.familiarity_controlled.data,
+            familiarity_public = form.familiarity_public.data,
+            familiarity_engineered = form.familiarity_engineered.data,
+            # TODO: You will need to complete the mapping. The lefthand side of the assignment is the variable in your PrequestionnaireAnswers in models.py, 
+            # and the value # on the right-hand side is its name from forms.py
+            
+            # threeA = threeA,
+            # threeB = threeB,
+            # threeC = threeC,
+            # threeD = threeD,
+            # threeE = threeE,
+            # four = four,
+            # five = five,
+            # six = six,
+            # seven = seven,
+            # eight = eight,
+            # nine = nine,
+            # ten = ten
+            )        
         db.session.add(answers)
         db.session.commit()
         return redirect(url_for('index'))
-    return render_template('prequestionnaire.html')
+    return render_template('prequestionnaire.html', form=form)
 
 @app.route('/experiment')
 def experiment():

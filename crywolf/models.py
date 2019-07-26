@@ -2,23 +2,29 @@ from crywolf import db
 
 class PrequestionnaireAnswers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    one = db.Column(db.String(1))
-    twoA = db.Column(db.String(1))
-    twoB = db.Column(db.String(1))
-    twoC = db.Column(db.String(1))
-    twoD = db.Column(db.String(1))
-    threeA = db.Column(db.String(1))
-    threeB = db.Column(db.String(1))
-    threeC = db.Column(db.String(1))
-    threeD = db.Column(db.String(1))
-    threeE = db.Column(db.String(1))
-    four = db.Column(db.String(1))
-    five = db.Column(db.String(1))
-    six = db.Column(db.String(1))
-    seven = db.Column(db.String(1))
-    eight = db.Column(db.String(1))
-    nine = db.Column(db.String(1))
-    ten = db.Column(db.String(1))
+    role = db.Column(db.String(1))
+
+    exp_researcher = db.Column(db.Integer())
+    exp_admin = db.Column(db.Integer())
+    exp_software = db.Column(db.Integer())
+    exp_security = db.Column(db.Integer())
+
+    familiarity_none = db.Column(db.Boolean())
+    familiarity_read = db.Column(db.Boolean())
+    familiarity_controlled = db.Column(db.Boolean())
+    familiarity_public = db.Column(db.Boolean())
+    familiarity_engineered = db.Column(db.Boolean())
+    
+    # TODO: Give the remaining radio button quiz questions good column names. Make them all String(256)
+    # TODO: Once you modify the database here, you are going to need re-create the database file itself so the table is created with the right columns.
+    
+    # four = db.Column(db.String(1))
+    # five = db.Column(db.String(1))
+    # six = db.Column(db.String(1))
+    # seven = db.Column(db.String(1))
+    # eight = db.Column(db.String(1))
+    # nine = db.Column(db.String(1))
+    # ten = db.Column(db.String(1))
 '''
 class Events(db.Model):
     id = db.Column(db.Integer, primary_key=True)
