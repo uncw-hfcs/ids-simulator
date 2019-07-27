@@ -35,7 +35,7 @@ Pre-experiment Questionnaire
                         <table>
                             <tr>
                                 <td>{{form.exp_researcher.label}}</td>
-                                <td>{{form.exp_researcher(class_="radio-inline")}}</td>                                
+                                <td>{{form.exp_researcher(class_="radio-inline")}}</td>                            
                             </tr>
                             <tr>
                                 <td>{{form.exp_admin.label}}</td>
@@ -57,59 +57,34 @@ Pre-experiment Questionnaire
                          {{ form.familiarity_controlled }} {{form.familiarity_controlled.label}}<br>
                          {{ form.familiarity_public }} {{form.familiarity_public.label}}<br>
                          {{ form.familiarity_engineered }} {{form.familiarity_engineered.label}}<br>
-                     <!--
-                    
-                        TODO: The remainder of these will look like the "role" question at the beginning.
+                     
 
-                    <h4>What is the subnet mask for 173.67.14.127 / 24?</h4>
-                        <input type="radio" name="q4" value="0"/> a) 173.67.14.127<br>
-                        <input type="radio" name="q4" value="1"/> b) 173.67.14.0<br>
-                        <input type="radio" name="q4" value="2"/> c) 255.255.255.0<br>
-                        <input type="radio" name="q4" value="3"/> d) 255.255.255.24<br>
-                        <input type="radio" name="q4" value="4"/> e) I don’t know<br>
-                    
-                    <h4>What is the network address for 173.67.14.127 / 24?</h4>
-                        <input type="radio" name="q5" value="0"/> a) 173.67.14.127<br>
-                        <input type="radio" name="q5" value="1"/> b) 173.67.14.0<br>
-                        <input type="radio" name="q5" value="2"/> c) 255.255.255.0<br>
-                        <input type="radio" name="q5" value="3"/> d) 255.255.255.24<br>
-                        <input type="radio" name="q5" value="4"/> e) I don’t know<br>
-                      
-                    <h4>True or False: TCP is a faster, more efficient, transfer protocol compared to UDP?</h4>                        
-                        <input type="radio" name="q6" value="0"/> a) True<br>
-                        <input type="radio" name="q6" value="1"/> b) False<br>
-                        <input type="radio" name="q6" value="2"/> c) I don’t know<br> 
-                        
-                    <h4>What port does HTTP use?</h4>                        
-                        <input type="radio" name="q7" value="0"/> a) 80<br>
-                        <input type="radio" name="q7" value="1"/> b) 443<br>
-                        <input type="radio" name="q7" value="2"/> c) 587<br>
-                        <input type="radio" name="q7" value="3"/> d) 5000<br>
-                        <input type="radio" name="q7" value="4"/> e) I don’t know<br>
+                    <h4>4. What is the subnet mask for 173.67.14.127 / 24?</h4>
+                        {{ form.subnet_mask }}
 
-                    <h4>A network security device that monitors incoming and outgoing network 
+                    
+                                        
+                    <h4>5. What is the network address for 173.67.14.127 / 24?</h4>
+                        {{ form.network_address }}
+
+                     
+                    <h4>6. True or False: TCP is a faster, more efficient, transfer protocol compared to UDP?</h4>                        
+                        {{ form.tcp_faster }}
+                    
+                    
+                    <h4>7. What port does HTTP use?</h4>                        
+                        {{ form.http_port }}
+ 
+                    <h4>8. A network security device that monitors incoming and outgoing network 
                             traffic and decides whether to allow or block specific traffic based 
                             on a defined set of security rules is the definition of a(n):</h4>                        
-                        <input type="radio" name="q8" value="0"/> a) Honeypot<br>
-                        <input type="radio" name="q8" value="1"/> b) Firewall<br>
-                        <input type="radio" name="q8" value="2"/> c) Botnet<br>
-                        <input type="radio" name="q8" value="3"/> d) Intrusion Detection System<br>
-                        <input type="radio" name="q8" value="4"/> e) I don’t know<br>
+                        {{ form.firewall }}
 
-                    <h4>The combination of an IP address and the port used is called a:</h4>                        
-                        <input type="radio" name="q9" value="0"/> a) Socket<br>
-                        <input type="radio" name="q9" value="1"/> b) MAC Address<br>
-                        <input type="radio" name="q9" value="2"/> c) Protocol<br>
-                        <input type="radio" name="q9" value="3"/> d) Ping<br>
-                        <input type="radio" name="q9" value="4"/> e) I don’t know<br>
+                    <h4>9. The combination of an IP address and the port used is called a:</h4>                        
+                        {{ form.socket }}
 
-                    <h4>Network, Internet, Transport, Application are the layers to what model?</h4>                        
-                        <input type="radio" name="q10" value="0"/> a) OSI<br>
-                        <input type="radio" name="q10" value="1"/> b) TCP/IP<br>
-                        <input type="radio" name="q10" value="2"/> c) UML<br>
-                        <input type="radio" name="q10" value="3"/> d) HTTPS<br>
-                        <input type="radio" name="q10" value="4"/> e) I don’t know<br>
-                 -->
+                    <h4>10. Network, Internet, Transport, Application are the layers to what model?</h4>                        
+                        {{ form.which_model }}
                 {{ form.csrf_token }}
                 <input type="submit" value="Submit">
             </form>

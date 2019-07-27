@@ -1,5 +1,5 @@
 from crywolf import app, db
-from flask.ext.script import Manager, prompt_bool
+from flask_script import Manager, prompt_bool
 
 manager = Manager(app)
 

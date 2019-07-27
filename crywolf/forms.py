@@ -60,13 +60,81 @@ class PrequestionnaireForm(FlaskForm):
     familiarity_public = BooleanField('I have defended or investigated attacks on a public network')
     familiarity_engineered = BooleanField('I have engineered software that explicitly involves attacks or defense of network cyber security attacks')
 
+    subnet_mask = RadioField('Label', 
+                    choices=[
+                        ('0','a) 173.67.14.127'),
+                        ('1','b) 173.67.14.0'), 
+                        ('2','c) 255.255.255.0'), 
+                        ('3','d) 255.255.255.24'), 
+                        ('4','e) I don’t know')
+                        ],
+                    validators=[DataRequired()]
+                    )
+
+    network_address = RadioField('Label', 
+                        choices=[
+                            ('0','a) 173.67.14.127'),
+                            ('1','b) 173.67.14.0'), 
+                            ('2','c) 255.255.255.0'), 
+                            ('3','d) 255.255.255.24'), 
+                            ('4','e) I don’t know')
+                            ],
+                        validators=[DataRequired()]
+                        )
+
+    tcp_faster = RadioField('Label', 
+                    choices=[
+                        ('0','a) True'),
+                        ('1','b) False'), 
+                        ('2','c) I don’t know')
+                        ],
+                    validators=[DataRequired()]
+                    )
+
+    http_port = RadioField('Label', 
+                    choices=[
+                        ('0','a) 80'),
+                        ('1','b) 443'), 
+                        ('2','c) 587'), 
+                        ('3','d) 5000'), 
+                        ('4','e) I don’t know')
+                        ],
+                    validators=[DataRequired()]
+                )    
+
+    firewall =  RadioField('Label', 
+                    choices=[
+                        ('0','a) Honeypot'),
+                        ('1','b) Firewall'), 
+                        ('2','c) Botnet'), 
+                        ('3','d) Intrusion Detection System'), 
+                        ('4','e) I don’t know')
+                        ],
+                    validators=[DataRequired()]
+                )  
+
+    socket =  RadioField('Label', 
+                    choices=[
+                        ('0','a) Socket'),
+                        ('1','b) MAC Address'), 
+                        ('2','c) Protocol'), 
+                        ('3','d) Ping'), 
+                        ('4','e) I don’t know')
+                        ],
+                    validators=[DataRequired()]
+                )    
+
+    which_model =  RadioField('Label', 
+                        choices=[
+                            ('0','a) OSI'),
+                            ('1','b) TCP/IP'), 
+                            ('2','c) UML'), 
+                            ('3','d) HTTPS'), 
+                            ('4','e) I don’t know')
+                            ],
+                        validators=[DataRequired()]
+                    )            
     # TODO: Create RadioFields similar to those above. The first parameter is the label. I recommend that you store the actual value of the answer rather than a 
     # integer representing their selection (e.g., store '173.67.14.127' instead of '0' -- it will be easier for you to debug the data in the database.
     
-    # four = StringField("four", validators=[DataRequired()])
-    # five = StringField("five", validators=[DataRequired()])
-    # six = StringField("six", validators=[DataRequired()])
-    # seven = StringField("seven", validators=[DataRequired()])
-    # eight = StringField("eight", validators=[DataRequired()])
-    # nine = StringField("nine", validators=[DataRequired()])
-    # ten = StringField("ten", validators=[DataRequired()])
+ 

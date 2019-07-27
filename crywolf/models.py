@@ -14,17 +14,18 @@ class PrequestionnaireAnswers(db.Model):
     familiarity_controlled = db.Column(db.Boolean())
     familiarity_public = db.Column(db.Boolean())
     familiarity_engineered = db.Column(db.Boolean())
+
+    subnet_mask = db.Column(db.String(256))
+    network_address = db.Column(db.String(256))
+    tcp_faster = db.Column(db.String(256))
+    http_port = db.Column(db.String(256))
+    firewall = db.Column(db.String(256))
+    socket = db.Column(db.String(256))
+    which_model = db.Column(db.String(256))
     
     # TODO: Give the remaining radio button quiz questions good column names. Make them all String(256)
     # TODO: Once you modify the database here, you are going to need re-create the database file itself so the table is created with the right columns.
     
-    # four = db.Column(db.String(1))
-    # five = db.Column(db.String(1))
-    # six = db.Column(db.String(1))
-    # seven = db.Column(db.String(1))
-    # eight = db.Column(db.String(1))
-    # nine = db.Column(db.String(1))
-    # ten = db.Column(db.String(1))
 '''
 class Events(db.Model):
     id = db.Column(db.Integer, primary_key=True)

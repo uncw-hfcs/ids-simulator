@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, url_for, redirect
 from flask_sqlalchemy import  SQLAlchemy
+import webbrowser
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -34,22 +35,13 @@ def prequestionnaire():
             familiarity_controlled = form.familiarity_controlled.data,
             familiarity_public = form.familiarity_public.data,
             familiarity_engineered = form.familiarity_engineered.data,
-            # TODO: You will need to complete the mapping. The lefthand side of the assignment is the variable in your PrequestionnaireAnswers in models.py, 
-            # and the value # on the right-hand side is its name from forms.py
-            
-            # threeA = threeA,
-            # threeB = threeB,
-            # threeC = threeC,
-            # threeD = threeD,
-            # threeE = threeE,
-            # four = four,
-            # five = five,
-            # six = six,
-            # seven = seven,
-            # eight = eight,
-            # nine = nine,
-            # ten = ten
-            )        
+            subnet_mask = form.subnet_mask.data,
+            network_address = form.network_address.data,
+            tcp_faster = form.tcp_faster.data,
+            http_port = form.http_port.data,
+            firewall = form.firewall.data,
+            socket = form.socket.data,
+            which_model = form.which_model.data)        
         db.session.add(answers)
         db.session.commit()
         return redirect(url_for('index'))
