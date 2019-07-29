@@ -28,63 +28,72 @@ Pre-experiment Questionnaire
             {% endif %}
 
             <form action = "" method = "POST" id = "prequiz">
-                    <h4>1. Which role best describes your current experience?</h4>
-                    {{ form.role }}  
-                    
-                    <h4>2. How many years of professional experience do you have in the following (select all that apply):</h4>  
-                        <table>
-                            <tr>
-                                <td>{{form.exp_researcher.label}}</td>
-                                <td>{{form.exp_researcher(class_="radio-inline")}}</td>                            
-                            </tr>
-                            <tr>
-                                <td>{{form.exp_admin.label}}</td>
-                                <td>{{form.exp_admin(class_="radio-inline")}}</td>                                
-                            </tr>                          
-                            <tr>
-                                <td>{{form.exp_software.label}}</td>
-                                <td>{{form.exp_software(class_="radio-inline")}}</td>                                
-                            </tr>                               
-                            <tr>
-                                <td>{{form.exp_security.label}}</td>
-                                <td>{{form.exp_security(class_="radio-inline")}}</td>                                
-                            </tr>   
-                        </table>                      
-                        
-                     <h4>3. How familiar are you with Internet cyber security attacks? (select all that apply)</h4>
-                         {{ form.familiarity_none }} {{form.familiarity_none.label}}<br>
-                         {{ form.familiarity_read }} {{form.familiarity_read.label}}<br>
-                         {{ form.familiarity_controlled }} {{form.familiarity_controlled.label}}<br>
-                         {{ form.familiarity_public }} {{form.familiarity_public.label}}<br>
-                         {{ form.familiarity_engineered }} {{form.familiarity_engineered.label}}<br>
-                     
+                <ol>
+                    <li> 
+                        <h4> Which role best describes your current experience?</h4>
+                        {{ form.role }}  
+                    </li>
+                    <li>  
+                        <h4> How many years of professional experience do you have in the following (select all that apply):</h4>  
+                            <table>
+                                <tr> 
+                                    <td>{{ form.exp_researcher.label }}</td>
+                                    <td>{{ form.exp_researcher(class_="radio-inline" )}}</td>                            
+                                </tr>
+                                <tr>
+                                    <td>{{ form.exp_admin.label }}</td>
+                                    <td>{{ form.exp_admin(class_="radio-inline") }}</td>                                
+                                </tr>                          
+                                <tr>
+                                    <td>{{ form.exp_software.label }}</td>
+                                    <td>{{ form.exp_software(class_="radio-inline") }}</td>                                
+                                </tr>                               
+                                <tr>
+                                    <td>{{ form.exp_security.label }}</td>
+                                    <td>{{ form.exp_security(class_="radio-inline") }}</td>                                
+                                </tr>   
+                            </table>
+                    </li>                      
+                    <li>        
+                        <h4> How familiar are you with Internet cyber security attacks? (select all that apply)</h4>
+                            {{ form.familiarity_none }} {{form.familiarity_none.label}}<br>
+                            {{ form.familiarity_read }} {{form.familiarity_read.label}}<br>
+                            {{ form.familiarity_controlled }} {{form.familiarity_controlled.label}}<br>
+                            {{ form.familiarity_public }} {{form.familiarity_public.label}}<br>
+                            {{ form.familiarity_engineered }} {{form.familiarity_engineered.label}}<br>
+                    </li>     
+                    <li>
+                        <h4> What is the subnet mask for 173.67.14.127 / 24?</h4>
+                            {{ form.subnet_mask }}
 
-                    <h4>4. What is the subnet mask for 173.67.14.127 / 24?</h4>
-                        {{ form.subnet_mask }}
-
-                    
-                                        
-                    <h4>5. What is the network address for 173.67.14.127 / 24?</h4>
-                        {{ form.network_address }}
-
-                     
-                    <h4>6. True or False: TCP is a faster, more efficient, transfer protocol compared to UDP?</h4>                        
-                        {{ form.tcp_faster }}
-                    
-                    
-                    <h4>7. What port does HTTP use?</h4>                        
-                        {{ form.http_port }}
- 
-                    <h4>8. A network security device that monitors incoming and outgoing network 
-                            traffic and decides whether to allow or block specific traffic based 
-                            on a defined set of security rules is the definition of a(n):</h4>                        
-                        {{ form.firewall }}
-
-                    <h4>9. The combination of an IP address and the port used is called a:</h4>                        
-                        {{ form.socket }}
-
-                    <h4>10. Network, Internet, Transport, Application are the layers to what model?</h4>                        
-                        {{ form.which_model }}
+                    </li>   
+                    <li>                        
+                        <h4> What is the network address for 173.67.14.127 / 24?</h4>
+                            {{ form.network_address }}
+                    </li>
+                    <li>     
+                        <h4> True or False: TCP is a faster, more efficient, transfer protocol compared to UDP?</h4>                        
+                            {{ form.tcp_faster }}
+                    </li>  
+                    <li>     
+                        <h4> What port does HTTP use?</h4>                        
+                            {{ form.http_port }}
+                    </li>
+                    <li>
+                        <h4> A network security device that monitors incoming and outgoing network 
+                                traffic and decides whether to allow or block specific traffic based 
+                                on a defined set of security rules is the definition of a(n):</h4>                        
+                            {{ form.firewall }}
+                    </li>
+                    <li>
+                        <h4> The combination of an IP address and the port used is called a:</h4>                        
+                            {{ form.socket }}
+                    </li>
+                    <li>
+                        <h4> Network, Internet, Transport, Application are the layers to what model?</h4>                        
+                            {{ form.which_model }}
+                    </li>
+                </ol>
                 {{ form.csrf_token }}
                 <input type="submit" value="Submit">
             </form>

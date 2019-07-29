@@ -1,6 +1,16 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, RadioField, BooleanField
+from wtforms.fields import StringField, RadioField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired
+
+class SurveyForm(FlaskForm):
+    mental = StringField()
+    physical = StringField()
+    temporal = StringField()
+    performance = StringField()
+    effort = StringField()
+    frustration = StringField()
+    useful_info = TextAreaField()
+    feedback = TextAreaField()
 
 class PrequestionnaireForm(FlaskForm):
     role = RadioField('Label', 

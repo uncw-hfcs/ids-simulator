@@ -11,7 +11,7 @@ app.config['SECRET_KEY'] = '+xjtZo+YaAWKhCSky9nLCubHvPCjhRRxN45niWNVaN4='
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'crywolf.db')
 db = SQLAlchemy(app)
 
-from forms import PrequestionnaireForm
+from forms import PrequestionnaireForm, SurveyForm
 import models
 
 @app.route('/index')
@@ -58,9 +58,23 @@ def experiment():
     #eventsTable = EventsTable(items, classes = ['container'], border = True)
     return render_template('experiment.html', table = items)#eventsTable)
 
-@app.route('/postsurvey') 
+@app.route('/postsurvey', methods = ["GET", "POST"]) 
 def postsurvey():
-    return render_template('postsurvey.html')
+    form = SurveyForm()
+    if form.validate_on_submit():
+        responses = models.SurveyAnswers(
+            mental = form.mental.data,
+            physical = form.physical.data,
+            temporal = form.temporal.data,
+            performance = form.performance.data,
+            effort = form.effort.data,
+            frustration = form.frustration.data,
+            useful_info = form.useful_info.data,
+            feedback = form.feedback.data)
+        db.session.add(responses)
+        db.session.commit()
+        return redirect(url_for('index')) 
+    return render_template('postsurvey.html', form=form)
 
 @app.route('/events/<eventData>')
 def events(eventData):    

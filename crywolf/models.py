@@ -1,5 +1,16 @@
 from crywolf import db
 
+class SurveyAnswers(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    mental = db.Column(db.String(3))
+    physical = db.Column(db.String(3))
+    temporal = db.Column(db.String(3))
+    performance = db.Column(db.String(3))
+    effort = db.Column(db.String(3))
+    frustration = db.Column(db.String(3))
+    useful_info = db.Column(db.String(1000))
+    feedback = db.Column(db.String(1000))
+
 class PrequestionnaireAnswers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     role = db.Column(db.String(1))
