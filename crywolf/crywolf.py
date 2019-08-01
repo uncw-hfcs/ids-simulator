@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, url_for, redirect, flash
 from flask_sqlalchemy import  SQLAlchemy
-from flask_login import LoginManager, login_user
+from flask_login import LoginManager, login_user, current_user
 import webbrowser
 
 
@@ -13,30 +13,37 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'cr
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 
-from forms import PrequestionnaireForm, SurveyForm, LoginForm
+from forms import PrequestionnaireForm, SurveyForm, UserForm
 
 import models
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = UserForm()
+    if form.validate_on_submit():
+        user = models.User(username = form.username.data)
+        db.session.add(user)
+        db.session.commit()
+        login_user(user, remember=True)
+        flash('Logged in successfully.')
+
+        return redirect(url_for('index')) #TODO: redirect to training.html
+    return render_template('register.html', form=form, current_user = current_user)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # Here we use a class of some kind to represent and validate our
-    # client-side form data. For example, WTForms is a library that will
-    # handle this for us, and we use a custom LoginForm to validate.
-    form = LoginForm()
+    
+    form = UserForm()
     if form.validate_on_submit():
-        # Login and validate the user.
-        # user should be an instance of your `User` class
-        user = models.User(username = form.username.data)
+       
+        #user =  models.User(username = form.username.data)
 
-        login_user(user, remember=True)
+        login_user(models.User.query.filter_by(username = form.username.data).first(), remember=True)
 
         flash('Logged in successfully.')
-        db.session.add(user)
-        db.session.commit()
-
-        return redirect(url_for('index'))
-    return render_template('login.html', form=form)
+        
+        return redirect(url_for('index')) #redirect to where ever the user left off. Need to figure how to do that...
+    return render_template('login.html', form=form, current_user = current_user)
 
 @login_manager.user_loader
 def load_user(user_id):
