@@ -1,14 +1,11 @@
-from crywolf import db, login_manager
+from crywolf import db
 from flask_login.mixins import UserMixin
 
-
-@login_manager.user_loader
-def load_user(id):
-    return User.query.get(int(id))
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True)
+
 
 class SurveyAnswers(db.Model):
     id = db.Column(db.Integer, primary_key=True)

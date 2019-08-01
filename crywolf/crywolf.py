@@ -27,15 +27,20 @@ def login():
     if form.validate_on_submit():
         # Login and validate the user.
         # user should be an instance of your `User` class
-        user = models.User(userName = form.username.data)
+        user = models.User(username = form.username.data)
 
         login_user(user, remember=True)
 
         flash('Logged in successfully.')
+        db.session.add(user)
+        db.session.commit()
 
         return redirect(url_for('index'))
     return render_template('login.html', form=form)
 
+@login_manager.user_loader
+def load_user(user_id):
+    return models.User.query.get(user_id)
 
 @app.route('/index')
 @app.route('/')
