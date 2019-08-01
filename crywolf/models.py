@@ -5,6 +5,15 @@ from flask_login.mixins import UserMixin
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True)
+    group = db.Column(db.Integer(), nullable = True)
+
+    '''
+    def set_group(self):
+        if self.id % 3 != 0:
+            self.group = self.id % 3
+        else:
+            self.group = 3
+    '''
 
     def __repr__(self):
         return self.username

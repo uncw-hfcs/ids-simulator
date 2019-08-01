@@ -21,8 +21,13 @@ import models
 def register():
     form = UserForm()
     if form.validate_on_submit():
-        user = models.User(username = form.username.data)
+        user = models.User(username = form.username.data)        
         db.session.add(user)
+        db.session.commit()
+        if user.id % 3 != 0:
+            user.group = user.id % 3
+        else:
+            user.group = 3
         db.session.commit()
         login_user(user, remember=True)
         flash('Logged in successfully.')
@@ -35,8 +40,6 @@ def login():
     
     form = UserForm()
     if form.validate_on_submit():
-       
-        #user =  models.User(username = form.username.data)
 
         login_user(models.User.query.filter_by(username = form.username.data).first(), remember=True)
 
