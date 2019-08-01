@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+IDS Simulator - Welcome
+{% endblock %}
+
+{% block content %}
+
+{% if form.errors %}
+{{ form.errors }}
+{% endif %}
+<form action = "" method = "POST" id = "login">
+
+    <p>{{ form.fName.label }}{{ form.fName()}} </p>
+    <p>{{ form.lName.label }}{{ form.lName()}} </p>
+    {{ form.csrf_token }}
+    <input type="submit" value="Submit">
+
+</form>
+
+{% endblock %}

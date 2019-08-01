@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, url_for, redirect
 from flask_sqlalchemy import  SQLAlchemy
+from flask_login import LoginManager, login_user
 import webbrowser
 
 
@@ -10,9 +11,41 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '+xjtZo+YaAWKhCSky9nLCubHvPCjhRRxN45niWNVaN4='
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'crywolf.db')
 db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
-from forms import PrequestionnaireForm, SurveyForm
+from forms import PrequestionnaireForm, SurveyForm, LoginForm
+from user import User
 import models
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    # Here we use a class of some kind to represent and validate our
+    # client-side form data. For example, WTForms is a library that will
+    # handle this for us, and we use a custom LoginForm to validate.
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Login and validate the user.
+        # user should be an instance of your `User` class
+        user = User(
+            fName = form.fName.data,
+            lName = form.lName.data
+        )
+
+        login_user(user)
+
+        flask.flash('Logged in successfully.')
+
+        next = url_for('experiment')
+        if not is_safe_url(next):
+            return flask.abort(400)
+
+        return redirect(next or url_for('index'))
+    return render_template('login.html', form=form)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
 
 @app.route('/index')
 @app.route('/')
@@ -50,13 +83,15 @@ def prequestionnaire():
 @app.route('/experiment')
 def experiment():
     items = []
-    with open("test_content.txt", "r") as inFile:
+    id = 1
+    with open("testEvents.txt", "r") as inFile:
         for line in inFile:
             line = line.rstrip()
-            id,date,classification,s_ip,s_port,d_ip,d_port,description = line.split("\t")
-            items.append((id,date,classification,s_ip,s_port,d_ip,d_port,description))#EventItem(id,date,classification,s_ip,s_port,d_ip,d_port,description))
-    #eventsTable = EventsTable(items, classes = ['container'], border = True)
-    return render_template('experiment.html', table = items)#eventsTable)
+            line = line.split("\t")
+            line.insert(0, str(id))    
+            items.append(line)
+            id += 1
+    return render_template('experiment.html', table = items)
 
 @app.route('/postsurvey', methods = ["GET", "POST"]) 
 def postsurvey():

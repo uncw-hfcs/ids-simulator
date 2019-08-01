@@ -25,16 +25,7 @@ Experiment Table
     </style>
     <div>
         <table align="center">
-            <tr>
-                <th>Event ID</th>
-                <th>Date</th>
-                <th>Classification</th>
-                <th>Source IP</th>
-                <th>Source Port</th>
-                <th>Destination IP</th>
-                <th>Destination Port</th>
-                <th>Description</th>
-            </tr>
+            
             
             {% for row in table %}
                 <tr onclick="window.location.href='{{ url_for('events', eventData = row[0]) }}';">

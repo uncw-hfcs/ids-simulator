@@ -5,6 +5,7 @@ IDS Simulator - Welcome
 {% endblock %}
 
 {% block content %}
+    
     <article>
         <header>
             <h1>This will be the homepage</h1>
@@ -14,6 +15,7 @@ IDS Simulator - Welcome
             <h2>Title: {{ section }}</h2>
             <p>Text: {{ text }}</p>
         </section>
+        <!---
         <section>
             <h2>article section h2</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
@@ -22,6 +24,16 @@ IDS Simulator - Welcome
             <h3>article footer h3</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor.</p>
         </footer>
+    -->
     </article>
+    <aside>
+        
+        <!--<h3>aside</h3>-->
+        <p>If this is your first time on this page, please choose the "New Participant" button. If you need to restore a session that was interrupted, please select
+            "Restore Session."
+        </p>
+        <button type="button" onclick="window.location.href='{{ url_for('login') }}';">New Participant</button><!--These obviously will need to be changed-->
+        <button type="button" onclick="window.location.href='{{ url_for('postsurvey') }}';">Restore Session</button><!--These are just placeholder urls-->
+    </aside>
 
 {% endblock %}

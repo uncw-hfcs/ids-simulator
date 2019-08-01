@@ -1,0 +1,2 @@
+John Doe	doej@example.com	Success	2a00:1450:4864:20::328	o365	Google	Ireland	NA	NA
+Jane Doe	doeja@example2.com	Failure	75.38.128.255	NA	NA	Russia	Moscow	NA
