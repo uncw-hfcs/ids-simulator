@@ -3,9 +3,8 @@ from wtforms.fields import StringField, RadioField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired
 
 class LoginForm(FlaskForm):
-    fName = StringField('First Name:', validators=[DataRequired()])
-    lName = StringField('Last Name:', validators=[DataRequired()])
-
+    username = StringField('Please enter a username:', validators=[DataRequired()])
+    
 class SurveyForm(FlaskForm):
     mental = StringField()
     physical = StringField()

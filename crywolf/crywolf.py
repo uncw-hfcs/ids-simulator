@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, flash
 from flask_sqlalchemy import  SQLAlchemy
 from flask_login import LoginManager, login_user
 import webbrowser
@@ -11,12 +11,12 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '+xjtZo+YaAWKhCSky9nLCubHvPCjhRRxN45niWNVaN4='
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'crywolf.db')
 db = SQLAlchemy(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
+login_manager = LoginManager(app)
 
 from forms import PrequestionnaireForm, SurveyForm, LoginForm
-from user import User
+
 import models
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -27,25 +27,15 @@ def login():
     if form.validate_on_submit():
         # Login and validate the user.
         # user should be an instance of your `User` class
-        user = User(
-            fName = form.fName.data,
-            lName = form.lName.data
-        )
+        user = models.User(userName = form.username.data)
 
-        login_user(user)
+        login_user(user, remember=True)
 
-        flask.flash('Logged in successfully.')
+        flash('Logged in successfully.')
 
-        next = url_for('experiment')
-        if not is_safe_url(next):
-            return flask.abort(400)
-
-        return redirect(next or url_for('index'))
+        return redirect(url_for('index'))
     return render_template('login.html', form=form)
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get(user_id)
 
 @app.route('/index')
 @app.route('/')
