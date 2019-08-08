@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}
+Training Events
+{% endblock %}
+
+{% block content %}
+    <style>
+        
+        table, th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 10px;
+        }
+        td {
+            cursor: pointer;
+        }
+        tr:hover {
+            background-color: lightblue;
+        }
+        tr:first-child:hover {
+            background-color: white;
+        }
+        
+    </style>
+    <div>
+        <table align="left">
+           
+            
+            {% for event in eventsList %}
+                <tr onclick="window.location.href='{{ url_for('eventPage', eventId = event.id) }}';">
+                    <td><a href='{{ url_for('eventPage', eventId = event.id) }}'> {{ event.alert_type }}</a></td>                    
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

@@ -1,19 +1,24 @@
 from crywolf import db
 from flask_login.mixins import UserMixin
 
+class TrainingEvent(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    alert_type = db.Column(db.String(50))
+    name = db.Column(db.String(50))
+    email = db.Column(db.String(50))
+    result = db.Column(db.String(10))
+    source_ip = db.Column(db.String(50))
+    organization = db.Column(db.String(25))
+    geo_country = db.Column(db.String(25))
+    geo_city = db.Column(db.String(25))
+    geo_region = db.Column(db.String(25))
+
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True)
-    group = db.Column(db.Integer(), nullable = True)
-
-    '''
-    def set_group(self):
-        if self.id % 3 != 0:
-            self.group = self.id % 3
-        else:
-            self.group = 3
-    '''
+    group = db.Column(db.Integer())
 
     def __repr__(self):
         return self.username

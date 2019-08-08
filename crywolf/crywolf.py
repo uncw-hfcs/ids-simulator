@@ -85,6 +85,15 @@ def prequestionnaire():
         return redirect(url_for('index'))
     return render_template('prequestionnaire.html', form=form)
 
+@app.route('/training')
+def training():
+    ids = [1,2]
+
+    eventsList = []
+    for id in ids:
+        eventsList.append(models.TrainingEvent.query.get(id))
+    return render_template('training.html', eventsList=eventsList)
+
 @app.route('/experiment')
 def experiment():
     items = []
@@ -116,9 +125,10 @@ def postsurvey():
         return redirect(url_for('index')) 
     return render_template('postsurvey.html', form=form)
 
-@app.route('/events/<eventData>')
-def events(eventData):    
-    return render_template('events.html', test = eventData)
+@app.route('/eventPage/<eventId>')
+def eventPage(eventId):
+    event = models.TrainingEvent.query.get(eventId)
+    return render_template('eventPage.html', event = event)
 
 if __name__ == "__main__":
     app.run(debug=True)
