@@ -10,11 +10,11 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '+xjtZo+YaAWKhCSky9nLCubHvPCjhRRxN45niWNVaN4='
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'crywolf.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 
 from forms import PrequestionnaireForm, SurveyForm, UserForm
-
 import models
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -87,7 +87,7 @@ def prequestionnaire():
 
 @app.route('/training')
 def training():
-    ids = [1,2]
+    ids = [1,2,3,4,5]
 
     eventsList = []
     for id in ids:

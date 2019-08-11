@@ -3,17 +3,17 @@ from flask_login.mixins import UserMixin
 
 class TrainingEvent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    alert_type = db.Column(db.String(50))
-    name = db.Column(db.String(50))
-    email = db.Column(db.String(50))
-    result = db.Column(db.String(10))
-    source_ip = db.Column(db.String(50))
-    organization = db.Column(db.String(25))
-    geo_country = db.Column(db.String(25))
-    geo_city = db.Column(db.String(25))
-    geo_region = db.Column(db.String(25))
-
-
+    is_false_positive = db.Column(db.Boolean())
+    country_of_authentication1 = db.Column(db.String(1))
+    number_successful_logins1 = db.Column(db.Integer)
+    number_failed_logins1 = db.Column(db.Integer)
+    source_provider1 = db.Column(db.String(50))
+    country_of_authentication2 = db.Column(db.String(1))
+    number_successful_logins2 = db.Column(db.Integer)
+    number_failed_logins2 = db.Column(db.Integer)
+    source_provider2 = db.Column(db.String(50))
+    time_between_authentications = db.Column(db.Float)
+    vpn_confidence = db.Column(db.String(5))
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)

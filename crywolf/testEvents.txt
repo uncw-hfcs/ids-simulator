@@ -1,2 +1,5 @@
-Multiple Country Authorization	John Doe	doej@example.com	Success	2a00:1450:4864:20::328	Google	Ireland	NA	NA
-Multiple Country Authorization	Jane Doe	doeja@example2.com	Failure	75.38.128.255	NA	Russia	Moscow	NA
+0	A	53	8	Rainbow	K	12	0	Kfed	1.25	0%
+0	A	20	2	Rainbow	J	3	0	Jnat	3.75	0%
+1	G	5	0	GISP	H	10	1	Hhosting	0.5	25%
+1	A	3	0	Horizon Wireless	D	24	2	DISP	0.75	0%
+1	C	30	3	W-verse	E	4	0	Rainbow	2	0%

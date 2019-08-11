@@ -29,7 +29,7 @@ Training Events
             
             {% for event in eventsList %}
                 <tr onclick="window.location.href='{{ url_for('eventPage', eventId = event.id) }}';">
-                    <td><a href='{{ url_for('eventPage', eventId = event.id) }}'> {{ event.alert_type }}</a></td>                    
+                    <td><a href='{{ url_for('eventPage', eventId = event.id) }}'> Event {{ event.id }}</a></td>                    
                 </tr>
             {% endfor %}
         </table>

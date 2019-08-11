@@ -5,11 +5,23 @@ Event Details
 {% endblock %}
 
 {% block content %}
-    <p>{{ event.name }}</p>
+    <article>
+        <table>
+            <tr><td>Country of Authorization: </td>    <td>{{event.country_of_authentication1}}</td></tr>
+            <tr><td>Number of Successful Logings: </td>    <td>{{event.number_successful_logins1}}</td></tr>
+            <tr><td>Number of Failed Logins: </td>    <td>{{event.number_failed_logins1}}</td></tr>
+            <tr><td>Source Provider: </td>    <td>{{event.source_provider1}}</td></tr>
+            <tr><td>Country of Authorization: </td>    <td>{{event.country_of_authentication2}}</td></tr>
+            <tr><td>Number of Successful Logings: </td>    <td>{{event.number_successful_logins2}}</td></tr>
+            <tr><td>Number of Failed Logins: </td>    <td>{{event.number_failed_logins2}}</td></tr>
+            <tr><td>Source Provider: </td>    <td>{{event.source_provider2}} </td></tr>
+            <tr><td>Time Between Authentications: </td>    <td>{{event.time_between_authentications}} hrs</td></tr>
+            <tr><td>VPN Confidence: </td>    <td>{{event.vpn_confidence}} </td></tr>
+        </table>
+    </article>
     <aside>
         
-        <p> This is where the user will make their decision
-        </p>
+        <p> This is where the user will make their decision</p>
             
     </aside>
 {% endblock %}
