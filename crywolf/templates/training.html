@@ -18,17 +18,15 @@ Training Events
         tr:hover {
             background-color: lightblue;
         }
-        tr:first-child:hover {
-            background-color: white;
-        }
+        
         
     </style>
     <div>
-        <table align="left">
+        <table align="center">
            
             
             {% for event in eventsList %}
-                <tr onclick="window.location.href='{{ url_for('eventPage', eventId = event.id) }}';">
+                <tr onclick="window.location.href='{{ url_for('eventPage', eventId = event.id) }}';"></tr>
                     <td><a href='{{ url_for('eventPage', eventId = event.id) }}'> Event {{ event.id }}</a></td>                    
                 </tr>
             {% endfor %}

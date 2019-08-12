@@ -1,6 +1,11 @@
 from crywolf import db
 from flask_login.mixins import UserMixin
 
+class EventDecision(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    escalate = db.Column(db.String(15))
+    confidence = db.Column(db.String(1))
+
 class TrainingEvent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     is_false_positive = db.Column(db.Boolean())

@@ -2,6 +2,16 @@ from flask_wtf import FlaskForm
 from wtforms.fields import StringField, RadioField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired
 
+class eventDecisionForm(FlaskForm):
+    escalate = RadioField(
+                    choices=[
+                        ('Escalate','Escalate'),
+                        ("Don't escalate","Don't escalate"),
+                        ("I don't know","I don't know")
+                    ]
+                )
+    confidence = RadioField(choices=[("1","1"),("2","2"),("3", "3"),("4","4"),("5","5")])
+
 class UserForm(FlaskForm):
     username = StringField('Please enter a username:', validators=[DataRequired()])
     

@@ -21,7 +21,21 @@ Event Details
     </article>
     <aside>
         
-        <p> This is where the user will make their decision</p>
+        <p> Please determine if this event should be escalated.</p>
+        <form action = "" method = "POST" id = "event_decision">
+            {{ form.escalate }}
+            <p> On a scale from 1 (low) to 5 (high), please rate your confidence in this decision.</p>
+            {% for subfield in form.confidence %}
+            <tr>
+                <td>{{ subfield }}</td>
+                <td>{{ subfield.label }}</td>
+            </tr>
+            {% endfor %}
+
+            <!--{{ form.confidence }}-->
+            {{ form.csrf_token }}
+            <input type="submit" value="Submit">
+        </form>
             
     </aside>
 {% endblock %}

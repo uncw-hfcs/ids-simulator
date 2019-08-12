@@ -14,7 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 
-from forms import PrequestionnaireForm, SurveyForm, UserForm
+from forms import PrequestionnaireForm, SurveyForm, UserForm, eventDecisionForm
 import models
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -125,10 +125,18 @@ def postsurvey():
         return redirect(url_for('index')) 
     return render_template('postsurvey.html', form=form)
 
-@app.route('/eventPage/<eventId>')
+@app.route('/eventPage/<eventId>', methods = ["GET", "POST"])
 def eventPage(eventId):
     event = models.TrainingEvent.query.get(eventId)
-    return render_template('eventPage.html', event = event)
+    form = eventDecisionForm()
+    if form.validate_on_submit():
+        response = models.EventDecision(
+            escalate = form.escalate.data,
+            confidence = form.confidence.data
+        )
+        db.session.add(response)
+        db.session.commit()
+    return render_template('eventPage.html', event = event, form=form)
 
 if __name__ == "__main__":
     app.run(debug=True)
