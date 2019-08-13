@@ -13,7 +13,7 @@ class eventDecisionForm(FlaskForm):
     confidence = RadioField(choices=[("1","1"),("2","2"),("3", "3"),("4","4"),("5","5")])
 
 class UserForm(FlaskForm):
-    username = StringField('Please enter a username:', validators=[DataRequired()])
+    username = StringField('username:', validators=[DataRequired()])
     
 class SurveyForm(FlaskForm):
     mental = StringField()
@@ -28,51 +28,51 @@ class SurveyForm(FlaskForm):
 class PrequestionnaireForm(FlaskForm):
     role = RadioField('Label', 
                 choices=[
-                    ('0','Student'),
-                    ('1','Researcher'), 
-                    ('2','IT/Network Administrator'), 
-                    ('3','Software Engineering (developer, tester, project management, etc.)'), 
-                    ('4','Cyber Security Specialist')
+                    ('Student','Student'),
+                    ('Researcher','Researcher'), 
+                    ('IT/Network Administrator','IT/Network Administrator'), 
+                    ('Software Engineering','Software Engineering (developer, tester, project management, etc.)'), 
+                    ('Cyber Security Specialist','Cyber Security Specialist')
                     ],
                 validators=[DataRequired()]
                 )
     exp_researcher = RadioField('Researcher', 
                 choices=[
-                    ('0','None'),
-                    ('1','< 1'), 
-                    ('2','1 - 5'), 
-                    ('3','5 - 10'), 
-                    ('4','10+')
+                    ('None','None'),
+                    ('< 1','< 1'), 
+                    ('1 - 5','1 - 5'), 
+                    ('5 - 10','5 - 10'), 
+                    ('10+','10+')
                     ],
                 validators=[DataRequired()]
                 )
     exp_admin = RadioField('IT/Network Administrator', 
                 choices=[
-                    ('0','None'),
-                    ('1','< 1'), 
-                    ('2','1 - 5'), 
-                    ('3','5 - 10'), 
-                    ('4','10+')
+                    ('None','None'),
+                    ('< 1','< 1'), 
+                    ('1 - 5','1 - 5'), 
+                    ('5 - 10','5 - 10'), 
+                    ('10+','10+')
                     ],
                 validators=[DataRequired()]
                 )
     exp_software = RadioField('Software Engineering', 
                 choices=[
-                    ('0','None'),
-                    ('1','< 1'), 
-                    ('2','1 - 5'), 
-                    ('3','5 - 10'), 
-                    ('4','10+')
+                    ('None','None'),
+                    ('< 1','< 1'), 
+                    ('1 - 5','1 - 5'), 
+                    ('5 - 10','5 - 10'), 
+                    ('10+','10+')
                     ],
                 validators=[DataRequired()]
                 )
     exp_security = RadioField('Cyber Security Specialist', 
                 choices=[
-                    ('0','None'),
-                    ('1','< 1'), 
-                    ('2','1 - 5'), 
-                    ('3','5 - 10'), 
-                    ('4','10+')
+                    ('None','None'),
+                    ('< 1','< 1'), 
+                    ('1 - 5','1 - 5'), 
+                    ('5 - 10','5 - 10'), 
+                    ('10+','10+')
                     ],
                 validators=[DataRequired()]
                 )
@@ -85,79 +85,78 @@ class PrequestionnaireForm(FlaskForm):
 
     subnet_mask = RadioField('Label', 
                     choices=[
-                        ('0','a) 173.67.14.127'),
-                        ('1','b) 173.67.14.0'), 
-                        ('2','c) 255.255.255.0'), 
-                        ('3','d) 255.255.255.24'), 
-                        ('4','e) I don’t know')
+                        ('a) 173.67.14.127','a) 173.67.14.127'),
+                        ('b) 173.67.14.0','b) 173.67.14.0'), 
+                        ('c) 255.255.255.0','c) 255.255.255.0'), 
+                        ('d) 255.255.255.24','d) 255.255.255.24'), 
+                        ('e) I don’t know','e) I don’t know')
                         ],
                     validators=[DataRequired()]
                     )
 
     network_address = RadioField('Label', 
                         choices=[
-                            ('0','a) 173.67.14.127'),
-                            ('1','b) 173.67.14.0'), 
-                            ('2','c) 255.255.255.0'), 
-                            ('3','d) 255.255.255.24'), 
-                            ('4','e) I don’t know')
+                        ('a) 173.67.14.127','a) 173.67.14.127'),
+                        ('b) 173.67.14.0','b) 173.67.14.0'), 
+                        ('c) 255.255.255.0','c) 255.255.255.0'), 
+                        ('d) 255.255.255.24','d) 255.255.255.24'), 
+                        ('e) I don’t know','e) I don’t know')
                             ],
                         validators=[DataRequired()]
                         )
 
     tcp_faster = RadioField('Label', 
                     choices=[
-                        ('0','a) True'),
-                        ('1','b) False'), 
-                        ('2','c) I don’t know')
+                        ('True','a) True'),
+                        ('False','b) False'), 
+                        ('I don’t know','c) I don’t know')
                         ],
                     validators=[DataRequired()]
                     )
 
     http_port = RadioField('Label', 
                     choices=[
-                        ('0','a) 80'),
-                        ('1','b) 443'), 
-                        ('2','c) 587'), 
-                        ('3','d) 5000'), 
-                        ('4','e) I don’t know')
+                        ('80','a) 80'),
+                        ('443','b) 443'), 
+                        ('587','c) 587'), 
+                        ('5000','d) 5000'), 
+                        ('I don’t know','e) I don’t know')
                         ],
                     validators=[DataRequired()]
                 )    
 
     firewall =  RadioField('Label', 
                     choices=[
-                        ('0','a) Honeypot'),
-                        ('1','b) Firewall'), 
-                        ('2','c) Botnet'), 
-                        ('3','d) Intrusion Detection System'), 
-                        ('4','e) I don’t know')
+                        ('Honeypot','a) Honeypot'),
+                        ('Firewall','b) Firewall'), 
+                        ('Botnet','c) Botnet'), 
+                        ('Intrusion Detection System','d) Intrusion Detection System'), 
+                        ('I don’t know','e) I don’t know')
                         ],
                     validators=[DataRequired()]
                 )  
 
     socket =  RadioField('Label', 
                     choices=[
-                        ('0','a) Socket'),
-                        ('1','b) MAC Address'), 
-                        ('2','c) Protocol'), 
-                        ('3','d) Ping'), 
-                        ('4','e) I don’t know')
+                        ('Socket','a) Socket'),
+                        ('MAC Address','b) MAC Address'), 
+                        ('Protocol','c) Protocol'), 
+                        ('Ping','d) Ping'), 
+                        ('I don’t know','e) I don’t know')
                         ],
                     validators=[DataRequired()]
                 )    
 
     which_model =  RadioField('Label', 
                         choices=[
-                            ('0','a) OSI'),
-                            ('1','b) TCP/IP'), 
-                            ('2','c) UML'), 
-                            ('3','d) HTTPS'), 
-                            ('4','e) I don’t know')
+                            ('OSI','a) OSI'),
+                            ('TCP/IP','b) TCP/IP'), 
+                            ('UML','c) UML'), 
+                            ('HTTPS','d) HTTPS'), 
+                            ('I don’t know','e) I don’t know')
                             ],
                         validators=[DataRequired()]
                     )            
-    # TODO: Create RadioFields similar to those above. The first parameter is the label. I recommend that you store the actual value of the answer rather than a 
-    # integer representing their selection (e.g., store '173.67.14.127' instead of '0' -- it will be easier for you to debug the data in the database.
+   
     
  

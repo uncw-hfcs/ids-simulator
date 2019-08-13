@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, url_for, redirect, flash
 from flask_sqlalchemy import  SQLAlchemy
-from flask_login import LoginManager, login_user, current_user
+from flask_login import LoginManager, login_user, current_user, login_required
 import webbrowser
 
 
@@ -17,52 +17,28 @@ login_manager = LoginManager(app)
 from forms import PrequestionnaireForm, SurveyForm, UserForm, eventDecisionForm
 import models
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    form = UserForm()
-    if form.validate_on_submit():
-        user = models.User(username = form.username.data)        
-        db.session.add(user)
-        db.session.commit()
-        if user.id % 3 != 0:
-            user.group = user.id % 3
-        else:
-            user.group = 3
-        db.session.commit()
-        login_user(user, remember=True)
-        flash('Logged in successfully.')
-
-        return redirect(url_for('index')) #TODO: redirect to training.html
-    return render_template('register.html', form=form, current_user = current_user)
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    
-    form = UserForm()
-    if form.validate_on_submit():
-
-        login_user(models.User.query.filter_by(username = form.username.data).first(), remember=True)
-
-        flash('Logged in successfully.')
-        
-        return redirect(url_for('index')) #redirect to where ever the user left off. Need to figure how to do that...
-    return render_template('login.html', form=form, current_user = current_user)
-
 @login_manager.user_loader
 def load_user(user_id):
     return models.User.query.get(user_id)
 
-@app.route('/index')
-@app.route('/')
+@app.route('/index',methods=['GET', 'POST'])
+@app.route('/',methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', section = "Section title passed from View to Template",
+    form = UserForm()
+    if form.validate_on_submit():
+
+        login_user(models.User.query.filter_by(username = form.username.data).first(), remember=True)       
+        return redirect(url_for('prequestionnaire'))
+    return render_template('index.html', form=form, section = "Section title passed from View to Template",
                             text = "Text passed from View to Template")
 
 @app.route('/prequestionnaire', methods = ["GET", "POST"])
+@login_required
 def prequestionnaire():    
     form = PrequestionnaireForm()
     if form.validate_on_submit():
         answers = models.PrequestionnaireAnswers(
+            user = current_user.username,
             role = form.role.data,
             exp_researcher = form.exp_researcher.data,
             exp_admin = form.exp_admin.data,
@@ -82,10 +58,11 @@ def prequestionnaire():
             which_model = form.which_model.data)        
         db.session.add(answers)
         db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for('training'))
     return render_template('prequestionnaire.html', form=form)
 
 @app.route('/training')
+@login_required
 def training():
     ids = [1,2,3,4,5]
 
@@ -95,6 +72,7 @@ def training():
     return render_template('training.html', eventsList=eventsList)
 
 @app.route('/experiment')
+@login_required
 def experiment():
     items = []
     id = 1
@@ -108,6 +86,7 @@ def experiment():
     return render_template('experiment.html', table = items)
 
 @app.route('/postsurvey', methods = ["GET", "POST"]) 
+@login_required
 def postsurvey():
     form = SurveyForm()
     if form.validate_on_submit():
@@ -126,16 +105,20 @@ def postsurvey():
     return render_template('postsurvey.html', form=form)
 
 @app.route('/eventPage/<eventId>', methods = ["GET", "POST"])
+@login_required
 def eventPage(eventId):
     event = models.TrainingEvent.query.get(eventId)
     form = eventDecisionForm()
     if form.validate_on_submit():
         response = models.EventDecision(
+            user=current_user.username,
+            event_id = eventId,
             escalate = form.escalate.data,
             confidence = form.confidence.data
         )
         db.session.add(response)
         db.session.commit()
+        return redirect(url_for("training"))
     return render_template('eventPage.html', event = event, form=form)
 
 if __name__ == "__main__":

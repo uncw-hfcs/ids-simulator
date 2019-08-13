@@ -17,12 +17,18 @@ IDS Simulator - Welcome
         </section>
     </article>
     <aside>
+        {% if form.errors %}
+        {{ form.errors }}
+        {% endif %}
+        <form action = "" method = "POST" id = "login">
         
-        <p>If this is your first time on this page, please choose the "New Participant" button. If you need to restore a session that was interrupted, please select
-            "Restore Session."
-        </p>
-        <button type="button" onclick="window.location.href='{{ url_for('register') }}';">New Participant</button>
-        <button type="button" onclick="window.location.href='{{ url_for('login') }}';">Restore Session</button>
+            <p>{{ form.username.label }}{{ form.username()}} </p>
+            
+            {{ form.csrf_token }}
+            <input type="submit" value="Login">
+        
+        </form>
+        
     </aside>
 
 {% endblock %}

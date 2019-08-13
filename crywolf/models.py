@@ -3,6 +3,8 @@ from flask_login.mixins import UserMixin
 
 class EventDecision(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.String(50))
+    event_id = db.Column(db.Integer)
     escalate = db.Column(db.String(15))
     confidence = db.Column(db.String(1))
 
@@ -31,6 +33,7 @@ class User(db.Model, UserMixin):
 
 class SurveyAnswers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.String(50))
     mental = db.Column(db.String(3))
     physical = db.Column(db.String(3))
     temporal = db.Column(db.String(3))
@@ -42,6 +45,7 @@ class SurveyAnswers(db.Model):
 
 class PrequestionnaireAnswers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.String(50))
     role = db.Column(db.String(1))
 
     exp_researcher = db.Column(db.Integer())
