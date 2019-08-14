@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Experiment Table
+Experiment Events
 {% endblock %}
 
 {% block content %}
@@ -17,26 +17,19 @@ Experiment Table
         }
         tr:hover {
             background-color: lightblue;
-        }
-        tr:first-child:hover {
-            background-color: white;
-        }
+        }        
         
     </style>
     <div>
         <table align="center">
+           
             
-            
-            {% for row in table %}
-                <tr onclick="window.location.href='{{ url_for('events', eventData = row[0]) }}';">
-                    <td><a href='events/{{ row[0] }}'> {{ row[0] }}</a></td>
-                    {% for item in row[1:] %}
-                        <td>
-                            {{ item }}
-                        </td>
-                    {% endfor %}
+            {% for event in eventsList %}
+                <tr onclick="window.location.href='{{ url_for('eventPage', eventId = event.id) }}';"></tr>
+                    <td><a href='{{ url_for('eventPage', eventId = event.id) }}'> Event {{ event.id }}</a></td>                    
                 </tr>
             {% endfor %}
         </table>
+        <button align = "right" type="submit" onclick="location.href='{{ url_for('postsurvey') }}';">Finished!</button>
     </div>
 {% endblock %}

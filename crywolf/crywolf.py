@@ -74,16 +74,12 @@ def training():
 @app.route('/experiment')
 @login_required
 def experiment():
-    items = []
-    id = 1
-    with open("testEvents.txt", "r") as inFile:
-        for line in inFile:
-            line = line.rstrip()
-            line = line.split("\t")
-            line.insert(0, str(id))    
-            items.append(line)
-            id += 1
-    return render_template('experiment.html', table = items)
+    ids = [1,2,3,4,5]
+
+    eventsList = []
+    for id in ids:
+        eventsList.append(models.TrainingEvent.query.get(id))
+    return render_template('experiment.html', eventsList=eventsList)
 
 @app.route('/postsurvey', methods = ["GET", "POST"]) 
 @login_required
@@ -104,10 +100,29 @@ def postsurvey():
         return redirect(url_for('index')) 
     return render_template('postsurvey.html', form=form)
 
+
+@app.route('/trainingEventPage/<eventId>', methods = ["GET", "POST"])
+@login_required
+def trainingEventPage(eventId):
+    event = models.TrainingEvent.query.get(eventId)    
+    form = eventDecisionForm()
+    if form.validate_on_submit():
+        response = models.TrainingEventDecision(
+            user=current_user.username,
+            event_id = eventId,
+            escalate = form.escalate.data,
+            confidence = form.confidence.data
+        )
+        db.session.add(response)
+        db.session.commit()
+        return redirect(url_for("training"))
+    return render_template('trainingEventPage.html', event = event, form=form)
+
+
 @app.route('/eventPage/<eventId>', methods = ["GET", "POST"])
 @login_required
 def eventPage(eventId):
-    event = models.TrainingEvent.query.get(eventId)
+    event = models.Event.query.get(eventId)
     form = eventDecisionForm()
     if form.validate_on_submit():
         response = models.EventDecision(
@@ -118,7 +133,7 @@ def eventPage(eventId):
         )
         db.session.add(response)
         db.session.commit()
-        return redirect(url_for("training"))
+        return redirect(url_for("experiment"))
     return render_template('eventPage.html', event = event, form=form)
 
 if __name__ == "__main__":

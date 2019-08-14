@@ -26,11 +26,11 @@ Training Events
            
             
             {% for event in eventsList %}
-                <tr onclick="window.location.href='{{ url_for('eventPage', eventId = event.id) }}';"></tr>
-                    <td><a href='{{ url_for('eventPage', eventId = event.id) }}'> Event {{ event.id }}</a></td>                    
+                <tr onclick="window.location.href='{{ url_for('trainingEventPage', eventId = event.id) }}';"></tr>
+                    <td><a href='{{ url_for('trainingEventPage', eventId = event.id) }}'> Event {{ event.id }}</a></td>                    
                 </tr>
             {% endfor %}
         </table>
-        <button align = "right" type="submit" onclick="location.href='{{ url_for('postsurvey') }}';">Finished!</button>
+        <button  type="submit" onclick="location.href='{{ url_for('experiment') }}';">Take the Experiment!</button>
     </div>
 {% endblock %}

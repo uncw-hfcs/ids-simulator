@@ -156,7 +156,4 @@ class PrequestionnaireForm(FlaskForm):
                             ('I don’t know','e) I don’t know')
                             ],
                         validators=[DataRequired()]
-                    )            
-   
-    
- 
+                    )
