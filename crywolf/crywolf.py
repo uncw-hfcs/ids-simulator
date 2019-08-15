@@ -122,7 +122,7 @@ def trainingEventPage(eventId):
 @app.route('/eventPage/<eventId>', methods = ["GET", "POST"])
 @login_required
 def eventPage(eventId, time_event_click):
-    time_event_click = time_event_click
+    
     event = models.Event.query.get(eventId)
     form = eventDecisionForm()
     if form.validate_on_submit():
