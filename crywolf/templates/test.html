@@ -22,11 +22,15 @@ Experiment Events
     </style>
     <div>
         <table align="center">
-           
+           <tr>
+               <td>Event Number</td><td>Status</td><td>Decision</td>
+           </tr>
             
             {% for event in eventsList %}
-                <tr onclick="window.location.href='{{ url_for('eventPage', eventId = event.id) }}';">
-                    <td><a href='{{ url_for('eventPage', eventId = event.id) }}'> Event {{ event.id }}</a></td>                    
+                <tr onclick="window.location.href='{{ url_for('eventPage', eventId = event.id, time_event_click = {{now}}) }}';">
+                    <td><a href='{{ url_for('eventPage', eventId = event.id, time_event_click = {{now}} ) }}'> Event {{ loop.index }}</a></td>     
+                    <td></td>
+                    <td></td>               
                 
             {% endfor %}
         </tr>

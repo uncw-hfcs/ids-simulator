@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, url_for, redirect, flash
 from flask_sqlalchemy import  SQLAlchemy
 from flask_login import LoginManager, login_user, current_user, login_required
-import webbrowser
+import datetime
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -74,12 +74,12 @@ def training():
 @app.route('/experiment')
 @login_required
 def experiment():
-    ids = [1,2,3,4,5]
+    ids = [x for x in range(1,91)]
 
     eventsList = []
     for id in ids:
-        eventsList.append(models.TrainingEvent.query.get(id))
-    return render_template('experiment.html', eventsList=eventsList)
+        eventsList.append(models.Event.query.get(id))
+    return render_template('test.html', eventsList=eventsList) #CHANGE BACK TO experiment.html!!!!
 
 @app.route('/postsurvey', methods = ["GET", "POST"]) 
 @login_required
@@ -121,20 +121,29 @@ def trainingEventPage(eventId):
 
 @app.route('/eventPage/<eventId>', methods = ["GET", "POST"])
 @login_required
-def eventPage(eventId):
+def eventPage(eventId, time_event_click):
+    time_event_click = time_event_click
     event = models.Event.query.get(eventId)
     form = eventDecisionForm()
     if form.validate_on_submit():
+               
         response = models.EventDecision(
             user=current_user.username,
             event_id = eventId,
             escalate = form.escalate.data,
-            confidence = form.confidence.data
+            confidence = form.confidence.data,
+            time_event_click = time_event_click,
+            time_event_decision = datetime.datetime.now()
         )
+        
         db.session.add(response)
         db.session.commit()
         return redirect(url_for("experiment"))
     return render_template('eventPage.html', event = event, form=form)
+
+@app.context_processor
+def inject_now():
+    return {'now': datetime.datetime.now()}
 
 if __name__ == "__main__":
     app.run(debug=True)

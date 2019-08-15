@@ -7,7 +7,9 @@ class EventDecision(db.Model):
     event_id = db.Column(db.Integer)
     escalate = db.Column(db.String(15))
     confidence = db.Column(db.String(1))
-
+    time_event_click = db.Column(db.DateTime)
+    time_event_decision = db.Column(db.DateTime)
+    
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     is_false_positive = db.Column(db.Boolean())
