@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, url_for, redirect, flash
+from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import  SQLAlchemy
 from flask_login import LoginManager, login_user, current_user, login_required
 import datetime
@@ -121,25 +121,31 @@ def trainingEventPage(eventId):
 
 @app.route('/eventPage/<eventId>', methods = ["GET", "POST"])
 @login_required
-def eventPage(eventId, time_event_click):
+def eventPage(eventId):
     
     event = models.Event.query.get(eventId)
     form = eventDecisionForm()
-    if form.validate_on_submit():
-               
-        response = models.EventDecision(
-            user=current_user.username,
-            event_id = eventId,
-            escalate = form.escalate.data,
-            confidence = form.confidence.data,
-            time_event_click = time_event_click,
-            time_event_decision = datetime.datetime.now()
-        )
-        
-        db.session.add(response)
-        db.session.commit()
-        return redirect(url_for("experiment"))
+
+    if request.method == 'GET':
+        print("GET")
+        # TODO: Log a database entry that an event was clicked on       
+    else:
+        print("POST")
+        if form.validate_on_submit():           
+            response = models.EventDecision(
+                user=current_user.username,
+                event_id = eventId,
+                escalate = form.escalate.data,
+                confidence = form.confidence.data,
+                time_event_click = time_event_click,
+                time_event_decision = datetime.datetime.now()
+            )
+            
+            db.session.add(response)
+            db.session.commit()
+            return redirect(url_for("experiment"))
     return render_template('eventPage.html', event = event, form=form)
+
 
 @app.context_processor
 def inject_now():

@@ -27,13 +27,13 @@ Experiment Events
            </tr>
             
             {% for event in eventsList %}
-                <tr onclick="window.location.href='{{ url_for('eventPage', eventId = event.id, time_event_click = {{now}}) }}';">
-                    <td><a href='{{ url_for('eventPage', eventId = event.id, time_event_click = {{now}} ) }}'> Event {{ loop.index }}</a></td>     
+                <tr>
+                    <td><a href="{{ url_for('eventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td>     
                     <td></td>
                     <td></td>               
-                
+                </tr>        
             {% endfor %}
-        </tr>
+        
         </table>
         <button type="submit" onclick="location.href='{{ url_for('postsurvey') }}';">Finished!</button>
     </div>
