@@ -26,8 +26,7 @@ def load_user(user_id):
 def index():
     form = UserForm()
     if form.validate_on_submit():
-
-        login_user(models.User.query.filter_by(username = form.username.data).first(), remember=True)       
+        login_user(models.User.query.filter_by(username = form.username.data).first(), remember=False)
         return redirect(url_for('prequestionnaire'))
     return render_template('index.html', form=form, section = "Section title passed from View to Template",
                             text = "Text passed from View to Template")
@@ -74,6 +73,14 @@ def training():
 @app.route('/experiment')
 @login_required
 def experiment():
+    
+    user = models.User.query.filter_by(username = current_user.username).first()
+    if request.method == "GET" and user.time_begin == None:
+        print(user.username)
+        # user.time_begin = datetime.datetime.now()
+        # db.session.commit()
+    
+
     ids = [x for x in range(1,91)]
 
     eventsList = []
@@ -121,35 +128,30 @@ def trainingEventPage(eventId):
 
 @app.route('/eventPage/<eventId>', methods = ["GET", "POST"])
 @login_required
-def eventPage(eventId):
-    
+def eventPage(eventId):    
     event = models.Event.query.get(eventId)
     form = eventDecisionForm()
-
     if request.method == 'GET':
-        print("GET")
-        # TODO: Log a database entry that an event was clicked on       
+        newEvent = models.EventClicked(
+            user = current_user.username,
+            event_id = eventId,
+            time_event_click = datetime.datetime.now()
+        )   
+        db.session.add(newEvent)
+        db.session.commit()    
     else:
-        print("POST")
         if form.validate_on_submit():           
             response = models.EventDecision(
                 user=current_user.username,
                 event_id = eventId,
                 escalate = form.escalate.data,
                 confidence = form.confidence.data,
-                time_event_click = time_event_click,
                 time_event_decision = datetime.datetime.now()
-            )
-            
+            )            
             db.session.add(response)
             db.session.commit()
             return redirect(url_for("experiment"))
     return render_template('eventPage.html', event = event, form=form)
-
-
-@app.context_processor
-def inject_now():
-    return {'now': datetime.datetime.now()}
 
 if __name__ == "__main__":
     app.run(debug=True)

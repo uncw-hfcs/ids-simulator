@@ -1,15 +1,20 @@
 from crywolf import db
 from flask_login.mixins import UserMixin
 
+class EventClicked(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.String(50))
+    event_id = db.Column(db.Integer)
+    time_event_click = db.Column(db.DateTime)
+
 class EventDecision(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.String(50))
     event_id = db.Column(db.Integer)
     escalate = db.Column(db.String(15))
     confidence = db.Column(db.String(1))
-    time_event_click = db.Column(db.DateTime)
     time_event_decision = db.Column(db.DateTime)
-    
+
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     is_false_positive = db.Column(db.Boolean())
@@ -49,6 +54,8 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True)
     group = db.Column(db.Integer())
+    time_begin = db.Column(db.DateTime)
+    time_end = db.Column(db.DateTime)
 
     def __repr__(self):
         return self.username
