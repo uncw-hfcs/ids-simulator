@@ -23,14 +23,14 @@ Experiment Events
     <div>
         <table align="center">
            <tr>
-               <td>Event Number</td><td>Status</td><td>Decision</td>
+               <td>Event Number</td><td>Decision</td>
            </tr>
             
             {% for event in eventsList %}
                 <tr>
                     <td><a href="{{ url_for('eventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td>     
                     <td></td>
-                    <td></td>               
+                                  
                 </tr>        
             {% endfor %}
         

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Logout
+{% endblock %}
+
+{% block content %}
+    <style>
+        button {
+            color: black;
+        }
+        </style>
+    <article>
+        
+    </article>
+    <aside>
+        <p>Thank you for your participation!</p>
+        <button type="submit" onclick="location.href='{{ url_for('index') }}';">Return to homepage!</button>
+                    
+    </aside>
+{% endblock %}

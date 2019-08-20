@@ -26,7 +26,7 @@ class SurveyForm(FlaskForm):
     feedback = TextAreaField()
 
 class PrequestionnaireForm(FlaskForm):
-    role = RadioField('Label', 
+    role = RadioField('Which role best describes your current experience?', 
                 choices=[
                     ('Student','Student'),
                     ('Researcher','Researcher'), 

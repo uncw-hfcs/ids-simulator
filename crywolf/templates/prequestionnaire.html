@@ -29,28 +29,51 @@ Pre-experiment Questionnaire
 
             <form action = "" method = "POST" id = "prequiz">
                 <ol>
-                    <li> 
-                        <h4> Which role best describes your current experience?</h4>
-                        {{ form.role }}  
+                    <li>                         
+                        <h4>{{ form.role.label }}</h4>
+                        {{ form.role }}
+                        {% for error in form.role.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}  
                     </li>
                     <li>  
                         <h4> How many years of professional experience do you have in the following (select all that apply):</h4>  
                             <table>
                                 <tr>
                                     <td>{{ form.exp_researcher.label }}</td>
-                                    <td>{{ form.exp_researcher(class_="radio-inline" )}}</td>                            
+                                    {% for subfield in form.exp_researcher %}
+                                        <td>{{ subfield }}{{ subfield.label }}</td>  
+                                    {% endfor %}
+                                    {% for error in form.role.errors %}
+                                        <span style="color: red;">[{{ error }}]</span>
+                                    {% endfor %}                                   
                                 </tr>
                                 <tr>
                                     <td>{{ form.exp_admin.label }}</td>
-                                    <td>{{ form.exp_admin(class_="radio-inline") }}</td>                                
+                                    {% for subfield in form.exp_admin %}
+                                        <td>{{ subfield }}{{ subfield.label }}</td>  
+                                    {% endfor %}  
+                                    {% for error in form.exp_admin.errors %}
+                                        <span style="color: red;">[{{ error }}]</span>
+                                    {% endfor %}                                
                                 </tr>                          
                                 <tr>
                                     <td>{{ form.exp_software.label }}</td>
-                                    <td>{{ form.exp_software(class_="radio-inline") }}</td>                                
+                                    {% for subfield in form.exp_software %}
+                                        <td>{{ subfield }}{{ subfield.label }}</td>  
+                                    {% endfor %} 
+                                    {% for error in form.exp_software.errors %}
+                                        <span style="color: red;">[{{ error }}]</span>
+                                    {% endfor %}                                
                                 </tr>                               
                                 <tr>
                                     <td>{{ form.exp_security.label }}</td>
-                                    <td>{{ form.exp_security(class_="radio-inline") }}</td>                                
+                                    {% for subfield in form.exp_security %}
+                                        <td>{{ subfield }}{{ subfield.label }}</td>  
+                                    {% endfor %} 
+                                    {% for error in form.exp_security.errors %}
+                                        <span style="color: red;">[{{ error }}]</span>
+                                    {% endfor %}                                
                                 </tr>   
                             </table>
                     </li>                      
@@ -65,32 +88,53 @@ Pre-experiment Questionnaire
                     <li>
                         <h4> What is the subnet mask for 173.67.14.127 / 24?</h4>
                             {{ form.subnet_mask }}
+                            {% for error in form.subnet_mask.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %} 
                     </li>   
                     <li>                        
                         <h4> What is the network address for 173.67.14.127 / 24?</h4>
                             {{ form.network_address }}
+                            {% for error in form.network_address.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %} 
                     </li>
                     <li>     
                         <h4> True or False: TCP is a faster, more efficient, transfer protocol compared to UDP?</h4>                        
                             {{ form.tcp_faster }}
+                            {% for error in form.tcp_faster.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %} 
                     </li>  
                     <li>     
                         <h4> What port does HTTP use?</h4>                        
                             {{ form.http_port }}
+                            {% for error in form.http_port.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %} 
                     </li>
                     <li>
                         <h4> A network security device that monitors incoming and outgoing network 
                                 traffic and decides whether to allow or block specific traffic based 
                                 on a defined set of security rules is the definition of a(n):</h4>                        
                             {{ form.firewall }}
+                            {% for error in form.firewall.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %} 
                     </li>
                     <li>
                         <h4> The combination of an IP address and the port used is called a:</h4>                        
                             {{ form.socket }}
+                            {% for error in form.socket.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %} 
                     </li>
                     <li>
                         <h4> Network, Internet, Transport, Application are the layers to what model?</h4>                        
                             {{ form.which_model }}
+                            {% for error in form.which_model.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %} 
                     </li>
                 </ol>
                 {{ form.csrf_token }}

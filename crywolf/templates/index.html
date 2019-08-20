@@ -5,6 +5,12 @@ IDS Simulator - Welcome
 {% endblock %}
 
 {% block content %}
+
+    <style>
+    form {
+        color: black;
+    }
+    </style>
     
     <article>
         <header>
@@ -12,7 +18,6 @@ IDS Simulator - Welcome
             <p>There will be a welcome message and instructions for the user to follow. This page will take the user to the prequestionnaire.</p>
         </header>
         <section>
-            <h2>Title: {{ section }}</h2>
             <p>Current User: {{ current_user }}</p>
         </section>
     </article>

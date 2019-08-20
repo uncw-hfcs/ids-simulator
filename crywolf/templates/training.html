@@ -8,29 +8,37 @@ Training Events
     <style>
         
         table, th, td {
-            border: 1px solid black;
+            border: 3px solid black;
             text-align: center;
             padding: 10px;
         }
-        td {
-            cursor: pointer;
-        }
+        
         tr:hover {
             background-color: lightblue;
-        }
-        
-        
+        }  
+        tr:first-child:hover {
+            background-color: white;
+        }      
+        tr:nth-child(even) {background-color: lightgrey;}
     </style>
     <div>
         <table align="center">
-           
+           <tr>
+               <td><h4>Event Number</h4></td><td><h4>Decision</h4></td>
+           </tr>
             
-            {% for event in eventsList %}
-                <tr onclick="window.location.href='{{ url_for('trainingEventPage', eventId = event.id) }}';"></tr>
-                    <td><a href='{{ url_for('trainingEventPage', eventId = event.id) }}'> Event {{ event.id }}</a></td>                    
-                </tr>
+            {% for event, decision in eventsList %}
+                <tr>
+                    <td><a href="{{ url_for('trainingEventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td>     
+                    <td>{% if decision != None %}
+                            {{ decision }}
+                        {% endif %}
+                    </td>
+                                  
+                </tr>        
             {% endfor %}
+        
         </table>
-        <button  type="submit" onclick="location.href='{{ url_for('experiment') }}';">Take the Experiment!</button>
+        <button type="submit" onclick="location.href='{{ url_for('experiment') }}';">Take the experiment!</button>
     </div>
 {% endblock %}

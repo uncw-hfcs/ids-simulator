@@ -15,6 +15,9 @@ class EventDecision(db.Model):
     confidence = db.Column(db.String(1))
     time_event_decision = db.Column(db.DateTime)
 
+    def __repr__(self):
+        return self.escalate
+
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     is_false_positive = db.Column(db.Boolean())
@@ -35,6 +38,10 @@ class TrainingEventDecision(db.Model):
     event_id = db.Column(db.Integer)
     escalate = db.Column(db.String(15))
     confidence = db.Column(db.String(1))
+    time_event_decision = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return self.escalate
 
 class TrainingEvent(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, url_for, redirect, flash, request
-from flask_sqlalchemy import  SQLAlchemy
-from flask_login import LoginManager, login_user, current_user, login_required
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 import datetime
 
 
@@ -26,10 +26,12 @@ def load_user(user_id):
 def index():
     form = UserForm()
     if form.validate_on_submit():
-        login_user(models.User.query.filter_by(username = form.username.data).first(), remember=False)
+        user = models.User.query.filter_by(username = form.username.data).first()
+        if user is None:
+            return redirect(url_for('index'))
+        login_user(user)
         return redirect(url_for('prequestionnaire'))
-    return render_template('index.html', form=form, section = "Section title passed from View to Template",
-                            text = "Text passed from View to Template")
+    return render_template('index.html', form=form)
 
 @app.route('/prequestionnaire', methods = ["GET", "POST"])
 @login_required
@@ -65,9 +67,12 @@ def prequestionnaire():
 def training():
     ids = [1,2,3,4,5]
 
-    eventsList = []
+    eventsList = []   #This will store an eventID and eventDecision tuple
     for id in ids:
-        eventsList.append(models.TrainingEvent.query.get(id))
+        eventsList.append((models.TrainingEvent.query.get(id),
+                          models.TrainingEventDecision.query.filter_by(user = current_user.username, event_id = id).
+                            order_by(models.TrainingEventDecision.time_event_decision.desc()).first())
+                         )
     return render_template('training.html', eventsList=eventsList)
 
 @app.route('/experiment')
@@ -76,24 +81,37 @@ def experiment():
     
     user = models.User.query.filter_by(username = current_user.username).first()
     if request.method == "GET" and user.time_begin == None:
-        print(user.username)
-        # user.time_begin = datetime.datetime.now()
-        # db.session.commit()
+        local_user = db.session.merge(user)
+        local_user.time_begin = datetime.datetime.now()
+        db.session.add(local_user)
+        db.session.commit()
     
 
     ids = [x for x in range(1,91)]
 
-    eventsList = []
+    eventsList = []   #This will store an eventID and eventDecision tuple
     for id in ids:
-        eventsList.append(models.Event.query.get(id))
-    return render_template('test.html', eventsList=eventsList) #CHANGE BACK TO experiment.html!!!!
+        eventsList.append((models.Event.query.get(id),
+                          models.EventDecision.query.filter_by(user = current_user.username, event_id = id).
+                            order_by(models.EventDecision.time_event_decision.desc()).first())
+                         )
+    return render_template('experiment.html', eventsList=eventsList) 
 
 @app.route('/postsurvey', methods = ["GET", "POST"]) 
 @login_required
 def postsurvey():
+
+    user = models.User.query.filter_by(username = current_user.username).first()
+    if request.method == "GET" and user.time_end == None:
+        local_user = db.session.merge(user)
+        local_user.time_end = datetime.datetime.now()
+        db.session.add(local_user)
+        db.session.commit()
+
     form = SurveyForm()
     if form.validate_on_submit():
         responses = models.SurveyAnswers(
+            user = current_user.username,
             mental = form.mental.data,
             physical = form.physical.data,
             temporal = form.temporal.data,
@@ -104,7 +122,7 @@ def postsurvey():
             feedback = form.feedback.data)
         db.session.add(responses)
         db.session.commit()
-        return redirect(url_for('index')) 
+        return redirect(url_for('logout')) 
     return render_template('postsurvey.html', form=form)
 
 
@@ -118,7 +136,8 @@ def trainingEventPage(eventId):
             user=current_user.username,
             event_id = eventId,
             escalate = form.escalate.data,
-            confidence = form.confidence.data
+            confidence = form.confidence.data,
+            time_event_decision = datetime.datetime.now()
         )
         db.session.add(response)
         db.session.commit()
@@ -152,6 +171,12 @@ def eventPage(eventId):
             db.session.commit()
             return redirect(url_for("experiment"))
     return render_template('eventPage.html', event = event, form=form)
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return render_template('logout.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
