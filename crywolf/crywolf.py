@@ -42,6 +42,7 @@ def prequestionnaire():
     form = PrequestionnaireForm()
     if form.validate_on_submit():
         answers = models.PrequestionnaireAnswers(
+            timestamp = datetime.datetime.now(),
             user = current_user.username,
             role = form.role.data,
             exp_researcher = form.exp_researcher.data,
@@ -65,6 +66,7 @@ def prequestionnaire():
         # local_user.questionnaire_complete = True  
         db.session.add(answers)#, local_user)
         db.session.commit()
+        flash("Questionnaire saved successfully!")
         return redirect(url_for('training'))
     return render_template('prequestionnaire.html', form=form)
 

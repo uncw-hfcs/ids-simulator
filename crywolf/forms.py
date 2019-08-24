@@ -26,6 +26,17 @@ class SurveyForm(FlaskForm):
     feedback = TextAreaField()
 
 class PrequestionnaireForm(FlaskForm):
+    def validate(self):
+        if not FlaskForm.validate(self):
+            return False
+        result = True
+        
+        for field in [self.familiarity_none, self.familiarity_read, self.familiarity_controlled, self.familiarity_public, self.familiarity_engineered]:
+            if field.data is True:
+                return False                
+                     
+        return result
+
     role = RadioField('Which role best describes your current experience?', 
                 choices=[
                     ('Student','Student'),
