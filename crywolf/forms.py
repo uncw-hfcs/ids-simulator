@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, RadioField, BooleanField, TextAreaField, DecimalField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, ValidationError
+
 
 class eventDecisionForm(FlaskForm):
     escalate = RadioField(
@@ -26,16 +27,11 @@ class SurveyForm(FlaskForm):
     feedback = TextAreaField()
 
 class PrequestionnaireForm(FlaskForm):
-    def validate(self):
-        if not FlaskForm.validate(self):
-            return False
-        result = True
-        
-        for field in [self.familiarity_none, self.familiarity_read, self.familiarity_controlled, self.familiarity_public, self.familiarity_engineered]:
-            if field.data is True:
-                return False                
-                     
-        return result
+   
+    def validate_familiarity_none(form, field, message=None):
+        if not any(f.data for f in [form.familiarity_none, form.familiarity_read, form.familiarity_controlled, form.familiarity_public, form.familiarity_engineered]):
+            print("Please check at least one box.")
+            raise ValidationError(u"Please check at least one box.")
 
     role = RadioField('Which role best describes your current experience?', 
                 choices=[
