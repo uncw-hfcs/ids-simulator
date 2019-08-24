@@ -24,14 +24,17 @@ def load_user(user_id):
 @app.route('/index',methods=['GET', 'POST'])
 @app.route('/',methods=['GET', 'POST'])
 def index():
+    error = None
     form = UserForm()
     if form.validate_on_submit():
         user = models.User.query.filter_by(username = form.username.data).first()
-        if user is None:
-            return redirect(url_for('index'))
-        login_user(user)
-        return redirect(url_for('prequestionnaire'))
-    return render_template('index.html', form=form)
+        if user is not None:
+            login_user(user)
+            return redirect(url_for('prequestionnaire'))
+        else:
+            error = "Invalid username. Please try again."
+        
+    return render_template('index.html', form=form, error = error)
 
 @app.route('/prequestionnaire', methods = ["GET", "POST"])
 @login_required
