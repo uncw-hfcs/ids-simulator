@@ -56,8 +56,11 @@ def prequestionnaire():
             http_port = form.http_port.data,
             firewall = form.firewall.data,
             socket = form.socket.data,
-            which_model = form.which_model.data)        
-        db.session.add(answers)
+            which_model = form.which_model.data)    
+        # user = models.User.query.filter_by(username = current_user.username).first()
+        # local_user = db.session.merge(user)
+        # local_user.questionnaire_complete = True  
+        db.session.add(answers)#, local_user)
         db.session.commit()
         return redirect(url_for('training'))
     return render_template('prequestionnaire.html', form=form)
@@ -80,6 +83,12 @@ def training():
 def experiment():
     
     user = models.User.query.filter_by(username = current_user.username).first()
+    # if request.method == "GET" and user.training_complete == False:
+    #     local_user = db.session.merge(user)
+    #     local_user.training_complete = True 
+    #     db.session.add(local_user)
+    #     db.session.commit()
+
     if request.method == "GET" and user.time_begin == None:
         local_user = db.session.merge(user)
         local_user.time_begin = datetime.datetime.now()
@@ -87,7 +96,9 @@ def experiment():
         db.session.commit()
     
 
-    ids = [x for x in range(1,91)]
+    ids = [int(id) for id in current_user.events.split(",")]
+    ids.insert(43,73)
+    ids.insert(25, 72)
 
     eventsList = []   #This will store an eventID and eventDecision tuple
     for id in ids:
@@ -102,6 +113,12 @@ def experiment():
 def postsurvey():
 
     user = models.User.query.filter_by(username = current_user.username).first()
+    # if request.method == "GET" and user.experiment_complete == False:
+    #     local_user = db.session.merge(user)
+    #     local_user.training_complete = True 
+    #     db.session.add(local_user)
+    #     db.session.commit()
+
     if request.method == "GET" and user.time_end == None:
         local_user = db.session.merge(user)
         local_user.time_end = datetime.datetime.now()
@@ -171,6 +188,10 @@ def eventPage(eventId):
             db.session.commit()
             return redirect(url_for("experiment"))
     return render_template('eventPage.html', event = event, form=form)
+
+@app.route("/reference")
+def reference():
+    return render_template('reference.html')
 
 @app.route("/logout")
 @login_required

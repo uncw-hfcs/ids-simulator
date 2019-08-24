@@ -5,20 +5,23 @@ Event Details
 {% endblock %}
 
 {% block content %}
+
     <article>
+
         <table>
-            <tr><td>Country of Authorization: </td>    <td>{{event.country_of_authentication1}}</td></tr>
-            <tr><td>Number of Successful Logings: </td>    <td>{{event.number_successful_logins1}}</td></tr>
-            <tr><td>Number of Failed Logins: </td>    <td>{{event.number_failed_logins1}}</td></tr>
-            <tr><td>Source Provider: </td>    <td>{{event.source_provider1}}</td></tr>
-            <tr><td>Country of Authorization: </td>    <td>{{event.country_of_authentication2}}</td></tr>
-            <tr><td>Number of Successful Logings: </td>    <td>{{event.number_successful_logins2}}</td></tr>
-            <tr><td>Number of Failed Logins: </td>    <td>{{event.number_failed_logins2}}</td></tr>
-            <tr><td>Source Provider: </td>    <td>{{event.source_provider2}} </td></tr>
-            <tr><td>Time Between Authentications: </td>    <td>{{event.time_between_authentications}} hrs</td></tr>
-            <tr><td>VPN Confidence: </td>    <td>{{event.vpn_confidence}} </td></tr>
+            <tr><td>Country of Authorization: </td> <td><pre>   </pre></td>   <td> {{event.country_of_authentication1}}</td></tr>
+            <tr><td>Number of Successful Logings: </td>  <td><pre>   </pre></td>  <td> {{event.number_successful_logins1}}</td></tr>
+            <tr><td>Number of Failed Logins: </td>  <td><pre>   </pre></td>  <td> {{event.number_failed_logins1}}</td></tr>
+            <tr><td>Source Provider: </td> <td><pre>   </pre></td>   <td> {{event.source_provider1}}</td></tr>
+            <tr><td>Country of Authorization: </td>  <td><pre>   </pre></td>  <td> {{event.country_of_authentication2}}</td></tr>
+            <tr><td>Number of Successful Logings: </td>   <td><pre>   </pre></td> <td> {{event.number_successful_logins2}}</td></tr>
+            <tr><td>Number of Failed Logins: </td> <td><pre>   </pre></td>   <td> {{event.number_failed_logins2}}</td></tr>
+            <tr><td>Source Provider: </td>  <td><pre>   </pre></td> <td> {{event.source_provider2}} </td></tr>
+            <tr><td>Time Between Authentications: </td>  <td></td>  <td> {{event.time_between_authentications}} hrs</td></tr>
+            <tr><td>VPN Confidence: </td> <td><pre>   </pre></td>  <td> {{event.vpn_confidence}} </td></tr>
         </table>
     </article>
+    
     <aside>
         
         <p> Please determine if this event should be escalated.</p>
@@ -34,6 +37,11 @@ Event Details
             {{ form.csrf_token }}
             <input type="submit" value="Submit">
         </form>
+        <div class="sidenav">
+                <a href="{{ url_for('reference') }}" target="_blank">Reference Page</a>
+                
+        </div>
             
     </aside>
+    
 {% endblock %}

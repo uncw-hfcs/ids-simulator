@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, RadioField, BooleanField, TextAreaField
+from wtforms.fields import StringField, RadioField, BooleanField, TextAreaField, DecimalField
 from wtforms.validators import DataRequired
 
 class eventDecisionForm(FlaskForm):
@@ -16,12 +16,12 @@ class UserForm(FlaskForm):
     username = StringField('username:', validators=[DataRequired()])
     
 class SurveyForm(FlaskForm):
-    mental = StringField()
-    physical = StringField()
-    temporal = StringField()
-    performance = StringField()
-    effort = StringField()
-    frustration = StringField()
+    mental = DecimalField(places=1)
+    physical = DecimalField(places=1)
+    temporal = DecimalField(places=1)
+    performance = DecimalField(places=1)
+    effort = DecimalField(places=1)
+    frustration = DecimalField(places=1)
     useful_info = TextAreaField()
     feedback = TextAreaField()
 

@@ -20,16 +20,16 @@ class EventDecision(db.Model):
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    is_false_positive = db.Column(db.Boolean())
-    country_of_authentication1 = db.Column(db.String(1))
-    number_successful_logins1 = db.Column(db.Integer)
-    number_failed_logins1 = db.Column(db.Integer)
+    is_false_positive = db.Column(db.String(25))
+    country_of_authentication1 = db.Column(db.String(25))
+    number_successful_logins1 = db.Column(db.String(25))
+    number_failed_logins1 = db.Column(db.String(25))
     source_provider1 = db.Column(db.String(50))
-    country_of_authentication2 = db.Column(db.String(1))
-    number_successful_logins2 = db.Column(db.Integer)
-    number_failed_logins2 = db.Column(db.Integer)
+    country_of_authentication2 = db.Column(db.String(25))
+    number_successful_logins2 = db.Column(db.String(25))
+    number_failed_logins2 = db.Column(db.String(25))
     source_provider2 = db.Column(db.String(50))
-    time_between_authentications = db.Column(db.Float)
+    time_between_authentications = db.Column(db.String(25))
     vpn_confidence = db.Column(db.String(5))
 
 class TrainingEventDecision(db.Model):
@@ -45,12 +45,12 @@ class TrainingEventDecision(db.Model):
 
 class TrainingEvent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    is_false_positive = db.Column(db.Boolean())
-    country_of_authentication1 = db.Column(db.String(1))
+    is_false_positive = db.Column(db.String(25))
+    country_of_authentication1 = db.Column(db.String(25))
     number_successful_logins1 = db.Column(db.Integer)
     number_failed_logins1 = db.Column(db.Integer)
     source_provider1 = db.Column(db.String(50))
-    country_of_authentication2 = db.Column(db.String(1))
+    country_of_authentication2 = db.Column(db.String(25))
     number_successful_logins2 = db.Column(db.Integer)
     number_failed_logins2 = db.Column(db.Integer)
     source_provider2 = db.Column(db.String(50))
@@ -63,6 +63,7 @@ class User(db.Model, UserMixin):
     group = db.Column(db.Integer())
     time_begin = db.Column(db.DateTime)
     time_end = db.Column(db.DateTime)
+    events = db.Column(db.String(256))
 
     def __repr__(self):
         return self.username
@@ -71,12 +72,12 @@ class User(db.Model, UserMixin):
 class SurveyAnswers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.String(50))
-    mental = db.Column(db.String(3))
-    physical = db.Column(db.String(3))
-    temporal = db.Column(db.String(3))
-    performance = db.Column(db.String(3))
-    effort = db.Column(db.String(3))
-    frustration = db.Column(db.String(3))
+    mental = db.Column(db.Float(3))
+    physical = db.Column(db.Float(3))
+    temporal = db.Column(db.Float(3))
+    performance = db.Column(db.Float(3))
+    effort = db.Column(db.Float(3))
+    frustration = db.Column(db.Float(3))
     useful_info = db.Column(db.String(1000))
     feedback = db.Column(db.String(1000))
 

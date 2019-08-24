@@ -1,5 +1,5 @@
-0	A	53	8	Rainbow	K	12	0	Kfed	1.25	0%
-0	A	20	2	Rainbow	J	3	0	Jnat	3.75	0%
-1	G	5	0	GISP	H	10	1	Hhosting	0.5	25%
-1	A	3	0	Horizon Wireless	D	24	2	DISP	0.75	0%
-1	C	30	3	W-verse	E	4	0	Rainbow	2	0%
+0	Los Angeles	13	0	Hosting/server	Moscow	12	2	Telecom	1.22	95%
+0	Paris	13	3	Telecom	Miami	10	3	Mobile/Cellular	0.61	0%
+1	Beijing	12	0	Telecom	Miami	10	3	Telecom	0.65	0%
+0	Vancouver	4	3	Telecom	Seattle	6	1	Telecom	2.8	0%
+1	Tokyo	8	1	Telecom	Paris	8	0	Telecom	1.77	0%
