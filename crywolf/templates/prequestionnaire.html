@@ -68,7 +68,7 @@ Pre-experiment Questionnaire
                     </li>                      
                     <li>        
                         <h4> How familiar are you with Internet cyber security attacks? (select all that apply)</h4>
-                            {% if form.validate() %}
+                            {% if notValid %}
                             <span style="color: red;">[Please select at least one option]</span>
                             {% endif %}
                             {{ form.familiarity_none }} {{form.familiarity_none.label}}<br>

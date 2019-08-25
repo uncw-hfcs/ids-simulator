@@ -38,7 +38,7 @@ def index():
 
 @app.route('/prequestionnaire', methods = ["GET", "POST"])
 @login_required
-def prequestionnaire():    
+def prequestionnaire(): 
     form = PrequestionnaireForm()
     if form.validate_on_submit():
         answers = models.PrequestionnaireAnswers(
