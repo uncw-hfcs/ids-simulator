@@ -5,10 +5,15 @@ Event Details
 {% endblock %}
 
 {% block content %}
-
-    <article>
+    <style>
+        input {
+            color: black;
+        }       
+        </style>
+    <article>           
 
         <table>
+            <tr><td><a href="{{ url_for('reference') }}" target="_blank"><h3>Reference Page</h3></a></td></tr>
             <tr><td>City of Authorization: </td> <td><pre>   </pre></td>   <td> {{event.country_of_authentication1}}</td></tr>
             <tr><td>Number of Successful Logins: </td>  <td><pre>   </pre></td>  <td> {{event.number_successful_logins1}}</td></tr>
             <tr><td>Number of Failed Logins: </td>  <td><pre>   </pre></td>  <td> {{event.number_failed_logins1}}</td></tr>
@@ -21,7 +26,6 @@ Event Details
             <tr><td>VPN Confidence: </td> <td><pre>   </pre></td>  <td> {{event.vpn_confidence}} </td></tr>
         </table>
     </article>
-    
     <aside>
         
         <p> Please determine if this event should be escalated.</p>
@@ -35,13 +39,9 @@ Event Details
             </tr>
             {% endfor %}
             {{ form.csrf_token }}
-            <input type="submit" value="Submit">
+           <br> <input type="submit" value="Submit">
         </form>
-        <div class="sidenav">
-                <a href="{{ url_for('reference') }}" target="_blank">Reference Page</a>
-                
-        </div>
-            
     </aside>
+
     
 {% endblock %}
