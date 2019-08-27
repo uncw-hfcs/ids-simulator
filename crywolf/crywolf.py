@@ -61,45 +61,51 @@ def prequestionnaire():
             firewall = form.firewall.data,
             socket = form.socket.data,
             which_model = form.which_model.data)    
-        # user = models.User.query.filter_by(username = current_user.username).first()
-        # local_user = db.session.merge(user)
-        # local_user.questionnaire_complete = True  
-        db.session.add(answers)#, local_user)
+        user = models.User.query.filter_by(username = current_user.username).first()
+        local_user = db.session.merge(user)
+        local_user.questionnaire_complete = True  
+        db.session.add(answers, local_user)
         db.session.commit()
         flash("Questionnaire saved successfully!")
         return redirect(url_for('training'))
     return render_template('prequestionnaire.html', form=form)
 
-@app.route('/training')
+@app.route('/training', methods = ["GET", "POST"])
 @login_required
 def training():
     ids = [1,2,3,4,5]
-
     eventsList = []   #This will store an eventID and eventDecision tuple
     for id in ids:
         eventsList.append((models.TrainingEvent.query.get(id),
                           models.TrainingEventDecision.query.filter_by(user = current_user.username, event_id = id).
                             order_by(models.TrainingEventDecision.time_event_decision.desc()).first())
                          )
+    user = models.User.query.filter_by(username = current_user.username).first()
+    if request.method == "POST":
+        local_user = db.session.merge(user)
+        local_user.training_complete = True 
+        db.session.add(local_user)
+        db.session.commit()
+        return redirect(url_for('experiment'))
+
     return render_template('training.html', eventsList=eventsList)
 
-@app.route('/experiment')
+@app.route('/experiment', methods = ["GET", "POST"])
 @login_required
-def experiment():
-    
+def experiment():    
     user = models.User.query.filter_by(username = current_user.username).first()
-    # if request.method == "GET" and user.training_complete == False:
-    #     local_user = db.session.merge(user)
-    #     local_user.training_complete = True 
-    #     db.session.add(local_user)
-    #     db.session.commit()
-
     if request.method == "GET" and user.time_begin == None:
         local_user = db.session.merge(user)
         local_user.time_begin = datetime.datetime.now()
         db.session.add(local_user)
+        db.session.commit() 
+
+    if request.method == "POST":
+        local_user = db.session.merge(user)
+        local_user.experiment_complete = True 
+        db.session.add(local_user)
         db.session.commit()
-    
+        return redirect(url_for('postsurvey')) 
 
     ids = [int(id) for id in current_user.events.split(",")]
     ids.insert(43,73)
@@ -110,7 +116,7 @@ def experiment():
         eventsList.append((models.Event.query.get(id),
                           models.EventDecision.query.filter_by(user = current_user.username, event_id = id).
                             order_by(models.EventDecision.time_event_decision.desc()).first())
-                         )
+                         )    
     return render_template('experiment.html', eventsList=eventsList) 
 
 @app.route('/postsurvey', methods = ["GET", "POST"]) 
@@ -118,12 +124,6 @@ def experiment():
 def postsurvey():
 
     user = models.User.query.filter_by(username = current_user.username).first()
-    # if request.method == "GET" and user.experiment_complete == False:
-    #     local_user = db.session.merge(user)
-    #     local_user.training_complete = True 
-    #     db.session.add(local_user)
-    #     db.session.commit()
-
     if request.method == "GET" and user.time_end == None:
         local_user = db.session.merge(user)
         local_user.time_end = datetime.datetime.now()
@@ -142,7 +142,9 @@ def postsurvey():
             frustration = form.frustration.data,
             useful_info = form.useful_info.data,
             feedback = form.feedback.data)
-        db.session.add(responses)
+        local_user = db.session.merge(user)
+        local_user.survey_complete = True 
+        db.session.add(responses, local_user)
         db.session.commit()
         return redirect(url_for('logout')) 
     return render_template('postsurvey.html', form=form)
@@ -163,6 +165,7 @@ def trainingEventPage(eventId):
         )
         db.session.add(response)
         db.session.commit()
+        flash("Successfully recorded event decision!")
         return redirect(url_for("training"))
     return render_template('trainingEventPage.html', event = event, form=form)
 
@@ -180,18 +183,19 @@ def eventPage(eventId):
         )   
         db.session.add(newEvent)
         db.session.commit()    
-    else:
-        if form.validate_on_submit():           
-            response = models.EventDecision(
-                user=current_user.username,
-                event_id = eventId,
-                escalate = form.escalate.data,
-                confidence = form.confidence.data,
-                time_event_decision = datetime.datetime.now()
-            )            
-            db.session.add(response)
-            db.session.commit()
-            return redirect(url_for("experiment"))
+    
+    if form.validate_on_submit():           
+        response = models.EventDecision(
+            user=current_user.username,
+            event_id = eventId,
+            escalate = form.escalate.data,
+            confidence = form.confidence.data,
+            time_event_decision = datetime.datetime.now()
+        )            
+        db.session.add(response)
+        db.session.commit()
+        flash("Successfully recorded event decision!")
+        return redirect(url_for("experiment"))
     return render_template('eventPage.html', event = event, form=form)
 
 @app.route("/reference")

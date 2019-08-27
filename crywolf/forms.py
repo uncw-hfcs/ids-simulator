@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, RadioField, BooleanField, TextAreaField, DecimalField
-from wtforms.validators import DataRequired, ValidationError
-
+from wtforms.fields import StringField, RadioField, BooleanField, TextAreaField, DecimalField, SelectField
+from wtforms.validators import DataRequired, ValidationError, Optional
 
 class eventDecisionForm(FlaskForm):
     escalate = RadioField(
@@ -9,9 +8,10 @@ class eventDecisionForm(FlaskForm):
                         ('Escalate','Escalate'),
                         ("Don't escalate","Don't escalate"),
                         ("I don't know","I don't know")
-                    ]
+                    ],
+                    validators=[Optional()]
                 )
-    confidence = RadioField(choices=[("1","1"),("2","2"),("3", "3"),("4","4"),("5","5")])
+    confidence = RadioField(choices=[("1","1"),("2","2"),("3", "3"),("4","4"),("5","5")],validators=[Optional()])
 
 class UserForm(FlaskForm):
     username = StringField('username:', validators=[DataRequired()])
@@ -33,8 +33,9 @@ class PrequestionnaireForm(FlaskForm):
             print("Please check at least one box.")
             raise ValidationError(u"Please check at least one box.")
 
-    role = RadioField('Which role best describes your current experience?', 
+    role = SelectField('Which role best describes your current experience?', 
                 choices=[
+                    (None,"Select"),
                     ('Student','Student'),
                     ('Researcher','Researcher'), 
                     ('IT/Network Administrator','IT/Network Administrator'), 
@@ -43,9 +44,10 @@ class PrequestionnaireForm(FlaskForm):
                     ],
                 validators=[DataRequired()]
                 )
-    exp_researcher = RadioField('Researcher', 
+    exp_researcher = SelectField('Researcher', 
                 choices=[
-                    ('None','None'),
+                    (None,"Select"),
+                    ('No Experience','No Experience'),
                     ('< 1','< 1'), 
                     ('1 - 5','1 - 5'), 
                     ('5 - 10','5 - 10'), 
@@ -53,9 +55,10 @@ class PrequestionnaireForm(FlaskForm):
                     ],
                 validators=[DataRequired()]
                 )
-    exp_admin = RadioField('IT/Network Administrator', 
+    exp_admin = SelectField('IT/Network Administrator', 
                 choices=[
-                    ('None','None'),
+                    (None,"Select"),
+                    ('No Experience','No Experience'),
                     ('< 1','< 1'), 
                     ('1 - 5','1 - 5'), 
                     ('5 - 10','5 - 10'), 
@@ -63,9 +66,10 @@ class PrequestionnaireForm(FlaskForm):
                     ],
                 validators=[DataRequired()]
                 )
-    exp_software = RadioField('Software Engineering', 
+    exp_software = SelectField('Software Engineering', 
                 choices=[
-                    ('None','None'),
+                    (None,"Select"),
+                    ('No Experience','No Experience'),
                     ('< 1','< 1'), 
                     ('1 - 5','1 - 5'), 
                     ('5 - 10','5 - 10'), 
@@ -73,9 +77,10 @@ class PrequestionnaireForm(FlaskForm):
                     ],
                 validators=[DataRequired()]
                 )
-    exp_security = RadioField('Cyber Security Specialist', 
+    exp_security = SelectField('Cyber Security Specialist', 
                 choices=[
-                    ('None','None'),
+                    (None,"Select"),
+                    ('No Experience','No Experience'),
                     ('< 1','< 1'), 
                     ('1 - 5','1 - 5'), 
                     ('5 - 10','5 - 10'), 
@@ -92,22 +97,22 @@ class PrequestionnaireForm(FlaskForm):
 
     subnet_mask = RadioField('Label', 
                     choices=[
-                        ('a) 173.67.14.127','a) 173.67.14.127'),
-                        ('b) 173.67.14.0','b) 173.67.14.0'), 
-                        ('c) 255.255.255.0','c) 255.255.255.0'), 
-                        ('d) 255.255.255.24','d) 255.255.255.24'), 
-                        ('e) I don’t know','e) I don’t know')
+                        ('173.67.14.127','a) 173.67.14.127'),
+                        ('173.67.14.0','b) 173.67.14.0'), 
+                        ('255.255.255.0','c) 255.255.255.0'), 
+                        ('255.255.255.24','d) 255.255.255.24'), 
+                        ('I don’t know','e) I don’t know')
                         ],
                     validators=[DataRequired()]
                     )
 
     network_address = RadioField('Label', 
                         choices=[
-                        ('a) 173.67.14.127','a) 173.67.14.127'),
-                        ('b) 173.67.14.0','b) 173.67.14.0'), 
-                        ('c) 255.255.255.0','c) 255.255.255.0'), 
-                        ('d) 255.255.255.24','d) 255.255.255.24'), 
-                        ('e) I don’t know','e) I don’t know')
+                        ('173.67.14.127','a) 173.67.14.127'),
+                        ('173.67.14.0','b) 173.67.14.0'), 
+                        ('255.255.255.0','c) 255.255.255.0'), 
+                        ('255.255.255.24','d) 255.255.255.24'), 
+                        ('I don’t know','e) I don’t know')
                             ],
                         validators=[DataRequired()]
                         )

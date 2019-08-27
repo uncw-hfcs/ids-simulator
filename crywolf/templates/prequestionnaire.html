@@ -40,6 +40,26 @@ Pre-experiment Questionnaire
                             <span style="color: red;">[Please ensure all fields have a selection]</span>
                             {% endif %}
                             <table>
+                                    <tr>
+                                        <td>{{ form.exp_researcher.label }}</td>
+                                        <td>{{ form.exp_researcher }}</td>                           
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.exp_admin.label }}</td>
+                                        <td>{{ form.exp_admin }}</td>                             
+                                    </tr>                          
+                                    <tr>
+                                        <td>{{ form.exp_software.label }}</td>
+                                        <td>{{ form.exp_software }}</td>                               
+                                    </tr>                               
+                                    <tr>
+                                        <td>{{ form.exp_security.label }}</td>
+                                        <td>{{ form.exp_security }}</td>                               
+                                    </tr>   
+                                </table>
+                           
+                            <!--
+                            <table>
                                 <tr>
                                     <td>{{ form.exp_researcher.label }}</td>
                                     {% for subfield in form.exp_researcher %}
@@ -64,7 +84,7 @@ Pre-experiment Questionnaire
                                         <td>{{ subfield }}{{ subfield.label }}</td>  
                                     {% endfor %}                              
                                 </tr>   
-                            </table>
+                            </table>-->
                     </li>                      
                     <li>        
                         <h4> How familiar are you with Internet cyber security attacks? (select all that apply)</h4>

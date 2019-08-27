@@ -1,4 +1,4 @@
-0	Los Angeles	13	0	Hosting/server	Moscow	12	2	Telecom	1.22	95%
+0	Los Angeles	13	0	Hosting/server	Moscow	12	2	Hosting/server	1.22	95%
 0	Paris	13	3	Telecom	Miami	10	3	Mobile/Cellular	0.61	0%
 1	Beijing	12	0	Telecom	Miami	10	3	Telecom	0.65	0%
 0	Vancouver	4	3	Telecom	Seattle	6	1	Telecom	2.8	0%

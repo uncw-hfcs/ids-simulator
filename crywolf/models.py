@@ -64,6 +64,10 @@ class User(db.Model, UserMixin):
     time_begin = db.Column(db.DateTime)
     time_end = db.Column(db.DateTime)
     events = db.Column(db.String(256))
+    questionnaire_complete = db.Column(db.Boolean)
+    training_complete = db.Column(db.Boolean)
+    experiment_complete = db.Column(db.Boolean)
+    survey_complete = db.Column(db.Boolean)
 
     def __repr__(self):
         return self.username
@@ -85,12 +89,12 @@ class PrequestionnaireAnswers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime)
     user = db.Column(db.String(50))
-    role = db.Column(db.String(1))
+    role = db.Column(db.String(50))
 
-    exp_researcher = db.Column(db.Integer())
-    exp_admin = db.Column(db.Integer())
-    exp_software = db.Column(db.Integer())
-    exp_security = db.Column(db.Integer())
+    exp_researcher = db.Column(db.String(50))
+    exp_admin = db.Column(db.String(50))
+    exp_software = db.Column(db.String(50))
+    exp_security = db.Column(db.String(50))
 
     familiarity_none = db.Column(db.Boolean())
     familiarity_read = db.Column(db.Boolean())

@@ -19,11 +19,24 @@
                 <a href= {{ url_for('index') }}><h1 class="title">IDS Simulator</h1></a>
                 <nav>
                     <ul>
+                        {% if current_user.is_authenticated and current_user.questionnaire_complete == False %}
+                            <a href={{ url_for('prequestionnaire') }}>Questionnaire</a>
+                        {% endif %}
+                        {% if current_user.is_authenticated and current_user.questionnaire_complete == True %}<!-- and current_user.training_complete == False %}-->
+                            <li><a href={{ url_for('training') }}>Training</a></li>
+                        {% endif %}
+                        {% if current_user.is_authenticated and current_user.training_complete == True %}<!--and current_user.experiment_complete == False %}-->
+                            <li><a href={{ url_for('experiment') }}>Experiment</a></li>
+                        {% endif %}
+                        {% if current_user.is_authenticated and current_user.experiment_complete == True %}<!--and current_user.experiment_complete == False %}-->
+                            <li><a href={{ url_for('postsurvey') }}>Survey</a></li>
+                        {% endif %}
+                        
                                  
-                    <!--<a href={{ url_for('prequestionnaire') }}>Questionnaire</a>-->
-                    <li><a href={{ url_for('training') }}>Training</a></li>
-                    <li><a href={{ url_for('experiment') }}>Experiment</a></li>
-                    <li><a href={{ url_for('postsurvey') }}>Survey</a></li>
+                    
+                    
+                    
+                    
                 </ul>
                                            
                 </nav>

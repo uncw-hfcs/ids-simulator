@@ -46,6 +46,8 @@ Training Events
             {% endfor %}
         
         </table>
-        <button type="submit" onclick="location.href='{{ url_for('experiment') }}';">Take the experiment!</button>
+        <form action ="" method="POST">
+            <input type="submit" value="Take the experiment!">
+        </form>
     </div>
 {% endblock %}

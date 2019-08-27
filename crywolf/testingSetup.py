@@ -83,7 +83,11 @@ with open("users.txt", "r") as inFile:
         user= models.User(
             username = line[0],
             group = line[1],
-            events = assignment
+            events = assignment,
+            questionnaire_complete = False,
+            training_complete = False,
+            experiment_complete = False,
+            survey_complete = False
             )
         db.session.add(user)
         db.session.commit()
