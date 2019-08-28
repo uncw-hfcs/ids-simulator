@@ -20,7 +20,7 @@ class EventDecision(db.Model):
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    is_false_positive = db.Column(db.String(25))
+    should_escalate = db.Column(db.String(25))
     country_of_authentication1 = db.Column(db.String(25))
     number_successful_logins1 = db.Column(db.String(25))
     number_failed_logins1 = db.Column(db.String(25))
@@ -45,7 +45,7 @@ class TrainingEventDecision(db.Model):
 
 class TrainingEvent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    is_false_positive = db.Column(db.String(25))
+    should_escalate = db.Column(db.String(25))
     country_of_authentication1 = db.Column(db.String(25))
     number_successful_logins1 = db.Column(db.Integer)
     number_failed_logins1 = db.Column(db.Integer)
@@ -68,6 +68,7 @@ class User(db.Model, UserMixin):
     training_complete = db.Column(db.Boolean)
     experiment_complete = db.Column(db.Boolean)
     survey_complete = db.Column(db.Boolean)
+    completion_code = db.Column(db.String(6))
 
     def __repr__(self):
         return self.username
@@ -75,6 +76,7 @@ class User(db.Model, UserMixin):
 
 class SurveyAnswers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    timestamp = db.Column(db.DateTime)
     user = db.Column(db.String(50))
     mental = db.Column(db.Float(3))
     physical = db.Column(db.Float(3))

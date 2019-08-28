@@ -4,46 +4,31 @@
 IDS Simulator - Welcome
 {% endblock %}
 
-{% block content %}
-
-    <!-- <style>
-    form {
-        color: black;
-    }
-    label{
-        color: white;
-    }
-    
-    </style> -->
-    
+{% block content %}    
     <div>
         <header>
-            <h1>Welcome to the IDS Simulator</h1>
+            <h1>Welcome!</h1>
             <p>Your participation in this experiment is voluntary. You may refuse to participate or may refuse to answer 
                     any questions. You may stop at any time without penalty. The data you provide will be 
                     kept secure once it is in the researcher’s possession. However, the researcher cannot 
                     guarantee security during transmission of data due to keylogging or other spyware that 
                     may exist on the computer you are using. </p><!--Software will also be used to record your monitor’s 
                     display during the conduct of this experiment.-->
-            <p>There will be a welcome message and instructions for the user to follow. This page will take the user to the prequestionnaire.</p>
+            <p>Please login with the provided username.</p>
         </header>
-        <section>
+        <!--<section>
             <p>Current User: {{ current_user }}</p>
-        </section>
+        </section>-->
     </div>
     <div>
         <!-- <aside> -->
-        {% if form.errors %}
-        {{ form.errors }}
-        {% endif %}
         <form action = "" method = "POST" id = "login">
             {% if error != None %}
                 <span style="color: red;">[{{ error }}]</span>
             {% endif %}                
             <p> {{ form.username.label }} {{ form.username()}} </p>           
             {{ form.csrf_token }}
-            <input type="submit" value="Login">
-        
+            <input type="submit" value="Login">        
         </form>
         <!-- </aside>        -->
     </div>

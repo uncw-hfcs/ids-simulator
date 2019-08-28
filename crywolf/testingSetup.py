@@ -5,7 +5,7 @@ with open("events.txt", 'r') as inFile:
         line = line.rstrip() 
         line = line.split('\t')
         event= models.Event(
-            is_false_positive=line[0],
+            should_escalate=line[0],
             country_of_authentication1=line[1], 
             number_successful_logins1=line[2], 
             number_failed_logins1=line[3], 
@@ -20,8 +20,8 @@ with open("events.txt", 'r') as inFile:
         db.session.add(event)
         db.session.commit()
 
-event= models.Event(
-        is_false_positive=None,
+testerEvent1= models.Event(
+        should_escalate=None,
         country_of_authentication1="For this event", 
         number_successful_logins1= "please just", 
         number_failed_logins1='select "Escalate"', 
@@ -33,7 +33,22 @@ event= models.Event(
         time_between_authentications="0",
         vpn_confidence="0"
         )
-db.session.add(event)
+db.session.add(testerEvent1)
+db.session.commit()
+testerEvent2= models.Event(
+        should_escalate=None,
+        country_of_authentication1="For this event", 
+        number_successful_logins1= "please just", 
+        number_failed_logins1='select "Don\'t escalate"', 
+        source_provider1= 'for your', 
+        country_of_authentication2='decision', 
+        number_successful_logins2='and "4"', 
+        number_failed_logins2='for', 
+        source_provider2='confidence',
+        time_between_authentications="0",
+        vpn_confidence="0"
+        )
+db.session.add(testerEvent2)
 db.session.commit()
 
 with open("trainingEvents.txt", 'r') as inFile:
@@ -41,7 +56,7 @@ with open("trainingEvents.txt", 'r') as inFile:
         line = line.rstrip() 
         line = line.split('\t')
         training_event= models.TrainingEvent(
-            is_false_positive=line[0],
+            should_escalate=line[0],
             country_of_authentication1=line[1], 
             number_successful_logins1=line[2], 
             number_failed_logins1=line[3], 
@@ -61,12 +76,12 @@ from random import sample, shuffle
 
 
 with open("users.txt", "r") as inFile:
-    escalate = [x for x in range(48,72)]
-    dont_escalate = [y for y in range(1,48)]
+    escalate = [x for x in range(49,73)]
+    dont_escalate = [y for y in range(1,49)]
 
-    group1Events = sample(escalate,24) + sample(dont_escalate,24)
-    group2Events = sample(escalate,9) + sample(dont_escalate,39)
-    group3Events = sample(escalate,1) + sample(dont_escalate,47)
+    group1Events = escalate + sample(dont_escalate,25)
+    group2Events = sample(escalate,9) + sample(dont_escalate,40)
+    group3Events = sample(escalate,1) + dont_escalate
     for line in inFile:
         line = line.rstrip() 
         line = line.split('\t')
@@ -87,7 +102,8 @@ with open("users.txt", "r") as inFile:
             questionnaire_complete = False,
             training_complete = False,
             experiment_complete = False,
-            survey_complete = False
+            survey_complete = False,
+            completion_code = line[2]
             )
         db.session.add(user)
         db.session.commit()

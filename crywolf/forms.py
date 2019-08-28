@@ -17,20 +17,19 @@ class UserForm(FlaskForm):
     username = StringField('username:', validators=[DataRequired()])
     
 class SurveyForm(FlaskForm):
-    mental = DecimalField(places=1)
-    physical = DecimalField(places=1)
-    temporal = DecimalField(places=1)
-    performance = DecimalField(places=1)
-    effort = DecimalField(places=1)
-    frustration = DecimalField(places=1)
-    useful_info = TextAreaField()
+    mental = DecimalField(places=1,validators=[DataRequired()])
+    physical = DecimalField(places=1,validators=[DataRequired()])
+    temporal = DecimalField(places=1,validators=[DataRequired()])
+    performance = DecimalField(places=1,validators=[DataRequired()])
+    effort = DecimalField(places=1,validators=[DataRequired()])
+    frustration = DecimalField(places=1,validators=[DataRequired()])
+    useful_info = TextAreaField(validators=[DataRequired()])
     feedback = TextAreaField()
 
 class PrequestionnaireForm(FlaskForm):
    
     def validate_familiarity_none(form, field, message=None):
         if not any(f.data for f in [form.familiarity_none, form.familiarity_read, form.familiarity_controlled, form.familiarity_public, form.familiarity_engineered]):
-            print("Please check at least one box.")
             raise ValidationError(u"Please check at least one box.")
 
     role = SelectField('Which role best describes your current experience?', 

@@ -30,7 +30,7 @@ def index():
         user = models.User.query.filter_by(username = form.username.data).first()
         if user is not None:
             login_user(user)
-            return redirect(url_for('prequestionnaire'))
+            return redirect(url_for('intro'))
         else:
             error = "Invalid username. Please try again."
         
@@ -60,7 +60,8 @@ def prequestionnaire():
             http_port = form.http_port.data,
             firewall = form.firewall.data,
             socket = form.socket.data,
-            which_model = form.which_model.data)    
+            which_model = form.which_model.data
+            )    
         user = models.User.query.filter_by(username = current_user.username).first()
         local_user = db.session.merge(user)
         local_user.questionnaire_complete = True  
@@ -108,8 +109,10 @@ def experiment():
         return redirect(url_for('postsurvey')) 
 
     ids = [int(id) for id in current_user.events.split(",")]
-    ids.insert(43,73)
-    ids.insert(25, 72)
+    ids.insert(25, 73) #This is the most obvious "Escalate" event. Everyone sees this.
+    ids.insert(6,74) #This is the "Please just select 'Escalate' event"
+    ids.insert(43,75) #This is the "Please just select 'Don't escalate' event"
+    
 
     eventsList = []   #This will store an eventID and eventDecision tuple
     for id in ids:
@@ -134,6 +137,7 @@ def postsurvey():
     if form.validate_on_submit():
         responses = models.SurveyAnswers(
             user = current_user.username,
+            timestamp = datetime.datetime.now(),
             mental = form.mental.data,
             physical = form.physical.data,
             temporal = form.temporal.data,
@@ -141,7 +145,8 @@ def postsurvey():
             effort = form.effort.data,
             frustration = form.frustration.data,
             useful_info = form.useful_info.data,
-            feedback = form.feedback.data)
+            feedback = form.feedback.data
+        )
         local_user = db.session.merge(user)
         local_user.survey_complete = True 
         db.session.add(responses, local_user)
@@ -205,8 +210,16 @@ def reference():
 @app.route("/logout")
 @login_required
 def logout():
+    code = current_user.completion_code
     logout_user()
-    return render_template('logout.html')
+    return render_template('logout.html', code=code)
+
+@app.route("/intro", methods=["GET", "POST"])
+@login_required
+def intro():
+    if request.method=="POST":
+        return redirect(url_for('prequestionnaire'))
+    return render_template("intro.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+Introduction
+{% endblock %}
+
+{% block content %}
+
+    <div>
+        <header>
+            <h2>Welcome to the IDS Simulator!</h2>
+            <h3>The Scenario</h3>
+            <p>Your participation in this experiment is voluntary. You may refuse to participate or may refuse to answer 
+                    any questions. You may stop at any time without penalty. The data you provide will be 
+                    kept secure once it is in the researcher’s possession. However, the researcher cannot 
+                    guarantee security during transmission of data due to keylogging or other spyware that 
+                    may exist on the computer you are using. </p>
+            <p>Please login with the provided username.</p>
+        </header>
+        <form action="" method="POST">
+            <input type="submit" value="Take the questionnaire!" />
+        </form>
+    </div>
+
+{% endblock %}

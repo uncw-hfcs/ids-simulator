@@ -16,8 +16,8 @@ Post-experiment Survey
             <h1>Post-experiment Survey</h1>
             <p>Please rate how you feel about the following.</p>
 
-            {% if form.errors %}
-            {{ form.errors }}
+            {% if form.mental.errors or form.physical.errors or form.temporal.errors or form.performance.errors or form.effort.errors or form.frustration.errors %}
+            <span style="color: red;">[Please ensure all table fields are filled out]</span>
             {% endif %}
 
             <form action = "" method = "POST" id = "postsurvey">
@@ -61,7 +61,10 @@ Post-experiment Survey
                                     </tbody>
                         </table>
                     </li>
-                    <li><h4>What information was most useful in determining whether or not an alert represented malicious behavior?</h4></li>                         
+                    <li><h4>What information was most useful in determining whether or not an alert should be escalated?</h4></li>  
+                        {% if form.useful_info.errors %}
+                        <span style="color: red;">[Please briefly state the information you found useful]</span>
+                        {% endif %}                       
                         {{ form.useful_info(rows=4, cols=50) }}
                         
                     <li><h4>Is there any other feedback you would like to provide?</h4></li>                         
