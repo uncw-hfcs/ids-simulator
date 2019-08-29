@@ -29,6 +29,13 @@ Training Events
                 {% endfor %}
             {% endif %}    
         {% endwith %}
+        <h3>Instructions:</h3>
+        <ul>
+            <li>Please evaluate each event. Your decision for each event will be posted next to the event.</li>
+            <li>Please only use resources provided (i.e. Please don't use the internet. Besides, it probably won't help).</li>
+            <li>When you've evaluated all events, please click the "Take the experiment!" button at the bottom.</li>
+
+        </ul>
         <table align="center">
            <tr>
                <td><h4>Event Number</h4></td><td><h4>Decision</h4></td>
@@ -36,7 +43,13 @@ Training Events
             
             {% for event, decision in eventsList %}
                 <tr>
-                    <td><a href="{{ url_for('trainingEventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td>     
+                    {% if event.id == 1 %}
+                    <td><a href="{{ url_for('MoscowEventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td> 
+                    {% elif event.id == 2 %}
+                    <td><a href="{{ url_for('BeijingEventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td> 
+                    {% else %}
+                    <td><a href="{{ url_for('trainingEventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td>    
+                    {% endif %} 
                     <td>{% if decision != None %}
                             {{ decision }}
                         {% endif %}

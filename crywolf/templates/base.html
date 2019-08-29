@@ -33,14 +33,8 @@
                         {% endif %}
                         {% if current_user.is_authenticated and current_user.questionnaire_complete == True %}
                             <li><a href={{ url_for('reference') }} target="_blank">Reference Page</a></li>
-                        {% endif %}
-                        
-                                 
-                    
-                    
-                    
-                    
-                </ul>
+                        {% endif %}                
+                    </ul>
                                            
                 </nav>
             </header>
@@ -49,27 +43,8 @@
         <div class="main-container">
             <div class="main wrapper clearfix">
                 {% block content %}
-                {% endblock %}
-                <!--    
-                {% block sidebar %}
-                    <aside>
-                        <h3>aside</h3>
-                        <p>I'm not sure I'll use this, but don't want to get rid of it right now.</p>
-                    </aside>
-                {% endblock %}-->
-
-            </div> <!-- #main -->
-        </div> <!-- #main-container -->
-        <!--
-        <div class="footer-container">
-            <footer class="wrapper">
-                <h3>footer</h3>
-            </footer>
-        </div>
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="../static/js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
-
-        <script src="js/main.js"></script>-->
+                {% endblock %}               
+            </div> 
+        </div> 
     </body>
 </html>

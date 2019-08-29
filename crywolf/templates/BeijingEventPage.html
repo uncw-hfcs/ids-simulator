@@ -19,8 +19,20 @@ Event Details
                     <h3>{{ message }}</h3>
                 {% endfor %}
             {% endif %}    
-        {% endwith %}               
-
+        {% endwith %}         
+        <h3>Event Evaluation</h3>
+        <ul>
+            <li><h4>Remember, you can always access the Reference Page. It is linked on the menu bar and above the Event Details. </h4></li>
+            <li>One of the authorizations came from Beijing. Be on HIGH alert!</li>
+            <li>The successful to failed login ratio looks unconcerning for both locations.</li>
+            <li>The source provider for both locations is a "Telecom" provider.</li>
+            <li>You're 0% sure these authorizations are through a VPN.</li>
+            <li>Time between authorizations suggests "Impossible Travel" and the lack of failed logins from Beijing suggests that the users credentials are
+                compromised.</li>
+            <li>For this event, there's not enough evidence to dismiss it. You should choose "Escalate" perhaps a "4" or "5" for
+                confidence level.
+            </li>
+        </ul>
         <table>
             <tr><td><a href="{{ url_for('reference') }}" target="_blank"><h3>Reference Page</h3></a></td></tr>
             <tr><td>City of Authorization: </td> <td><pre>   </pre></td>   <td> {{event.country_of_authentication1}}</td></tr>

@@ -154,6 +154,43 @@ def postsurvey():
         return redirect(url_for('logout')) 
     return render_template('postsurvey.html', form=form)
 
+@app.route('/BeijingEventPage/<eventId>', methods = ["GET", "POST"])
+@login_required
+def BeijingEventPage(eventId):
+    event = models.TrainingEvent.query.get(eventId)    
+    form = eventDecisionForm()
+    if form.validate_on_submit():
+        response = models.TrainingEventDecision(
+            user=current_user.username,
+            event_id = eventId,
+            escalate = form.escalate.data,
+            confidence = form.confidence.data,
+            time_event_decision = datetime.datetime.now()
+        )
+        db.session.add(response)
+        db.session.commit()
+        flash("Successfully recorded event decision!")
+        return redirect(url_for("training"))
+    return render_template('BeijingEventPage.html', event = event, form=form)
+
+@app.route('/MoscowEventPage/<eventId>', methods = ["GET", "POST"])
+@login_required
+def MoscowEventPage(eventId):
+    event = models.TrainingEvent.query.get(eventId)    
+    form = eventDecisionForm()
+    if form.validate_on_submit():
+        response = models.TrainingEventDecision(
+            user=current_user.username,
+            event_id = eventId,
+            escalate = form.escalate.data,
+            confidence = form.confidence.data,
+            time_event_decision = datetime.datetime.now()
+        )
+        db.session.add(response)
+        db.session.commit()
+        flash("Successfully recorded event decision!")
+        return redirect(url_for("training"))
+    return render_template('MoscowEventPage.html', event = event, form=form)
 
 @app.route('/trainingEventPage/<eventId>', methods = ["GET", "POST"])
 @login_required
