@@ -1,5 +1,4 @@
 astroid==2.2.5
-autopep8==1.4.4
 Babel==2.7.0
 Click==7.0
 colorama==0.4.1
@@ -13,11 +12,11 @@ Flask-WTF==0.14.2
 isort==4.3.21
 itsdangerous==1.1.0
 Jinja2==2.10.1
-lazy-object-proxy==1.4.2
+lazy-object-proxy==1.4.1
+login==0.0.6
 MarkupSafe==1.1.1
 mccabe==0.6.1
 pkg-resources==0.0.0
-pycodestyle==2.5.0
 pylint==2.3.1
 pytz==2019.1
 six==1.12.0
