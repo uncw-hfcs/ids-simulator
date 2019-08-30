@@ -84,8 +84,8 @@ class SurveyAnswers(db.Model):
     performance = db.Column(db.Float(3))
     effort = db.Column(db.Float(3))
     frustration = db.Column(db.Float(3))
-    useful_info = db.Column(db.String(1000))
-    feedback = db.Column(db.String(1000))
+    useful_info = db.Column(db.Text())
+    feedback = db.Column(db.Text())
 
 class PrequestionnaireAnswers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
