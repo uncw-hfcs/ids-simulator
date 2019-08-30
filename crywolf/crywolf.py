@@ -245,7 +245,6 @@ def reference():
     return render_template('reference.html')
 
 @app.route("/logout")
-@login_required
 def logout():
     code = current_user.completion_code
     logout_user()

@@ -3,13 +3,18 @@ from wtforms.fields import StringField, RadioField, BooleanField, TextAreaField,
 from wtforms.validators import DataRequired, ValidationError, Optional
 
 class eventDecisionForm(FlaskForm):
+    def validate_decision(form, field, message=None):
+        if form.escalate == None:
+            raise ValidationError(u"Please select a value.")
+        if (form.escalate == "Escalate" or form.escalate == "Don't escalate") and form.confidence == None:
+            raise ValidationError(u"You must select a confidence level")
+
     escalate = RadioField(
                     choices=[
                         ('Escalate','Escalate'),
                         ("Don't escalate","Don't escalate"),
                         ("I don't know","I don't know")
-                    ],
-                    validators=[Optional()]
+                    ]
                 )
     confidence = RadioField(choices=[("1","1"),("2","2"),("3", "3"),("4","4"),("5","5")],validators=[Optional()])
 

@@ -31,7 +31,7 @@ Training Events
         {% endwith %}
         <h3>Instructions:</h3>
         <ul>
-            <li>Please evaluate each event. Your decision for each event will be posted next to the event.</li>
+            <li>Please evaluate each event. Your decision for each event will be posted next to the event. You are not required to evaluate every event.</li>
             <li>Please only use resources provided (i.e. Please don't use the internet. Besides, it probably won't help).</li>
             <li>When you've evaluated all events, please click the "Take the experiment!" button at the bottom.</li>
 
@@ -59,7 +59,7 @@ Training Events
             {% endfor %}
         
         </table>
-        <form action ="" method="POST">
+        <form action ="" onsubmit = "return confirm('Are you sure you\'re ready to begin the experiemnt? Click \'OK\' to continue.')" method="POST">
             <input type="submit" value="Take the experiment!">
         </form>
     </div>

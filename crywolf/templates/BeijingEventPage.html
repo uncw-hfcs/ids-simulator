@@ -20,9 +20,25 @@ Event Details
                 {% endfor %}
             {% endif %}    
         {% endwith %}         
-        <h3>Event Evaluation</h3>
+        
+        <h4>Your goal is to correctly determine if this event should be escalated based on the the details provided. Remember, you can always access the 
+                Reference Page. It is linked on the menu bar and above the Event Details. The following information will be provided for each event:</h4>
+            <ul>
+                <li>"City of Authorization" - There will be two of these fields, one for each location that the IDS detected an authorization from. It tells you
+                        the location that the authorization came from.</li>
+                <li>"Number of Successful Logins" - There will be two of these fields, one for each location that the IDS detected an authorization from. It tells
+                        you how many times there was a successful login from this location in the past 24 hours.</li>
+                <li>"Number of Failed Logins" - There will be two of these fields, one for each location that the IDS detected an authorization from. It tells
+                        you how many times there was a failed login from this location in the past 24 hours.</li>
+                <li>"Source Provider" - There will be two of these fields, one for each location that the IDS detected an authorization from. It tells you the type of
+                        Internet Provider the authorizations came from.</li>
+                <li>"Time Between Authorizations" - This is the field that typically triggers the alarm. The IDS correlates an authorization from each location
+                        and determines that they happened too quickly.</li>
+                <li>"VPN Confidence" - This should be treated as the conclusion that you, the analyst/participant, came to that this event involves a user utilizing 
+                        a Virtual Private Network (VPN).</li>
+            </ul>
+        <h3>How to evaluate this event</h3>
         <ul>
-            <li><h4>Remember, you can always access the Reference Page. It is linked on the menu bar and above the Event Details. </h4></li>
             <li>One of the authorizations came from Beijing. Be on HIGH alert!</li>
             <li>The successful to failed login ratio looks unconcerning for both locations.</li>
             <li>The source provider for both locations is a "Telecom" provider.</li>
@@ -50,6 +66,13 @@ Event Details
     <aside>
         
         <p> Please determine if this event should be escalated.</p>
+        <p>A decision to "Escalate" means that there is either evidence to suggest that malicious behavior is occurring, or that there isn't enough 
+            information provided to dismiss the alert.</p>
+        <p>A decision of "Don't Escalate" means that there is evidence to suggest that the alert is a false alarm.</p>
+        <form action = "" method = "POST" id = "event_decision">
+            {{ form.escalate }}
+            <p> On a scale from 1 (low) to 5 (high), please rate your confidence in this decision. A decision of "I don't know" does not require a
+                    confidence rating.</p>
         <form action = "" method = "POST" id = "event_decision">
             {{ form.escalate }}
             <p> On a scale from 1 (low) to 5 (high), please rate your confidence in this decision.</p>
