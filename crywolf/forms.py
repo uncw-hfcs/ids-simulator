@@ -1,13 +1,28 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, RadioField, BooleanField, TextAreaField, DecimalField, SelectField
-from wtforms.validators import DataRequired, ValidationError, Optional
+from wtforms.validators import InputRequired, DataRequired, ValidationError, Optional
+
+class RequiredIf(DataRequired):
+    # a validator which makes a field required if
+    # another field is set and has a truthy value
+
+    def __init__(self, other_field_name, *args, **kwargs):
+        self.other_field_name = other_field_name
+        super(RequiredIf, self).__init__(*args, **kwargs)
+
+    def __call__(self, form, field):
+        other_field = form._fields.get(self.other_field_name)
+        if other_field != "I don't know" and field  == None:
+            raise ValidationError(u"You must select a confidence level")
+
 
 class eventDecisionForm(FlaskForm):
-    def validate_decision(form, field, message=None):
+    def validate_ecalate(form, field, message=None):
         if form.escalate == None:
             raise ValidationError(u"Please select a value.")
-        if (form.escalate == "Escalate" or form.escalate == "Don't escalate") and form.confidence == None:
-            raise ValidationError(u"You must select a confidence level")
+    # def validate_confidence(form, field, message=None):
+    #     if (form.escalate == "Escalate" or form.escalate == "Don't escalate") and form.confidence == None:
+    #         raise ValidationError(u"You must select a confidence level")
 
     escalate = RadioField(
                     choices=[
@@ -16,19 +31,19 @@ class eventDecisionForm(FlaskForm):
                         ("I don't know","I don't know")
                     ]
                 )
-    confidence = RadioField(choices=[("1","1"),("2","2"),("3", "3"),("4","4"),("5","5")],validators=[Optional()])
+    confidence = RadioField(choices=[("1","1"),("2","2"),("3", "3"),("4","4"),("5","5")], validators=[RequiredIf(escalate)])
 
 class UserForm(FlaskForm):
-    username = StringField('username:', validators=[DataRequired()])
+    username = StringField('username:', validators=[InputRequired()])
     
 class SurveyForm(FlaskForm):
-    mental = DecimalField(places=1,validators=[DataRequired()])
-    physical = DecimalField(places=1,validators=[DataRequired()])
-    temporal = DecimalField(places=1,validators=[DataRequired()])
-    performance = DecimalField(places=1,validators=[DataRequired()])
-    effort = DecimalField(places=1,validators=[DataRequired()])
-    frustration = DecimalField(places=1,validators=[DataRequired()])
-    useful_info = TextAreaField(validators=[DataRequired()])
+    mental = DecimalField(places=1,validators=[InputRequired()])
+    physical = DecimalField(places=1,validators=[InputRequired()])
+    temporal = DecimalField(places=1,validators=[InputRequired()])
+    performance = DecimalField(places=1,validators=[InputRequired()])
+    effort = DecimalField(places=1,validators=[InputRequired()])
+    frustration = DecimalField(places=1,validators=[InputRequired()])
+    useful_info = TextAreaField(validators=[InputRequired()])
     feedback = TextAreaField()
 
 class PrequestionnaireForm(FlaskForm):
@@ -46,7 +61,7 @@ class PrequestionnaireForm(FlaskForm):
                     ('Software Engineering','Software Engineering (developer, tester, project management, etc.)'), 
                     ('Cyber Security Specialist','Cyber Security Specialist')
                     ],
-                validators=[DataRequired()]
+                validators=[InputRequired()]
                 )
     exp_researcher = SelectField('Researcher', 
                 choices=[
@@ -57,7 +72,7 @@ class PrequestionnaireForm(FlaskForm):
                     ('5 - 10','5 - 10'), 
                     ('10+','10+')
                     ],
-                validators=[DataRequired()]
+                validators=[InputRequired()]
                 )
     exp_admin = SelectField('IT/Network Administrator', 
                 choices=[
@@ -68,7 +83,7 @@ class PrequestionnaireForm(FlaskForm):
                     ('5 - 10','5 - 10'), 
                     ('10+','10+')
                     ],
-                validators=[DataRequired()]
+                validators=[InputRequired()]
                 )
     exp_software = SelectField('Software Engineering', 
                 choices=[
@@ -79,7 +94,7 @@ class PrequestionnaireForm(FlaskForm):
                     ('5 - 10','5 - 10'), 
                     ('10+','10+')
                     ],
-                validators=[DataRequired()]
+                validators=[InputRequired()]
                 )
     exp_security = SelectField('Cyber Security Specialist', 
                 choices=[
@@ -90,7 +105,7 @@ class PrequestionnaireForm(FlaskForm):
                     ('5 - 10','5 - 10'), 
                     ('10+','10+')
                     ],
-                validators=[DataRequired()]
+                validators=[InputRequired()]
                 )
 
     familiarity_none = BooleanField('None/very little')
@@ -107,7 +122,7 @@ class PrequestionnaireForm(FlaskForm):
                         ('255.255.255.24','d) 255.255.255.24'), 
                         ('I don’t know','e) I don’t know')
                         ],
-                    validators=[DataRequired()]
+                    validators=[InputRequired()]
                     )
 
     network_address = RadioField('Label', 
@@ -118,7 +133,7 @@ class PrequestionnaireForm(FlaskForm):
                         ('255.255.255.24','d) 255.255.255.24'), 
                         ('I don’t know','e) I don’t know')
                             ],
-                        validators=[DataRequired()]
+                        validators=[InputRequired()]
                         )
 
     tcp_faster = RadioField('Label', 
@@ -127,7 +142,7 @@ class PrequestionnaireForm(FlaskForm):
                         ('False','b) False'), 
                         ('I don’t know','c) I don’t know')
                         ],
-                    validators=[DataRequired()]
+                    validators=[InputRequired()]
                     )
 
     http_port = RadioField('Label', 
@@ -138,7 +153,7 @@ class PrequestionnaireForm(FlaskForm):
                         ('5000','d) 5000'), 
                         ('I don’t know','e) I don’t know')
                         ],
-                    validators=[DataRequired()]
+                    validators=[InputRequired()]
                 )    
 
     firewall =  RadioField('Label', 
@@ -149,7 +164,7 @@ class PrequestionnaireForm(FlaskForm):
                         ('Intrusion Detection System','d) Intrusion Detection System'), 
                         ('I don’t know','e) I don’t know')
                         ],
-                    validators=[DataRequired()]
+                    validators=[InputRequired()]
                 )  
 
     socket =  RadioField('Label', 
@@ -160,7 +175,7 @@ class PrequestionnaireForm(FlaskForm):
                         ('Ping','d) Ping'), 
                         ('I don’t know','e) I don’t know')
                         ],
-                    validators=[DataRequired()]
+                    validators=[InputRequired()]
                 )    
 
     which_model =  RadioField('Label', 
@@ -171,5 +186,5 @@ class PrequestionnaireForm(FlaskForm):
                             ('HTTPS','d) HTTPS'), 
                             ('I don’t know','e) I don’t know')
                             ],
-                        validators=[DataRequired()]
+                        validators=[InputRequired()]
                     )
