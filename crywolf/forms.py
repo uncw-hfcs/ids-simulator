@@ -2,36 +2,29 @@ from flask_wtf import FlaskForm
 from wtforms.fields import StringField, RadioField, BooleanField, TextAreaField, DecimalField, SelectField
 from wtforms.validators import InputRequired, DataRequired, ValidationError, Optional
 
-class RequiredIf(DataRequired):
-    # a validator which makes a field required if
-    # another field is set and has a truthy value
 
-    def __init__(self, other_field_name, *args, **kwargs):
-        self.other_field_name = other_field_name
-        super(RequiredIf, self).__init__(*args, **kwargs)
+class OptionalConfidence(Optional):
+    # a validator which makes a field optional if
+    # another field has a desired value
+
+    def __init__(self, *args, **kwargs):
+        super(OptionalConfidence, self).__init__(*args, **kwargs)
 
     def __call__(self, form, field):
-        other_field = form._fields.get(self.other_field_name)
-        if other_field != "I don't know" and field  == None:
-            raise ValidationError(u"You must select a confidence level")
-
+        if form.escalate.data == "I don't know":
+            super(OptionalConfidence, self).__call__(form, field)
 
 class eventDecisionForm(FlaskForm):
-    def validate_ecalate(form, field, message=None):
-        if form.escalate == None:
-            raise ValidationError(u"Please select a value.")
-    # def validate_confidence(form, field, message=None):
-    #     if (form.escalate == "Escalate" or form.escalate == "Don't escalate") and form.confidence == None:
-    #         raise ValidationError(u"You must select a confidence level")
-
+    
     escalate = RadioField(
                     choices=[
                         ('Escalate','Escalate'),
                         ("Don't escalate","Don't escalate"),
                         ("I don't know","I don't know")
-                    ]
+                    ],
+                    validators=[InputRequired()]
                 )
-    confidence = RadioField(choices=[("1","1"),("2","2"),("3", "3"),("4","4"),("5","5")], validators=[RequiredIf(escalate)])
+    confidence = RadioField(choices=[("1","1"),("2","2"),("3", "3"),("4","4"),("5","5")], validators=[OptionalConfidence()])
 
 class UserForm(FlaskForm):
     username = StringField('username:', validators=[InputRequired()])

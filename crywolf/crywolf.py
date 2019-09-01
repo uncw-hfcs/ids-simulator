@@ -225,8 +225,11 @@ def eventPage(eventId):
         )   
         db.session.add(newEvent)
         db.session.commit()    
+
+    print(form.errors)
     
-    if form.validate_on_submit():           
+    if form.validate_on_submit():  
+        print("Form valid!")         
         response = models.EventDecision(
             user=current_user.username,
             event_id = eventId,

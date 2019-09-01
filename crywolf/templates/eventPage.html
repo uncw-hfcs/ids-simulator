@@ -31,7 +31,14 @@ Event Details
         
         <p> Please determine if this event should be escalated.</p>
         <form action = "" method = "POST" id = "event_decision">
+            {% if form.escalate.errors %}
+            <p><span style="color: red;">[Please select a value.]</span></p>
+            {% endif %}
             {{ form.escalate }}
+
+            {% if form.confidence.errors %}
+            <p><span style="color: red;">[Please select a value.]</span></p>
+            {% endif %}
             <p> On a scale from 1 (low) to 5 (high), please rate your confidence in this decision.</p>
             {% for subfield in form.confidence %}
             <tr>
