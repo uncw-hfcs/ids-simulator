@@ -36,6 +36,7 @@ Training Events
             <li>When you've evaluated all events, please click the "Take the experiment!" button at the bottom.</li>
 
         </ul>
+        {% set count = namespace(a=0) %}
         <table align="center">
            <tr>
                <td><h4>Event Number</h4></td><td><h4>Decision</h4></td>
@@ -52,13 +53,23 @@ Training Events
                     {% endif %} 
                     <td>{% if decision != None %}
                             {{ decision }}
+                        {% else %}
+                            {% set count.a = count.a + 1 %}
                         {% endif %}
                     </td>
                                   
                 </tr>        
             {% endfor %}
         
+        
         </table>
+        <h2><span>Unprocessed Alerts: </span>
+            {% if count.a != 0 %}
+                <span style="color:red">{{ count.a }}</span>
+            {% else %}
+                <span style="color:#40f65b">{{ count.a }}</span>
+            {% endif %}
+        </h2>
         <form action ="" onsubmit = "return confirm('Are you sure you\'re ready to begin the experiemnt? Click \'OK\' to continue.')" method="POST">
             <input type="submit" value="Take the experiment!">
         </form>

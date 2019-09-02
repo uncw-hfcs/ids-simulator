@@ -21,6 +21,11 @@ import models
 def load_user(user_id):
     return models.User.query.get(user_id)
 
+@app.route("/reference")
+def reference():
+    return render_template('reference.html')
+
+#---------------------------Index-------------------------------------
 @app.route('/index',methods=['GET', 'POST'])
 @app.route('/',methods=['GET', 'POST'])
 def index():
@@ -35,7 +40,16 @@ def index():
             error = "Invalid username. Please try again."
         
     return render_template('index.html', form=form, error = error)
-
+#---------------------------------------------------------------------
+#---------------------------Landing Page------------------------------
+@app.route("/intro", methods=["GET", "POST"])
+@login_required
+def intro():
+    if request.method=="POST":
+        return redirect(url_for('prequestionnaire'))
+    return render_template("intro.html")
+#---------------------------------------------------------------------
+#---------------------------Questionnaire-----------------------------
 @app.route('/prequestionnaire', methods = ["GET", "POST"])
 @login_required
 def prequestionnaire(): 
@@ -70,7 +84,8 @@ def prequestionnaire():
         flash("Questionnaire saved successfully!")
         return redirect(url_for('training'))
     return render_template('prequestionnaire.html', form=form)
-
+#---------------------------------------------------------------------
+#---------------------------Training Page-----------------------------
 @app.route('/training', methods = ["GET", "POST"])
 @login_required
 def training():
@@ -90,7 +105,81 @@ def training():
         return redirect(url_for('experiment'))
 
     return render_template('training.html', eventsList=eventsList)
+#---------------------------------------------------------------------
+#---------------------------Training Event Pages----------------------
+@app.route('/trainingEventPage/<eventId>', methods = ["GET", "POST"])
+@login_required
+def trainingEventPage(eventId):
+    event = models.TrainingEvent.query.get(eventId)    
+    form = eventDecisionForm()
+    decision = models.TrainingEventDecision.query.filter_by(user = current_user.username, event_id = eventId).\
+        order_by(models.TrainingEventDecision.time_event_decision.desc()).first()
+    if request.method == 'GET' and decision is not None:
+        form.escalate.data = decision.escalate
+        form.confidence.data = decision.confidence
+    if form.validate_on_submit():
+        response = models.TrainingEventDecision(
+            user=current_user.username,
+            event_id = eventId,
+            escalate = form.escalate.data,
+            confidence = form.confidence.data,
+            time_event_decision = datetime.datetime.now()
+        )
+        db.session.add(response)
+        db.session.commit()
+        flash("Successfully recorded event decision!")
+        return redirect(url_for("training"))
+    return render_template('trainingEventPage.html', event = event, form=form)
 
+@app.route('/BeijingEventPage/<eventId>', methods = ["GET", "POST"])
+@login_required
+def BeijingEventPage(eventId):
+    event = models.TrainingEvent.query.get(eventId)    
+    form = eventDecisionForm()
+    decision = models.TrainingEventDecision.query.filter_by(user = current_user.username, event_id = eventId).\
+        order_by(models.TrainingEventDecision.time_event_decision.desc()).first()
+    if request.method == 'GET' and decision is not None:
+        form.escalate.data = decision.escalate
+        form.confidence.data = decision.confidence
+    if form.validate_on_submit():
+        response = models.TrainingEventDecision(
+            user=current_user.username,
+            event_id = eventId,
+            escalate = form.escalate.data,
+            confidence = form.confidence.data,
+            time_event_decision = datetime.datetime.now()
+        )
+        db.session.add(response)
+        db.session.commit()
+        flash("Successfully recorded event decision!")
+        return redirect(url_for("training"))
+    return render_template('BeijingEventPage.html', event = event, form=form)
+
+@app.route('/MoscowEventPage/<eventId>', methods = ["GET", "POST"])
+@login_required
+def MoscowEventPage(eventId):
+    event = models.TrainingEvent.query.get(eventId)    
+    form = eventDecisionForm()
+    decision = models.TrainingEventDecision.query.filter_by(user = current_user.username, event_id = eventId).\
+        order_by(models.TrainingEventDecision.time_event_decision.desc()).first()
+    if request.method == 'GET' and decision is not None:
+        form.escalate.data = decision.escalate
+        form.confidence.data = decision.confidence
+    if form.validate_on_submit():
+        response = models.TrainingEventDecision(
+            user=current_user.username,
+            event_id = eventId,
+            escalate = form.escalate.data,
+            confidence = form.confidence.data,
+            time_event_decision = datetime.datetime.now()
+        )
+        db.session.add(response)
+        db.session.commit()
+        flash("Successfully recorded event decision!")
+        return redirect(url_for("training"))
+    return render_template('MoscowEventPage.html', event = event, form=form)
+#---------------------------------------------------------------------
+#---------------------------Experiment Page---------------------------
 @app.route('/experiment', methods = ["GET", "POST"])
 @login_required
 def experiment():    
@@ -121,7 +210,45 @@ def experiment():
                             order_by(models.EventDecision.time_event_decision.desc()).first())
                          )    
     return render_template('experiment.html', eventsList=eventsList) 
+#---------------------------------------------------------------------
+#---------------------------Experiment Event Page---------------------
+@app.route('/eventPage/<eventId>', methods = ["GET", "POST"])
+@login_required
+def eventPage(eventId):    
+    event = models.Event.query.get(eventId)
+    form = eventDecisionForm()
+    decision = models.EventDecision.query.filter_by(user = current_user.username, event_id = eventId).\
+        order_by(models.EventDecision.time_event_decision.desc()).first()
+    if request.method == 'GET' and decision is not None:
+        form.escalate.data = decision.escalate
+        form.confidence.data = decision.confidence
+    if request.method == 'GET':
+        newEvent = models.EventClicked(
+            user = current_user.username,
+            event_id = eventId,
+            time_event_click = datetime.datetime.now()
+        )   
+        db.session.add(newEvent)
+        db.session.commit()    
 
+    print(form.errors)
+    
+    if form.validate_on_submit():  
+        print("Form valid!")         
+        response = models.EventDecision(
+            user=current_user.username,
+            event_id = eventId,
+            escalate = form.escalate.data,
+            confidence = form.confidence.data,
+            time_event_decision = datetime.datetime.now()
+        )            
+        db.session.add(response)
+        db.session.commit()
+        flash("Successfully recorded event decision!")
+        return redirect(url_for("experiment"))
+    return render_template('eventPage.html', event = event, form=form)
+#---------------------------------------------------------------------
+#---------------------------Survey Page-------------------------------
 @app.route('/postsurvey', methods = ["GET", "POST"]) 
 @login_required
 def postsurvey():
@@ -151,119 +278,15 @@ def postsurvey():
         local_user.survey_complete = True 
         db.session.add(responses, local_user)
         db.session.commit()
-        return redirect(url_for('logout'))
+        return redirect(url_for('completion'))
     return render_template('postsurvey.html', form=form)
-
-@app.route('/BeijingEventPage/<eventId>', methods = ["GET", "POST"])
-@login_required
-def BeijingEventPage(eventId):
-    event = models.TrainingEvent.query.get(eventId)    
-    form = eventDecisionForm()
-    if form.validate_on_submit():
-        response = models.TrainingEventDecision(
-            user=current_user.username,
-            event_id = eventId,
-            escalate = form.escalate.data,
-            confidence = form.confidence.data,
-            time_event_decision = datetime.datetime.now()
-        )
-        db.session.add(response)
-        db.session.commit()
-        flash("Successfully recorded event decision!")
-        return redirect(url_for("training"))
-    return render_template('BeijingEventPage.html', event = event, form=form)
-
-@app.route('/MoscowEventPage/<eventId>', methods = ["GET", "POST"])
-@login_required
-def MoscowEventPage(eventId):
-    event = models.TrainingEvent.query.get(eventId)    
-    form = eventDecisionForm()
-    if form.validate_on_submit():
-        response = models.TrainingEventDecision(
-            user=current_user.username,
-            event_id = eventId,
-            escalate = form.escalate.data,
-            confidence = form.confidence.data,
-            time_event_decision = datetime.datetime.now()
-        )
-        db.session.add(response)
-        db.session.commit()
-        flash("Successfully recorded event decision!")
-        return redirect(url_for("training"))
-    return render_template('MoscowEventPage.html', event = event, form=form)
-
-@app.route('/trainingEventPage/<eventId>', methods = ["GET", "POST"])
-@login_required
-def trainingEventPage(eventId):
-    event = models.TrainingEvent.query.get(eventId)    
-    form = eventDecisionForm()
-    decision = models.TrainingEventDecision.query.filter_by(user = current_user.username, event_id = eventId).\
-        order_by(models.TrainingEventDecision.time_event_decision.desc()).first()
-    if request.method == 'GET' and decision is not None:
-        form.escalate.data = decision.escalate
-        form.confidence.data = decision.confidence
-    if form.validate_on_submit():
-        response = models.TrainingEventDecision(
-            user=current_user.username,
-            event_id = eventId,
-            escalate = form.escalate.data,
-            confidence = form.confidence.data,
-            time_event_decision = datetime.datetime.now()
-        )
-        db.session.add(response)
-        db.session.commit()
-        flash("Successfully recorded event decision!")
-        return redirect(url_for("training"))
-    return render_template('trainingEventPage.html', event = event, form=form)
-
-
-@app.route('/eventPage/<eventId>', methods = ["GET", "POST"])
-@login_required
-def eventPage(eventId):    
-    event = models.Event.query.get(eventId)
-    form = eventDecisionForm()
-    if request.method == 'GET':
-        newEvent = models.EventClicked(
-            user = current_user.username,
-            event_id = eventId,
-            time_event_click = datetime.datetime.now()
-        )   
-        db.session.add(newEvent)
-        db.session.commit()    
-
-    print(form.errors)
-    
-    if form.validate_on_submit():  
-        print("Form valid!")         
-        response = models.EventDecision(
-            user=current_user.username,
-            event_id = eventId,
-            escalate = form.escalate.data,
-            confidence = form.confidence.data,
-            time_event_decision = datetime.datetime.now()
-        )            
-        db.session.add(response)
-        db.session.commit()
-        flash("Successfully recorded event decision!")
-        return redirect(url_for("experiment"))
-    return render_template('eventPage.html', event = event, form=form)
-
-@app.route("/reference")
-def reference():
-    return render_template('reference.html')
-
-@app.route("/logout")
-def logout():    
+#---------------------------------------------------------------------
+#---------------------------Completion Page---------------------------
+@app.route("/completion")
+def completion():    
     code = current_user.completion_code
     # logout_user()
-    return render_template('logout.html', code=code)
-
-@app.route("/intro", methods=["GET", "POST"])
-@login_required
-def intro():
-    if request.method=="POST":
-        return redirect(url_for('prequestionnaire'))
-    return render_template("intro.html")
-
+    return render_template('completion.html', code=code)
+#---------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True)
