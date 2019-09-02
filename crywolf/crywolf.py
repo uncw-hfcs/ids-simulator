@@ -199,7 +199,7 @@ def trainingEventPage(eventId):
     form = eventDecisionForm()
     decision = models.TrainingEventDecision.query.filter_by(user = current_user.username, event_id = eventId).\
         order_by(models.TrainingEventDecision.time_event_decision.desc()).first()
-    if decision is not None:
+    if request.method == 'GET' and decision is not None:
         form.escalate.data = decision.escalate
         form.confidence.data = decision.confidence
     if form.validate_on_submit():
