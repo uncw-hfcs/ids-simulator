@@ -151,7 +151,7 @@ def postsurvey():
         local_user.survey_complete = True 
         db.session.add(responses, local_user)
         db.session.commit()
-        return redirect(url_for('logout')) 
+        return redirect(url_for('logout'))
     return render_template('postsurvey.html', form=form)
 
 @app.route('/BeijingEventPage/<eventId>', methods = ["GET", "POST"])
@@ -197,6 +197,11 @@ def MoscowEventPage(eventId):
 def trainingEventPage(eventId):
     event = models.TrainingEvent.query.get(eventId)    
     form = eventDecisionForm()
+    decision = models.TrainingEventDecision.query.filter_by(user = current_user.username, event_id = eventId).\
+        order_by(models.TrainingEventDecision.time_event_decision.desc()).first()
+    if decision is not None:
+        form.escalate.data = decision.escalate
+        form.confidence.data = decision.confidence
     if form.validate_on_submit():
         response = models.TrainingEventDecision(
             user=current_user.username,
@@ -248,9 +253,9 @@ def reference():
     return render_template('reference.html')
 
 @app.route("/logout")
-def logout():
+def logout():    
     code = current_user.completion_code
-    logout_user()
+    # logout_user()
     return render_template('logout.html', code=code)
 
 @app.route("/intro", methods=["GET", "POST"])

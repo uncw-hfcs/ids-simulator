@@ -45,7 +45,7 @@ Event Details
             <li>You're 0% sure these authorizations are through a VPN.</li>
             <li>Time between authorizations suggests "Impossible Travel" and the lack of failed logins from Beijing suggests that the users credentials are
                 compromised.</li>
-            <li>For this event, there's not enough evidence to dismiss it. You should choose "Escalate" perhaps a "4" or "5" for
+            <li>For this event, there's not enough evidence to dismiss it. You should choose "Escalate" and perhaps a "4" or "5" for
                 confidence level.
             </li>
         </ul>
@@ -64,18 +64,20 @@ Event Details
         </table>
     </article>
     <aside>
-        
         <p> Please determine if this event should be escalated.</p>
         <p>A decision to "Escalate" means that there is either evidence to suggest that malicious behavior is occurring, or that there isn't enough 
             information provided to dismiss the alert.</p>
         <p>A decision of "Don't Escalate" means that there is evidence to suggest that the alert is a false alarm.</p>
         <form action = "" method = "POST" id = "event_decision">
+            {% if form.escalate.errors %}
+            <p><span style="color: red;">[Please select a value.]</span></p>
+            {% endif %}
             {{ form.escalate }}
             <p> On a scale from 1 (low) to 5 (high), please rate your confidence in this decision. A decision of "I don't know" does not require a
                     confidence rating.</p>
-        <form action = "" method = "POST" id = "event_decision">
-            {{ form.escalate }}
-            <p> On a scale from 1 (low) to 5 (high), please rate your confidence in this decision.</p>
+            {% if form.confidence.errors %}
+            <p><span style="color: red;">[You must select a confidence level.]</span></p>
+            {% endif %}
             {% for subfield in form.confidence %}
             <tr>
                 <td>{{ subfield }}</td>

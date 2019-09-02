@@ -60,12 +60,14 @@ Event Details
             {% if form.escalate.errors %}
             <p><span style="color: red;">[Please select a value.]</span></p>
             {% endif %}
+            
             {{ form.escalate }}
+            
             <p> On a scale from 1 (low) to 5 (high), please rate your confidence in this decision. A decision of "I don't know" does not require a
                     confidence rating.</p>
-            <!--{% if form.confidence.errors %}
+            {% if form.confidence.errors %}
             <p><span style="color: red;">[You must select a confidence level.]</span></p>
-            {% endif %}-->
+            {% endif %}
             {% for subfield in form.confidence %}
             <tr>
                 <td>{{ subfield }}</td>
