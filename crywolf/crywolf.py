@@ -90,6 +90,12 @@ def prequestionnaire():
 @login_required
 def training():
     ids = [1,2,3,4,5]
+    if request.method == "GET":
+        num_processed_alerts = 0
+        for id in ids:
+            if models.TrainingEventDecision.query.filter_by(user = current_user.username, event_id = id).\
+                            order_by(models.TrainingEventDecision.time_event_decision.desc()).first() != None:
+                num_processed_alerts += 1
     eventsList = []   #This will store an eventID and eventDecision tuple
     for id in ids:
         eventsList.append((models.TrainingEvent.query.get(id),
@@ -104,7 +110,7 @@ def training():
         db.session.commit()
         return redirect(url_for('experiment'))
 
-    return render_template('training.html', eventsList=eventsList)
+    return render_template('training.html', eventsList=eventsList, num_unprocessed_alerts = (len(eventsList) - num_processed_alerts))
 #---------------------------------------------------------------------
 #---------------------------Training Event Pages----------------------
 @app.route('/trainingEventPage/<eventId>', methods = ["GET", "POST"])
@@ -201,7 +207,12 @@ def experiment():
     ids.insert(25, 73) #This is the most obvious "Escalate" event. Everyone sees this.
     ids.insert(6,74) #This is the "Please just select 'Escalate' event"
     ids.insert(43,75) #This is the "Please just select 'Don't escalate' event"
-    
+    if request.method == "GET":
+        num_processed_alerts = 0
+        for id in ids:
+            if models.EventDecision.query.filter_by(user = current_user.username, event_id = id).\
+                            order_by(models.EventDecision.time_event_decision.desc()).first() != None:
+                num_processed_alerts += 1
 
     eventsList = []   #This will store an eventID and eventDecision tuple
     for id in ids:
@@ -209,7 +220,7 @@ def experiment():
                           models.EventDecision.query.filter_by(user = current_user.username, event_id = id).
                             order_by(models.EventDecision.time_event_decision.desc()).first())
                          )    
-    return render_template('experiment.html', eventsList=eventsList) 
+    return render_template('experiment.html', eventsList=eventsList, num_unprocessed_alerts = (len(eventsList) - num_processed_alerts) )
 #---------------------------------------------------------------------
 #---------------------------Experiment Event Page---------------------
 @app.route('/eventPage/<eventId>', methods = ["GET", "POST"])

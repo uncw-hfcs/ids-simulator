@@ -38,14 +38,13 @@ Experiment Events
             <li>When you have evaluated all events, please click the "Finished!" button at the bottom.</li>
             
         </ul>
-        {% set count = namespace(a=0) %}
-        <!-- {% for event, decision in eventList %}
-            {% if decision == None %}                
-                {% set count.a = count.a + 1 %}
+        <h2><span>Number of Unprocessed Alerts: </span>
+            {% if num_unprocessed_alerts > 0 %}
+                <span style="color:red">{{ num_unprocessed_alerts }}</span>
+            {% else %}
+                <span style="color:#40f65b">{{ num_unprocessed_alerts }}</span>
             {% endif %}
-        {% endfor %}
-       
-        <h2>Unprocessed Alerts: {{ count.a }}</h2> -->
+        </h2>
         <table align="center">
            <tr>
                <td><h4>Event Number</h4></td><td><h4>Decision</h4></td>
@@ -56,11 +55,8 @@ Experiment Events
                     <td><a href="{{ url_for('eventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td>     
                     <td>{% if decision != None %}
                             {{ decision }}
-                        {% else %}
-                            {% set count.a = count.a + 1 %}
                         {% endif %}
-                    </td>
-                                  
+                    </td>                                  
                 </tr>        
             {% endfor %}
         
@@ -75,11 +71,11 @@ Experiment Events
         </ul>
             
             
-        <h2><span>Unprocessed Alerts: </span>
-            {% if count.a != 0 %}
-                <span style="color:red">{{ count.a }}</span>
+        <h2><span>Number of Unprocessed Alerts: </span>
+            {% if num_unprocessed_alerts > 0 %}
+                <span style="color:red">{{ num_unprocessed_alerts }}</span>
             {% else %}
-                <span style="color:#40f65b">{{ count.a }}</span>
+                <span style="color:#40f65b">{{ num_unprocessed_alerts }}</span>
             {% endif %}
         </h2>
                 
