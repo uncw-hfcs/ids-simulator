@@ -10,16 +10,40 @@ Introduction
         <header>
             <h2>Welcome to the IDS Simulator!</h2>
             <h3>The Scenario</h3>
-            <p>Your participation in this experiment is voluntary. You may refuse to participate or may refuse to answer 
-                    any questions. You may stop at any time without penalty. The data you provide will be 
-                    kept secure once it is in the researcher’s possession. However, the researcher cannot 
-                    guarantee security during transmission of data due to keylogging or other spyware that 
-                    may exist on the computer you are using. </p>
-            <p>Please login with the provided username.</p>
+            <p>You are a junior cyber security analyst at
+                    Company XYZ. You perform initial triage on incoming network events that your company's Intrusion Detection System
+                    (IDS) has deemed an alert. Your job is to evaluate alerts to determine if they could constitute an attack against the company &#8212;
+                    thus needing to be escalated to a higher level echelon of analysis &#8212; or is harmless network activity and can be ignored.</p>
+
+            <h3>What to expect</h3>
+            <p>After this page you will take a brief questionnaire, then begin a training exercise to familiarize yourself with the IDS and how to evaluate 
+                an alert. Once training is complete, you will begin the experiment. The experiment will look exactly like the training, but there will be more 
+                alerts to evaluate. Once you have evaluated the events in the experiment, click the "Finished!" button at the bottome of the page. This will take 
+                you to brief survey asking for feedback on the experiment. Submitting the survey completes the experiment, and you will be provided with a 
+                completion code that you will need to write down on your login card.
+            </p>
         </header>
-        <form action="" method="POST">
-            <input type="submit" value="Take the questionnaire!" />
-        </form>
+        {% if current_user.is_authenticated and current_user.questionnaire_complete == False %}
+            <form action="" method="POST">
+                <input type="submit" value="Take the questionnaire!" />
+            </form>
+        {% else %}
+        <p>Please click one of the links below, or on the navigation bar above, to pick up where you left off.</p>
+        <ul>                
+            {% if current_user.is_authenticated and current_user.questionnaire_complete == True and current_user.experiment_complete == False %}
+                <li><a href={{ url_for('training') }}>Training</a></li>
+            {% endif %}
+            {% if current_user.is_authenticated and current_user.training_complete == True %}
+                <li><a href={{ url_for('experiment') }}>Experiment</a></li>
+            {% endif %}
+            {% if current_user.is_authenticated and current_user.experiment_complete == True %}
+                <li><a href={{ url_for('postsurvey') }}>Survey</a></li>
+            {% endif %}
+            {% if current_user.is_authenticated and current_user.survey_complete == True %}
+                <li><a href={{ url_for('completion') }}>Completion</a></li>
+            {% endif %}              
+        </ul>
+        {% endif %}
     </div>
 
 {% endblock %}

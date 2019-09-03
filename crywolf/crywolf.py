@@ -21,9 +21,16 @@ import models
 def load_user(user_id):
     return models.User.query.get(user_id)
 
+login_manager.login_view = "unauthorized"
+
+@app.route('/unauthorized')
+def unauthorized():
+    return render_template('401.html')
+
 @app.route("/reference")
 def reference():
     return render_template('reference.html')
+
 
 #---------------------------Index-------------------------------------
 @app.route('/index',methods=['GET', 'POST'])

@@ -16,13 +16,13 @@
 
         <div class="header-container">
             <header class="wrapper clearfix">
-                <a href= {{ url_for('index') }}><h1 class="title">IDS Simulator</h1></a>
+                <h1 class="title">IDS Simulator</h1>
                 <nav>
                     <ul>
-                        {% if current_user.is_authenticated and current_user.questionnaire_complete == False %}
+                        <!-- {% if current_user.is_authenticated and current_user.questionnaire_complete == False %}
                             <a href={{ url_for('prequestionnaire') }}>Questionnaire</a>
-                        {% endif %}
-                        {% if current_user.is_authenticated and current_user.questionnaire_complete == True %}
+                        {% endif %} -->
+                        {% if current_user.is_authenticated and current_user.questionnaire_complete == True and current_user.experiment_complete == False %}
                             <li><a href={{ url_for('training') }}>Training</a></li>
                         {% endif %}
                         {% if current_user.is_authenticated and current_user.training_complete == True %}
@@ -31,7 +31,10 @@
                         {% if current_user.is_authenticated and current_user.experiment_complete == True %}
                             <li><a href={{ url_for('postsurvey') }}>Survey</a></li>
                         {% endif %}
-                        {% if current_user.is_authenticated and current_user.questionnaire_complete == True %}
+                        {% if current_user.is_authenticated and current_user.survey_complete == True %}
+                            <li><a href={{ url_for('completion') }}>Completion</a></li>
+                        {% endif %}
+                        {% if current_user.is_authenticated and current_user.questionnaire_complete == True and current_user.experiment_complete == False %}
                             <li><a href={{ url_for('reference') }} target="_blank">Reference Page</a></li>
                         {% endif %}                
                     </ul>

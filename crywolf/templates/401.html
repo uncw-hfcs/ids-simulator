@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}
+401 - Unauthoized
+{% endblock %}
+
+{% block content %}
+    <h2>401 Error: Unauthoized access</h2>
+    <p>If you've made it here, it probably means you tried to access a page that requires you to be logged in. 
+        Please follow the link below and log in with the username provided to you.</p>
+    <a href={{ url_for('index') }}>Return to Homepage</a>
+{% endblock%}
