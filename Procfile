@@ -1,1 +1,1 @@
-web: gunicorn app:crywolf
+web: gunicorn crywolf:app
