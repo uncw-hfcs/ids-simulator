@@ -1,80 +1,102 @@
 {% extends "base.html" %}
 
 {% block title %}
-Training Events
+Training and Examples
 {% endblock %}
 
 {% block content %}
-    <!-- <style>
-        
-        table, th, td {
-            border: 3px solid black;
-            text-align: center;
-            padding: 10px;
-            margin: 3em;
-        }
-        
-        tr:hover {
-            background-color: lightblue;
-        }  
-        tr:first-child:hover {
-            background-color: white;
-        }      
-        tr:nth-child(even) {background-color: lightgrey;}
-    </style> -->
 
-    <div>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <h3 class="mb-md-5">{{ message }}</h3>
-                {% endfor %}
-            {% endif %}    
-        {% endwith %}
-        <h1>Training and examples</h1>
-        <p>
-            You will be presented with a table like the one below containing links to network events that the Intrusion Detection System (IDS) has alerted. As the junior cybersecurity analyst at your company, your job is to determine if these alerts are false alarms, or if the alert is likely malicious behavior and shoudl be escalated to more senior personnel to be dealt with.
-        </p>
-        <ul>
-            <li>Please evaluate each event. Your decision for each event will be posted next to the event. You are not required to evaluate every event.</li>
-            <li>Please only use resources provided (i.e. Please don't use the internet. Besides, it probably won't help).</li>
-            <li>When you've evaluated all events, please click the "Take the experiment!" button at the bottom.</li>
+{% with messages = get_flashed_messages() %}
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+    {{message}}
+</div>
+{% endfor %}
+{% endwith %}
+<h1>Training and examples</h1>
+<p>
+    You will be presented with a list of links to network events that the Intrusion
+    Detection System (IDS) has flagged as alerted on. As the junior cybersecurity analyst at your company, your job is
+    to determine if
+    these alerts are false alarms, or if the alert is likely malicious behavior and should be escalated to more senior
+    personnel to be dealt with.
+</p>
+<ul>
+    <li>Click on the Event # to see more details about the network event. Your decision for each event will be posted
+        next to the event.</li>
+    <li>In this training, the first two events have some explanation and guidance.</li>
+    <li>Refer to the <a href="{{ url_for('reference') }}">Security Playbook</a> for help on how to evaluate the network
+        events. You may wish to open this in a new window on your browser.</li>
+    <li>Do not use the Internet. Do not discuss with anyone else. If you have a question, raise your hand.</li>
+    <li>Once you have evaluated all events, click the "Take the experiment!" button at the bottom.</li>
 
-        </ul>
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th class="fit">Event Number</th>
-                <th class="fit">Decision</th>
-            </tr>
-            
-            {% for event, decision in eventsList %}
-                <tr>
-                    {% if event.id == 1 %}
-                    <td class="fit"><a href="{{ url_for('MoscowEventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td> 
-                    {% elif event.id == 2 %}
-                    <td class="fit"><a href="{{ url_for('BeijingEventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td> 
-                    {% else %}
-                    <td class="fit"><a href="{{ url_for('trainingEventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td>    
-                    {% endif %} 
-                    <td class="fit">{% if decision != None %}
-                            {{ decision }}
-                        {% endif %}
-                    </td>
-                                  
-                </tr>        
-            {% endfor %}
-        
-        
-        </table>
-        <h4>Number of Unprocessed Alerts:
-            {% if num_unprocessed_alerts > 0 %}
-                <span style="color:red">{{ num_unprocessed_alerts }}</span>
-            {% else %}
-                <span style="color:#40f65b">{{ num_unprocessed_alerts }}</span>
+</ul>
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>Event Number</th>
+        <th>Decision</th>
+    </tr>
+
+    {% for event, decision in eventsList %}
+    <tr>
+        {% if event.id == 1 %}
+        <td><a href="{{ url_for('MoscowEventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td>
+        {% elif event.id == 2 %}
+        <td><a href="{{ url_for('BeijingEventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td>
+        {% else %}
+        <td><a href="{{ url_for('trainingEventPage', eventId = event.id) }}"> Event {{ loop.index }}</a>
+        </td>
+        {% endif %}
+        <td>{% if decision != None %}
+            {{ decision }}
             {% endif %}
-        </h4>
-        <form action ="" onsubmit = "return confirm('Are you sure you\'re ready to begin the experiemnt? Click \'OK\' to continue.')" method="POST">
-            <input class="mt-md-3" type="submit" value="Take the experiment!">
-        </form>
+        </td>
+
+    </tr>
+    {% endfor %}
+
+
+</table>
+<p>Number events left to evaluate:
+    {% if num_unprocessed_alerts > 0 %}
+    <span style="color:red">{{ num_unprocessed_alerts }}</span>
+    {% else %}
+    <span style="color:#40f65b">{{ num_unprocessed_alerts }}</span>
+    {% endif %}
+</p>
+
+<!-- Modal -->
+<div class="modal fade" id="trainingConfirm" tabindex="-1" role="dialog" aria-labelledby="trainingConfirmLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="trainingConfirmLabel">Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% if num_unprocessed_alerts > 0 %}
+                <p class="error"><strong>You have not made a decision on all events!</strong></p>
+                {% endif %}
+                <p>Are you sure you are ready to begin the experiment?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form action="" method="POST">
+                    <!-- <input class="mt-md-3" type="submit" value="Take the experiment!"> -->
+                    <button type="submit" class="btn btn-primary">Yes, continue!</button>
+                </form>
+
+            </div>
+        </div>
     </div>
+</div>
+
+<button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#trainingConfirm">
+    Take the experiment!
+</button>
+
+
 {% endblock %}

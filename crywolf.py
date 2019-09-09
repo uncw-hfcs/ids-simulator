@@ -96,7 +96,8 @@ def prequestionnaire():
 @app.route('/training', methods = ["GET", "POST"])
 @login_required
 def training():
-    ids = [1,2,3,4,5]
+    # ids = [1,2,3,4,5]
+    ids = [1, 2, 3]
     if request.method == "GET":
         num_processed_alerts = 0
         for id in ids:
@@ -140,7 +141,7 @@ def trainingEventPage(eventId):
         )
         db.session.add(response)
         db.session.commit()
-        flash("Successfully recorded event decision!")
+        flash(f"Successfully recorded decision for Event {eventId}!")
         return redirect(url_for("training"))
     return render_template('trainingEventPage.html', event = event, form=form)
 

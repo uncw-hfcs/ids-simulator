@@ -52,7 +52,7 @@
                             exercise)</a></li>
                     {% endif %}
 
-                    {% if current_user.is_authenticated and current_user.experiment_complete == True and  current_user.survey_complete == False %}
+                    {% if current_user.is_authenticated and current_user.experiment_complete == True and current_user.survey_complete == False %}
                     <li class="nav-item"><a class="nav-link" href={{ url_for('postsurvey') }}>Post-experiment
                             questionnaire</a></li>
                     {% endif %}
@@ -60,6 +60,11 @@
                     {% if current_user.survey_complete == True %}
                     <li class="nav-item"><a class="nav-link" href={{ url_for('completion') }}>Get your completion
                             code</a></li>
+                    {% endif %}
+
+                    {% if current_user.is_authenticated and current_user.questionnaire_complete == True and current_user.survey_complete == False %}
+                    <li class="nav-item"><a class="nav-link" href={{ url_for('reference') }}>Security Playbook</a>
+                    </li>
                     {% endif %}
                 </ul>
             </div>
