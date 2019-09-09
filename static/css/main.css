@@ -15,7 +15,7 @@ html {
     background: #b3d4fc;
     text-shadow: none;
 }
-
+.wrapper
 hr {
     display: block;
     height: 1px;
@@ -51,6 +51,9 @@ textarea {
     padding: 0.2em 0;
 }
 
+.teal-bg {
+    background: teal;
+}
 
 /* ===== Initializr Styles ==================================================
    Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
@@ -68,6 +71,7 @@ body {
 /* ===================
     ALL: Orange Theme
    =================== */
+
 
 .header-container {
     border-bottom: 20px solid teal;
@@ -230,7 +234,7 @@ nav a:hover {
 
     nav {
         float: right;
-        width: 38%;
+        /* width: 38%; */
     }
 
 /* ============
@@ -248,7 +252,7 @@ nav a:hover {
     }
 }
 
-@media only screen and (min-width: 1140px) {
+/* @media only screen and (min-width: 1140px) {
 
 /* ===============
     Maximal Width
@@ -258,7 +262,7 @@ nav a:hover {
         width: 1026px; /* 1140px - 10% for margins */
         margin: 0 auto;
     }
-}
+} */
 
 /* ==========================================================================
    Helper classes
@@ -370,4 +374,10 @@ nav a:hover {
     h3 {
         page-break-after: avoid;
     }
+}
+
+.table td.fit, 
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
 }
