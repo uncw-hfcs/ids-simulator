@@ -31,7 +31,6 @@ def unauthorized():
 def reference():
     return render_template('reference.html')
 
-
 #---------------------------Index-------------------------------------
 @app.route('/index',methods=['GET', 'POST'])
 @app.route('/',methods=['GET', 'POST'])
@@ -307,5 +306,11 @@ def completion():
     # logout_user()
     return render_template('completion.html', code=code)
 #---------------------------------------------------------------------
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("index"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
