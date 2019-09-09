@@ -36,6 +36,9 @@ def reference():
 @app.route('/index',methods=['GET', 'POST'])
 @app.route('/',methods=['GET', 'POST'])
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('intro'))
+        
     error = None
     form = UserForm()
     if form.validate_on_submit():
@@ -49,11 +52,9 @@ def index():
     return render_template('index.html', form=form, error = error)
 #---------------------------------------------------------------------
 #---------------------------Landing Page------------------------------
-@app.route("/intro", methods=["GET", "POST"])
+@app.route("/intro", methods=["GET"])
 @login_required
 def intro():
-    if request.method=="POST":
-        return redirect(url_for('prequestionnaire'))
     return render_template("intro.html")
 #---------------------------------------------------------------------
 #---------------------------Questionnaire-----------------------------

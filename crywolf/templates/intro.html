@@ -8,42 +8,71 @@ Introduction
 
     <div>
         <header>
-            <h2>Welcome to the IDS Simulator!</h2>
             <h3>The Scenario</h3>
             <p>You are a junior cyber security analyst at
                     Company XYZ. You perform initial triage on incoming network events that your company's Intrusion Detection System
+<<<<<<< HEAD
                     (IDS) has deemed an alert. Your job is to evaluate alerts to determine if they could constitute an attack against the company &#8212;
                     thus needing to be escalated to a higher echelon of analysis &#8212; or is harmless network activity and can be ignored.</p>
+=======
+                    (IDS) has deemed an alert. IDSes are often configured to be overly sensitive, and many alerts are nothing to worry about.
+                    Your job is to evaluate alerts a decide if:
+                    <ol type="a">
+                        <li>The alert correctly identifies an attack against the company and thus needs to be <em>escalated</em> to senior security personnel; or</li>
+                        <li>The alert is is a false alarm and the harmless network activity can be ignored.</li>
+                    </ol>
+                    </p>
+>>>>>>> 678fd032a9593b81c2cd31a833ab583784386aba
 
             <h3>What to expect</h3>
-            <p>After this page you will take a brief questionnaire, then begin a training exercise to familiarize yourself with the IDS and how to evaluate 
+            <p>You will take a brief questionnaire, then begin a training exercise to familiarize yourself with the IDS and how to evaluate 
                 an alert. Once training is complete, you will begin the experiment. The experiment will look exactly like the training, but there will be more 
                 alerts to evaluate. Once you have evaluated the events in the experiment, click the "Finished!" button at the bottome of the page. This will take 
-                you to brief survey asking for feedback on the experiment. Submitting the survey completes the experiment, and you will be provided with a 
-                completion code that you will need to write down on your login card.
+                you to another brief questionnaire asking for feedback on the experiment. Finally, you will be provided with a 
+                completion code that you will need to write down on your login card an submit to the proctor.
             </p>
         </header>
-        {% if current_user.is_authenticated and current_user.questionnaire_complete == False %}
-            <form action="" method="POST">
-                <input type="submit" value="Take the questionnaire!" />
-            </form>
-        {% else %}
-        <p>Please click one of the links below, or on the navigation bar above, to pick up where you left off.</p>
-        <ul>                
-            {% if current_user.is_authenticated and current_user.questionnaire_complete == True and current_user.experiment_complete == False %}
+
+
+        <h3>Experiment steps:</h3>
+        <ol>
+            {% if current_user.questionnaire_complete == False %}
+                <li><a href={{ url_for('prequestionnaire')}}>Beginning questionnaire</a></li>
+            {% else %}
+                <li><strong>&lt;Completed&gt;</strong> <del>Beginning questionnaire</del></li>
+            {% endif %}
+
+            {% if current_user.questionnaire_complete == False %} 
+                <li>Training</li>
+            {% elif current_user.experiment_complete == False %}
                 <li><a href={{ url_for('training') }}>Training</a></li>
+            {% else %}
+                <li><strong>&lt;Completed&gt;</strong> <del>Training</del></li>
             {% endif %}
-            {% if current_user.is_authenticated and current_user.training_complete == True %}
-                <li><a href={{ url_for('experiment') }}>Experiment</a></li>
+
+            {% if current_user.training_complete == False %}
+                <li>Evaluate alerts (main exercise)</li>
+            {% elif current_user.experiment_complete == False %}
+                <li><a href={{ url_for('experiment') }}>Evaluate alerts (main exercise)</a></li>
+            {% else %}
+                <li><strong>&lt;Completed&gt;</strong> <del>Evaluate alerts (main exercise)</del></li>
             {% endif %}
-            {% if current_user.is_authenticated and current_user.experiment_complete == True %}
-                <li><a href={{ url_for('postsurvey') }}>Survey</a></li>
+
+
+            {% if current_user.experiment_complete == False %}
+                <li>Post-experiment questionnaire</li>
+            {% elif current_user.survey_complete == False %}
+                <li><a href={{ url_for('postsurvey') }}>Post-experiment questionnaire</a></li>
+            {% else %}
+                <li><strong>&lt;Completed&gt;</strong> <del>Post-experiment questionnaire</del></li>
             {% endif %}
-            {% if current_user.is_authenticated and current_user.survey_complete == True %}
-                <li><a href={{ url_for('completion') }}>Completion</a></li>
+
+            {% if current_user.survey_complete == False %}
+                <li>Get your completion code</li>
+            {% else %}
+                <li><a href={{ url_for('completion') }}>Get your completion code</a></li>
             {% endif %}              
-        </ul>
-        {% endif %}
+        </ol>
     </div>
 
 {% endblock %}

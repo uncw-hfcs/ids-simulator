@@ -22,6 +22,9 @@
                         <!-- {% if current_user.is_authenticated and current_user.questionnaire_complete == False %}
                             <a href={{ url_for('prequestionnaire') }}>Questionnaire</a>
                         {% endif %} -->
+                        {% if current_user.is_authenticated %}
+                            <li><a href={{ url_for('intro') }}> Main</a></li>
+                        {% endif %}
                         {% if current_user.is_authenticated and current_user.questionnaire_complete == True and current_user.experiment_complete == False %}
                             <li><a href={{ url_for('training') }}>Training</a></li>
                         {% endif %}
