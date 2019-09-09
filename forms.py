@@ -149,7 +149,7 @@ class PrequestionnaireForm(FlaskForm):
                     validators=[InputRequired()]
                 )    
 
-    firewall =  RadioField('Label', 
+    security_device =  RadioField('Label', 
                     choices=[
                         ('Honeypot','a) Honeypot'),
                         ('Firewall','b) Firewall'), 
@@ -160,7 +160,7 @@ class PrequestionnaireForm(FlaskForm):
                     validators=[InputRequired()]
                 )  
 
-    socket =  RadioField('Label', 
+    ip_port =  RadioField('Label', 
                     choices=[
                         ('Socket','a) Socket'),
                         ('MAC Address','b) MAC Address'), 

@@ -6,68 +6,69 @@ Introduction
 
 {% block content %}
 
-    <div>
-        <header>
-            <h3>The Scenario</h3>
-            <p>You are a junior cyber security analyst at
-                    Company XYZ. You perform initial triage on incoming network events that your company's Intrusion Detection System
-                    (IDS) has deemed an alert. IDSes are often configured to be overly sensitive, and many alerts are nothing to worry about.
-                    Your job is to evaluate alerts a decide if:
-                    <ol type="a">
-                        <li>The alert correctly identifies an attack against the company and thus needs to be <em>escalated</em> to senior security personnel; or</li>
-                        <li>The alert is is a false alarm and the harmless network activity can be ignored.</li>
-                    </ol>
-                    </p>
+<div>
+    <h3>Scenario</h3>
+    <p>You are a junior cyber security analyst at
+        Company XYZ. You perform initial triage on incoming network events that your company's Intrusion Detection
+        System
+        (IDS) has deemed an alert. However, IDSes often yield false alarms, and many alerts are nothing to worry about.
+        Your job is to examine the alerts to decide if:
+        <ol type="a">
+            <li>The alert correctly identifies an attack against the company and thus needs to be <em>escalated</em> to
+                senior security personnel; or</li>
+            <li>The alert is is a false alarm and the harmless network activity can be ignored.</li>
+        </ol>
+    </p>
 
-            <h3>What to expect</h3>
+    <!-- <h3>What to expect</h3>
             <p>You will take a brief questionnaire, then begin a training exercise to familiarize yourself with the IDS and how to evaluate 
                 an alert. Once training is complete, you will begin the experiment. The experiment will look exactly like the training, but there will be more 
                 alerts to evaluate. Once you have evaluated the events in the experiment, click the "Finished!" button at the bottom of the page. This will take 
                 you to another brief questionnaire asking for feedback on the experiment. Finally, you will be provided with a 
                 completion code that you will need to write down on your login card an submit to the proctor.
-            </p>
-        </header>
+            </p> -->
 
 
-        <h3>Experiment steps:</h3>
-        <ol>
-            {% if current_user.questionnaire_complete == False %}
-                <li><a href={{ url_for('prequestionnaire')}}>Beginning questionnaire</a></li>
-            {% else %}
-                <li><strong>&lt;Completed&gt;</strong> <del>Beginning questionnaire</del></li>
-            {% endif %}
+    <h3>Experiment steps:</h3>
+    <p>The major steps of this experiment are listed below. Complete them in order. You can always click on the <em>Home</em> link in the navigation bar to return to this page.</p>
+    <ol>
+        {% if current_user.questionnaire_complete == False %}
+        <li><a href={{ url_for('prequestionnaire')}}>Beginning questionnaire</a></li>
+        {% else %}
+        <li><strong>&lt;Completed&gt;</strong> <del>Beginning questionnaire</del></li>
+        {% endif %}
 
-            {% if current_user.questionnaire_complete == False %} 
-                <li>Training</li>
-            {% elif current_user.experiment_complete == False %}
-                <li><a href={{ url_for('training') }}>Training</a></li>
-            {% else %}
-                <li><strong>&lt;Completed&gt;</strong> <del>Training</del></li>
-            {% endif %}
+        {% if current_user.questionnaire_complete == False %}
+        <li>Training</li>
+        {% elif current_user.experiment_complete == False %}
+        <li><a href={{ url_for('training') }}>Training</a></li>
+        {% else %}
+        <li><strong>&lt;Completed&gt;</strong> <del>Training</del></li>
+        {% endif %}
 
-            {% if current_user.training_complete == False %}
-                <li>Evaluate alerts (main exercise)</li>
-            {% elif current_user.experiment_complete == False %}
-                <li><a href={{ url_for('experiment') }}>Evaluate alerts (main exercise)</a></li>
-            {% else %}
-                <li><strong>&lt;Completed&gt;</strong> <del>Evaluate alerts (main exercise)</del></li>
-            {% endif %}
+        {% if current_user.training_complete == False %}
+        <li>Evaluate alerts (main exercise)</li>
+        {% elif current_user.experiment_complete == False %}
+        <li><a href={{ url_for('experiment') }}>Evaluate alerts (main exercise)</a></li>
+        {% else %}
+        <li><strong>&lt;Completed&gt;</strong> <del>Evaluate alerts (main exercise)</del></li>
+        {% endif %}
 
 
-            {% if current_user.experiment_complete == False %}
-                <li>Post-experiment questionnaire</li>
-            {% elif current_user.survey_complete == False %}
-                <li><a href={{ url_for('postsurvey') }}>Post-experiment questionnaire</a></li>
-            {% else %}
-                <li><strong>&lt;Completed&gt;</strong> <del>Post-experiment questionnaire</del></li>
-            {% endif %}
+        {% if current_user.experiment_complete == False %}
+        <li>Post-experiment questionnaire</li>
+        {% elif current_user.survey_complete == False %}
+        <li><a href={{ url_for('postsurvey') }}>Post-experiment questionnaire</a></li>
+        {% else %}
+        <li><strong>&lt;Completed&gt;</strong> <del>Post-experiment questionnaire</del></li>
+        {% endif %}
 
-            {% if current_user.survey_complete == False %}
-                <li>Get your completion code</li>
-            {% else %}
-                <li><a href={{ url_for('completion') }}>Get your completion code</a></li>
-            {% endif %}              
-        </ol>
-    </div>
+        {% if current_user.survey_complete == False %}
+        <li>Get your completion code</li>
+        {% else %}
+        <li><a href={{ url_for('completion') }}>Get your completion code</a></li>
+        {% endif %}
+    </ol>
+</div>
 
 {% endblock %}

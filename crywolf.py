@@ -79,8 +79,8 @@ def prequestionnaire():
             network_address = form.network_address.data,
             tcp_faster = form.tcp_faster.data,
             http_port = form.http_port.data,
-            firewall = form.firewall.data,
-            socket = form.socket.data,
+            firewall = form.security_device.data,
+            socket = form.ip_port.data,
             which_model = form.which_model.data
             )    
         user = models.User.query.filter_by(username = current_user.username).first()
