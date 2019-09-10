@@ -53,8 +53,7 @@
                     {% endif %}
 
                     {% if current_user.is_authenticated and current_user.training_complete == True and current_user.experiment_complete == False %}
-                    <li class="nav-item"><a class="nav-link" href={{ url_for('experiment') }}>Evaluate alerts (main
-                            exercise)</a></li>
+                    <li class="nav-item"><a class="nav-link" href={{ url_for('experiment') }}>Evaluate IDS Alerts</a></li>
                     {% endif %}
 
                     {% if current_user.is_authenticated and current_user.experiment_complete == True and current_user.survey_complete == False %}

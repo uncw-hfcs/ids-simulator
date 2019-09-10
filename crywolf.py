@@ -125,8 +125,8 @@ def training():
 @login_required
 def trainingEventPage():
     eventId = request.args.get('eventId')
-    event = models.TrainingEvent.query.get(eventId)    
     number = request.args.get('index')
+    event = models.TrainingEvent.query.get(eventId)    
     form = eventDecisionForm()
     decision = models.TrainingEventDecision.query.filter_by(user = current_user.username, event_id = eventId).\
         order_by(models.TrainingEventDecision.time_event_decision.desc()).first()
@@ -143,7 +143,7 @@ def trainingEventPage():
         )
         db.session.add(response)
         db.session.commit()
-        flash(f"Successfully recorded event decision!")
+        flash(f"Successfully recorded decision for Event {number}!")
         return redirect(url_for("training"))
 
     if event.id == 1:
@@ -193,9 +193,11 @@ def experiment():
     return render_template('experiment.html', eventsList=eventsList, num_unprocessed_alerts = (len(eventsList) - num_processed_alerts) )
 #---------------------------------------------------------------------
 #---------------------------Experiment Event Page---------------------
-@app.route('/eventPage/<eventId>', methods = ["GET", "POST"])
+@app.route('/eventPage', methods = ["GET", "POST"])
 @login_required
-def eventPage(eventId):    
+def eventPage():
+    eventId = request.args.get('eventId')
+    number = request.args.get('index')    
     event = models.Event.query.get(eventId)
     form = eventDecisionForm()
     decision = models.EventDecision.query.filter_by(user = current_user.username, event_id = eventId).\
@@ -212,10 +214,7 @@ def eventPage(eventId):
         db.session.add(newEvent)
         db.session.commit()    
 
-    print(form.errors)
-    
     if form.validate_on_submit():  
-        print("Form valid!")         
         response = models.EventDecision(
             user=current_user.username,
             event_id = eventId,
@@ -225,9 +224,9 @@ def eventPage(eventId):
         )            
         db.session.add(response)
         db.session.commit()
-        flash("Successfully recorded event decision!")
+        flash(f"Successfully recorded decision for Event {number}!")
         return redirect(url_for("experiment"))
-    return render_template('eventPage.html', event = event, form=form)
+    return render_template('eventPage.html', event = event, number = number, form=form)
 #---------------------------------------------------------------------
 #---------------------------Survey Page-------------------------------
 @app.route('/postsurvey', methods = ["GET", "POST"]) 

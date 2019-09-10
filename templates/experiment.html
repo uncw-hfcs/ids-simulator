@@ -1,86 +1,120 @@
 {% extends "base.html" %}
 
 {% block title %}
-Experiment Events
+Evaluate IDS Alerts
 {% endblock %}
 
 {% block content %}
-    <style>
-        
-        table, th, td {
-            border: 3px solid black;
-            text-align: center;
-            padding: 10px;
-        }
-        
-        tr:hover {
-            background-color: lightblue;
-        }  
-        tr:first-child:hover {
-            background-color: white;
-        }      
-        tr:nth-child(even) {background-color: lightgrey;}
-    </style>
-    <div>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <h3>{{ message }}</h3>
-                {% endfor %}
-            {% endif %}    
-        {% endwith %}
-        <h3>Instructions:</h3>
-        <ul>
-            <li>Please evaluate the events below. Your decision for each event will be posted next to the event.</li>
-            <li>You are not required to evalute the events in order - you can come back to them later if needed.</li>
-            <li>You are not required to evaluate every event, so take your time and reason about each event. Some events are clear cut, and some are not. </li>
-            <li>Refer to the <a href="{{ url_for('reference') }}">Reference page</a> to help make your decisions. Please only use the resources provided (i.e., don't use the internet -- it probably won't help).</li>
-            <li>When you have evaluated all events, please click the "Finished!" button at the bottom.</li>
-            
-        </ul>
-        <h2><span>Number of Unprocessed Alerts: </span>
-            {% if num_unprocessed_alerts > 0 %}
-                <span style="color:red">{{ num_unprocessed_alerts }}</span>
-            {% else %}
-                <span style="color:#40f65b">{{ num_unprocessed_alerts }}</span>
+
+{% with messages = get_flashed_messages() %}
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+    {{message}}
+</div>
+{% endfor %}
+{% endwith %}
+
+<h1>Evaluate IDS Alerts</h1>
+<p>This is the main part of the experiment. Read the instructions below and evaluate the events as best you can. How
+    many you get correct does not affect your eligibility to receive compensation. However, quickly checking off answers
+    without due consideration of the task will exempt you from receiving compensation.</p>
+<ul>    
+    <li>You are not required to evaluate every event, so take your time and reason about each event. Some events are
+        clear cut, and some are not.</li>
+    <li>Refer to the <a href="{{ url_for('reference') }}">Security Playbook</a> for help on how to evaluate the network
+        events.</li>
+    <li>Do not use the Internet. Do not discuss with anyone else. If you have a question, raise your hand.</li>
+    <li>You may change your answers at any time.</li>
+    <li>Once you have evaluated all events, click the "Finished!" button at the bottom. This finalizes your answers and
+        you will no longer be able to change them.</li>
+    <li>Raise your hand if you have a question.</li>
+
+</ul>
+
+{% if num_unprocessed_alerts > 0 %}
+<div class="alert alert-warning">
+    <strong>Number of events left to process: {{ num_unprocessed_alerts }}</strong>
+</div>
+{% else %}
+<div class="alert alert-success">
+    All events processed!
+</div>
+{% endif %}
+
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>Event Number</th>
+        <th>Decision</th>
+    </tr>
+
+    {% for event, decision in eventsList %}
+    <tr>
+        <td><a href="{{ url_for('eventPage', eventId = event.id, index = loop.index) }}"> Event
+                {{ loop.index }}</a></td>
+        <td>{% if decision != None %}
+            {{ decision }}
             {% endif %}
-        </h2>
-        <table align="center">
-           <tr>
-               <td><h4>Event Number</h4></td><td><h4>Decision</h4></td>
-           </tr>
-            
-            {% for event, decision in eventsList %}
-                <tr>
-                    <td><a href="{{ url_for('eventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td>     
-                    <td>{% if decision != None %}
-                            {{ decision }}
-                        {% endif %}
-                    </td>                                  
-                </tr>        
-            {% endfor %}
-        
-        </table>
-        <h3>Instructions:</h3>
-        <ul>
-            <li>Please evaluate the events above. Your decision for each event will be posted next to the event.</li>
-            <li>You are not required to evalute the events in order - you can come back to them later if needed.</li>
-            <li>You are not required to evaluate every event, so take your time and reason about each event. Some events are clear cut, and some are not. </li>
-            <li>Refer to the <a href="{{ url_for('reference') }}">Reference page</a> to help make your decisions. Please only use the resources provided (i.e., don't use the internet -- it probably won't help).</li>
-            <li>When you have evaluated all events, please click the "Finished!" button below.</li>
-        </ul>
-            
-            
-        <h2><span>Number of Unprocessed Alerts: </span>
-            {% if num_unprocessed_alerts > 0 %}
-                <span style="color:red">{{ num_unprocessed_alerts }}</span>
-            {% else %}
-                <span style="color:#40f65b">{{ num_unprocessed_alerts }}</span>
-            {% endif %}
-        </h2>
-                
-        <form action ="" onsubmit = "return confirm('Are you sure you\'re finished with the experiment? You will not be able to go back!\nClick \'OK\' to continue.')" method="POST">
-                <input type="submit" value="Finished!">
-        </form>
+        </td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+<h1>Instructions:</h1>
+<ul>
+    <li>Click on the Event # to see more details about the network event. Your decision for each event will be posted
+        next to the event.</li>
+    <li>You are not required to evaluate every event, so take your time and reason about each event. Some events are
+        clear cut, and some are not.</li>
+    <li>Refer to the <a href="{{ url_for('reference') }}">Security Playbook</a> for help on how to evaluate the network
+        events. You may wish to open this in a new window on your browser.</li>
+    <li>Do not use the Internet. Do not discuss with anyone else. If you have a question, raise your hand.</li>
+    <li>Once you have evaluated all events, click the "Finished!" button at the bottom.</li>
+    <li>You may change your answers at any time.</li>
+</ul>
+
+
+{% if num_unprocessed_alerts > 0 %}
+<div class="alert alert-warning">
+    <strong>Number of alerts left to process: {{ num_unprocessed_alerts }}</strong>
+</div>
+{% else %}
+<div class="alert alert-success">
+    All alerts processed!
+</div>
+{% endif %}
+
+
+<!-- Modal -->
+<div class="modal fade" id="experimentConfirm" tabindex="-1" role="dialog" aria-labelledby="experimentConfirmLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="experimentConfirmLabel">Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% if num_unprocessed_alerts > 0 %}
+                <p class="error"><strong>You have not made a decision on all events!</strong></p>
+                {% endif %}
+                <p>Are you sure you are finished with the experiment? You will not be able to go back!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form action="" method="POST">
+                    <button type="submit" class="btn btn-primary">Yes, I am sure!</button>
+                </form>
+
+            </div>
+        </div>
     </div>
+</div>
+
+<button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#experimentConfirm">
+    Finish!
+</button>
+
 {% endblock %}

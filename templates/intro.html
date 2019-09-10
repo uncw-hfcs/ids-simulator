@@ -49,9 +49,9 @@ Introduction
         {% if current_user.training_complete == False %}
         <li>Evaluate alerts (main exercise)</li>
         {% elif current_user.experiment_complete == False %}
-        <li><a href={{ url_for('experiment') }}>Evaluate alerts (main exercise)</a></li>
+        <li><a href={{ url_for('experiment') }}>Evaluate IDS Alerts (main exercise)</a></li>
         {% else %}
-        <li><strong>&lt;Completed&gt;</strong> <del>Evaluate alerts (main exercise)</del></li>
+        <li><strong>&lt;Completed&gt;</strong> <del>Evaluate IDS Alerts (main exercise)</del></li>
         {% endif %}
 
 

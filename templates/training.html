@@ -29,7 +29,7 @@ Training and Examples
         events. You may wish to open this in a new window on your browser.</li>
     <li>Do not use the Internet. Do not discuss with anyone else. If you have a question, raise your hand.</li>
     <li>Once you have evaluated all events, click the "Take the experiment!" button at the bottom.</li>
-
+    <li>You may change your answers at any time.</li>
 </ul>
 <table class="table table-striped table-bordered">
     <tr>
@@ -39,7 +39,8 @@ Training and Examples
 
     {% for event, decision in eventsList %}
     <tr>
-         <td><a href="{{ url_for('trainingEventPage', eventId = event.id, index = loop.index) }}"> Event {{ loop.index }}</a></td>
+        <td><a href="{{ url_for('trainingEventPage', eventId = event.id, index = loop.index) }}"> Event
+                {{ loop.index }}</a></td>
         <td>{% if decision != None %}
             {{ decision }}
             {% endif %}
@@ -47,16 +48,17 @@ Training and Examples
 
     </tr>
     {% endfor %}
-
-
 </table>
-<p>Number events left to evaluate:
-    {% if num_unprocessed_alerts > 0 %}
-    <span style="color:red">{{ num_unprocessed_alerts }}</span>
-    {% else %}
-    <span style="color:#40f65b">{{ num_unprocessed_alerts }}</span>
-    {% endif %}
-</p>
+
+{% if num_unprocessed_alerts > 0 %}
+<div class="alert alert-warning">
+    Number of events left to process: {{ num_unprocessed_alerts }}
+</div>
+{% else %}
+<div class="alert alert-success">
+    All events processed!
+</div>
+{% endif %}
 
 <!-- Modal -->
 <div class="modal fade" id="trainingConfirm" tabindex="-1" role="dialog" aria-labelledby="trainingConfirmLabel"

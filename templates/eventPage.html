@@ -5,51 +5,84 @@ Event Details
 {% endblock %}
 
 {% block content %}
-    <style>
-        input {
-            color: black;
-            margin-left: 5px;
-        }       
-        </style>
-    <article>           
 
-        <table>
-            <tr><td><a href="{{ url_for('reference') }}" target="_blank"><h3>Reference Page</h3></a></td></tr>
-            <tr><td>City of Authorization: </td> <td><pre>   </pre></td>   <td> {{event.country_of_authentication1}}</td></tr>
-            <tr><td>Number of Successful Logins: </td>  <td><pre>   </pre></td>  <td> {{event.number_successful_logins1}}</td></tr>
-            <tr><td>Number of Failed Logins: </td>  <td><pre>   </pre></td>  <td> {{event.number_failed_logins1}}</td></tr>
-            <tr><td>Source Provider: </td> <td><pre>   </pre></td>   <td> {{event.source_provider1}}</td></tr>
-            <tr><td>City of Authorization: </td>  <td><pre>   </pre></td>  <td> {{event.country_of_authentication2}}</td></tr>
-            <tr><td>Number of Successful Logins: </td>   <td><pre>   </pre></td> <td> {{event.number_successful_logins2}}</td></tr>
-            <tr><td>Number of Failed Logins: </td> <td><pre>   </pre></td>   <td> {{event.number_failed_logins2}}</td></tr>
-            <tr><td>Source Provider: </td>  <td><pre>   </pre></td> <td> {{event.source_provider2}} </td></tr>
-            <tr><td>Time Between Authentications: </td>  <td></td>  <td> {{event.time_between_authentications}} hrs</td></tr>
-            <tr><td>VPN Confidence: </td> <td><pre>   </pre></td>  <td> {{event.vpn_confidence}} </td></tr>
-        </table>
-    </article>
-    <aside>
-        
-        <p> Please determine if this event should be escalated.</p>
-        <form action = "" method = "POST" id = "event_decision">
-            {% if form.escalate.errors %}
-            <p><span style="color: red;">[Please select a value.]</span></p>
-            {% endif %}
-            {{ form.escalate }}
+{% if form.errors %}
+<div class="alert alert-danger" role="alert">
+    Not all form fields were filled out. Please check for error messages below.
+</div>
+{% endif %}
 
-            {% if form.confidence.errors %}
-            <p><span style="color: red;">[Please select a value.]</span></p>
-            {% endif %}
-            <p> On a scale from 1 (low) to 5 (high), please rate your confidence in this decision.</p>
-            {% for subfield in form.confidence %}
-            <tr>
-                <td>{{ subfield }}</td>
-                <td>{{ subfield.label }}</td>
-            </tr>
-            {% endfor %}
+<h1>Event #{{ number }}</h1>
+
+<table class="table">
+    <tr>
+        <th scope="row">City of Authorization</th>
+        <td>{{ event.country_of_authentication1 }}</td>
+        <td>{{ event.country_of_authentication2 }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Number of Successful Logins</th>
+        <td>{{ event.number_successful_logins1 }}</td>
+        <td>{{ event.number_successful_logins2 }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Number of Failed Logins</th>
+        <td>{{ event.number_failed_logins1 }}</td>
+        <td>{{ event.number_failed_logins2 }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Source Provider</th>
+        <td>{{ event.source_provider1 }}</td>
+        <td>{{ event.source_provider2 }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Time between Authentications</th>
+        <td colspan="2" class="text-center">{{event.time_between_authentications}} hrs</td>
+    </tr>
+    <tr>
+        <th scope="row">VPN Confidence</th>
+        <td colspan="2" class="text-center">{{event.vpn_confidence}}</td>
+    </tr>
+</table>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Event Decision Form</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Determine if this event should be escalated. </h6>
+
+        <form action="" method="POST" id="event_decision">
+            <div class="form-group">
+                {% if form.escalate.errors %}
+                <div class="alert alert-danger" role="alert">
+                    You must select a value.
+                </div>
+                {% endif %}
+                <ul class="list-unstyled">
+                    {% for subfield in form.escalate %}
+                    <li>{{ subfield }} {{ subfield.label }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="form-group">
+                <p> On a scale from 1 (low) to 5 (high), please rate your confidence in this decision. A decision of "I
+                    don't know" does not require a confidence rating.</p>
+                {% if form.confidence.errors %}
+                <div class="alert alert-danger" role="alert">
+                    You must select a confidence level.
+                </div>
+                {% endif %}
+                {% for subfield in form.confidence %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                {% endfor %}
+            </div>
             {{ form.csrf_token }}
-           <br> <input type="submit" value="Submit"><input type="reset" value="Reset">
+            <input type="submit" value="Submit" class="btn btn-primary"><input type="reset" value="Reset" class="btn">
         </form>
-    </aside>
+    </div>
+</div>
 
-    
+
 {% endblock %}
