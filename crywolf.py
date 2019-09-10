@@ -97,7 +97,7 @@ def prequestionnaire():
 @login_required
 def training():
     # ids = [1,2,3,4,5]
-    ids = [1, 2, 3]
+    ids = [1, 2]
     if request.method == "GET":
         num_processed_alerts = 0
         for id in ids:

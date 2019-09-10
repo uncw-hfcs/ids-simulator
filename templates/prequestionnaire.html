@@ -27,7 +27,9 @@ Pre-experiment Questionnaire
         <li>
             <p>
                 {% if form.role.errors %}
-                <span class="error">[Please select a value]</span>
+                <div class="alert alert-danger" role="alert">
+                    <strong>Please select a value.</strong>
+                </div>
                 {% endif %}
                 {{ form.role.label }}
                 {{ form.role }}
@@ -38,7 +40,9 @@ Pre-experiment Questionnaire
 
             <p>
                 {% if form.exp_researcher.errors or form.exp_admin.errors or form.exp_software.errors or form.exp_security.errors %}
-                <span class="error">[Please ensure all fields have a selection]</span>
+                <div class="alert alert-danger" role="alert">
+                    <strong>Please select a value for each role.</strong>
+                </div>
                 {% endif %}
                 How many years of professional experience do you have in the following (select all that apply):
             </p>
@@ -65,7 +69,9 @@ Pre-experiment Questionnaire
 
             <p>
                 {% if form.familiarity_none.errors %}
-                <span class="error">[Please select at least one checkbox.]</span>
+                <div class="alert alert-danger" role="alert">
+                    <strong>Please select at least one checkbox.</strong>
+                </div>
                 {% endif %}
                 How familiar are you with Internet cyber security attacks? (select all that apply)
             </p>
@@ -102,7 +108,9 @@ Pre-experiment Questionnaire
         <li class="mt-5">
 
             <p> {% if form.subnet_mask.errors %}
-                <span class="error">[Please select a value]</span>
+                <div class="alert alert-danger" role="alert">
+                    <strong>Please select a value.</strong>
+                </div>
                 {% endif %}
                 What is the <em>subnet mask</em> for 173.67.14.127 / 24?
             </p>
@@ -116,7 +124,9 @@ Pre-experiment Questionnaire
         <li class="mt-5">
 
             <p> {% if form.network_address.errors %}
-                <span class="error">[Please select a value]</span>
+                <div class="alert alert-danger" role="alert">
+                    <strong>Please select a value.</strong>
+                </div>
                 {% endif %}
                 What is the <em>network address</em> for 173.67.14.127 / 24?
             </p>
@@ -130,7 +140,9 @@ Pre-experiment Questionnaire
         </li>
         <li class="mt-5">
             <p>{% if form.tcp_faster.errors %}
-                <span class="error">[Please select a value]</span>
+                <div class="alert alert-danger" role="alert">
+                    <strong>Please select a value.</strong>
+                </div>
                 {% endif %}
                 True or False: TCP is a faster, more efficient transfer protocol compared to UDP?
             </p>
@@ -144,7 +156,9 @@ Pre-experiment Questionnaire
         <li class="mt-5">
 
             <p>{% if form.http_port.errors %}
-                <span class="error">[Please select a value]</span>
+                <div class="alert alert-danger" role="alert">
+                    <strong>Please select a value.</strong>
+                </div>
                 {% endif %}
                 Which port does HTTP use by default?
             </p>
@@ -157,7 +171,9 @@ Pre-experiment Questionnaire
         </li>
         <li class="mt-5">
             <p> {% if form.security_device.errors %}
-                <span class="error">[Please select a value]</span>
+                <div class="alert alert-danger" role="alert">
+                    <strong>Please select a value.</strong>
+                </div>
                 {% endif %}
                 A network security device that monitors incoming and outgoing network
                 traffic and decides whether to allow or block specific traffic based
@@ -172,7 +188,9 @@ Pre-experiment Questionnaire
         </li>
         <li class="mt-5">
             <p> {% if form.ip_port.errors %}
-                <span class="error">[Please select a value]</span>
+                <div class="alert alert-danger" role="alert">
+                    <strong>Please select a value.</strong>
+                </div>
                 {% endif %}
                 The combination of an IP address and the port used is called a:
             </p>
@@ -186,7 +204,9 @@ Pre-experiment Questionnaire
         </li>
         <li class="mt-5">
             <p> {% for error in form.which_model.errors %}
-                <span class="error">[Please select a value]</span>
+                <div class="alert alert-danger" role="alert">
+                    <strong>Please select a value.</strong>
+                </div>
                 {% endfor %}
                 Network, Internet, Transport, Application are the layers of which networking model?
             </p>
