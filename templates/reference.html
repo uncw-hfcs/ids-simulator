@@ -13,12 +13,37 @@ Reference Page
     .tg .tg-wa1i{font-weight:bold;text-align:center;vertical-align:middle}
     .tg .tg-nrix{text-align:center;vertical-align:middle}
     </style>
-    <h2>The Reference Page</h2>
+    <h1>The Security Playbook</h1>
       <p>
         This page provides guidelines that will help you determine whether an event should be escalated. It can be accessed at any time by clicking the link at the
           top of any Event Details Page, or on the menu bar at the top of the page. As you will most likely reference this page often, it may benefit you to leave it open in
           seperate tab.
       </p>
+      <p> It contains descriptions of the network event data and other helpful information you will need. You
+          can always access the Security Playbook from the navigation bar. You will become more and more familiar with the
+          playbook as the experiment progresses. Take your time to understand what is in the Security Playbook and refer to it
+          often to help you.</p>
+    <h2>Event Data</h2>
+    <ul>
+        <li>"City of Authorization" - There will be two of these fields, one for each location that the IDS detected an
+            authorization from. It tells you
+            the location that the authorization came from.</li>
+        <li>"Number of Successful Logins" - There will be two of these fields, one for each location that the IDS detected
+            an authorization from. It tells
+            you how many times there was a successful login from this location in the past 24 hours.</li>
+        <li>"Number of Failed Logins" - There will be two of these fields, one for each location that the IDS detected an
+            authorization from. It tells
+            you how many times there was a failed login from this location in the past 24 hours.</li>
+        <li>"Source Provider" - There will be two of these fields, one for each location that the IDS detected an
+            authorization from. It tells you the type of
+            Internet Provider the authorizations came from.</li>
+        <li>"Time Between Authorizations" - This is the field that typically triggers the alarm. The IDS correlates an
+            authorization from each location
+            and determines that they happened too quickly.</li>
+        <li>"VPN Confidence" - This should be treated as the conclusion that you, the analyst/participant, came to that this
+            event involves a user utilizing
+            a Virtual Private Network (VPN).</li>
+    </ul>
     <h2>How to evaluate an event</h2>
       <ul>
           <li>Look at the locations of the authorizations and consider the concern level for each location. This alone shouldn't be the deciding factor, but locations

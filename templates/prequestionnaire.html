@@ -10,7 +10,9 @@ Pre-experiment Questionnaire
 <h1>Pre-experiment Questionnaire</h1>
 
 {% if form.errors %}
-<p class="error">You must answer all questions before submitting. Please check for error messages below.</p>
+<div class="alert alert-danger" role="alert">
+    You must answer all questions before submitting. Please check for error messages below.
+</div>
 {% endif %}
 
 

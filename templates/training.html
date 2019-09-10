@@ -39,14 +39,7 @@ Training and Examples
 
     {% for event, decision in eventsList %}
     <tr>
-        {% if event.id == 1 %}
-        <td><a href="{{ url_for('MoscowEventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td>
-        {% elif event.id == 2 %}
-        <td><a href="{{ url_for('BeijingEventPage', eventId = event.id) }}"> Event {{ loop.index }}</a></td>
-        {% else %}
-        <td><a href="{{ url_for('trainingEventPage', eventId = event.id) }}"> Event {{ loop.index }}</a>
-        </td>
-        {% endif %}
+         <td><a href="{{ url_for('trainingEventPage', eventId = event.id, index = loop.index) }}"> Event {{ loop.index }}</a></td>
         <td>{% if decision != None %}
             {{ decision }}
             {% endif %}

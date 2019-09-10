@@ -5,3 +5,7 @@
 .error {
     color: red;
 }
+
+.nav-link {
+    color: white !important;
+}
