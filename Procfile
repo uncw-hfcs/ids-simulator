@@ -1,1 +1,1 @@
-web: python manage.py db upgrade; python testingSetup.py; gunicorn crywolf:app
+web: python manage.py db upgrade; gunicorn crywolf:app
