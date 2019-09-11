@@ -33,9 +33,9 @@ Introduction
     <p>The major steps of this experiment are listed below. Complete them in order. You can always click on the <em>Home</em> link in the navigation bar to return to this page.</p>
     <ol>
         {% if current_user.questionnaire_complete == False %}
-        <li><a href={{ url_for('prequestionnaire')}}>Beginning questionnaire</a></li>
+        <li><a href={{ url_for('prequestionnaire')}}>Questionnaire</a></li>
         {% else %}
-        <li><strong>&lt;Completed&gt;</strong> <del>Beginning questionnaire</del></li>
+        <li><strong>&lt;Completed&gt;</strong> <del>Questionnaire</del></li>
         {% endif %}
 
         {% if current_user.questionnaire_complete == False %}
@@ -56,11 +56,11 @@ Introduction
 
 
         {% if current_user.experiment_complete == False %}
-        <li>Post-experiment questionnaire</li>
+        <li>Ending Survey</li>
         {% elif current_user.survey_complete == False %}
-        <li><a href={{ url_for('postsurvey') }}>Post-experiment questionnaire</a></li>
+        <li><a href={{ url_for('postsurvey') }}>Ending Survey</a></li>
         {% else %}
-        <li><strong>&lt;Completed&gt;</strong> <del>Post-experiment questionnaire</del></li>
+        <li><strong>&lt;Completed&gt;</strong> <del>Ending Survey</del></li>
         {% endif %}
 
         {% if current_user.survey_complete == False %}
