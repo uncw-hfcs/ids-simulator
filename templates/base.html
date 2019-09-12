@@ -7,6 +7,8 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/css/bootstrap-slider.min.css">
     <link rel="stylesheet" href="../static/css/crywolf.css">
 
     <title>{% block title %}{% endblock %}</title>
@@ -22,6 +24,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/bootstrap-slider.min.js"></script>
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
@@ -44,7 +47,8 @@
                     {% endif %}
 
                     {% if current_user.is_authenticated and current_user.questionnaire_complete == False %}
-                    <li class="nav-item"><a class="nav-link" href={{ url_for('prequestionnaire')}}>Questionnaire</a></li>
+                    <li class="nav-item"><a class="nav-link" href={{ url_for('prequestionnaire')}}>Questionnaire</a>
+                    </li>
                     {% endif %}
 
                     {% if current_user.is_authenticated and current_user.questionnaire_complete == True and current_user.experiment_complete == False %}
@@ -52,7 +56,8 @@
                     {% endif %}
 
                     {% if current_user.is_authenticated and current_user.training_complete == True and current_user.experiment_complete == False %}
-                    <li class="nav-item"><a class="nav-link" href={{ url_for('experiment') }}>Evaluate IDS Alerts</a></li>
+                    <li class="nav-item"><a class="nav-link" href={{ url_for('experiment') }}>Evaluate IDS Alerts</a>
+                    </li>
                     {% endif %}
 
                     {% if current_user.is_authenticated and current_user.experiment_complete == True and current_user.survey_complete == False %}

@@ -1,22 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}
-Logout
+Completion Code
 {% endblock %}
 
 {% block content %}
-    <style>
-        button {
-            color: black;
-        }
-        </style>
-    <article>
-        <h2>Completion Code: {{ code }}</h2>
-        <p>Please write down your name and the Completion Code on the slip of paper provided and hand it to the experiment administrator.</p>
-    </article>
-    <aside>
-        <p>Thank you for your participation!</p>
-        <button type="submit" onclick="location.href='{{ url_for('index') }}';">Return to homepage!</button>
-                    
-    </aside>
+<h1>Completion Code: {{ code }}</h1>
+<p>Please write down your name and the Completion Code on the slip of paper provided and hand it to the experiment
+    administrator.</p>
+<p>Thank you for your participation!</p>
+<button class="btn btn-primary" type="submit" onclick="location.href='{{ url_for('index') }}';">Return to homepage!</button>
 {% endblock %}

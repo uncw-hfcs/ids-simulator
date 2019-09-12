@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, RadioField, BooleanField, TextAreaField, DecimalField, SelectField
-from wtforms.validators import InputRequired, DataRequired, ValidationError, Optional
+from wtforms.fields import StringField, RadioField, BooleanField, TextAreaField, IntegerField, SelectField
+from wtforms.validators import InputRequired, DataRequired, ValidationError, Optional, NumberRange
 
 
 class OptionalConfidence(Optional):
@@ -30,12 +30,12 @@ class UserForm(FlaskForm):
     username = StringField('username:', validators=[InputRequired()])
     
 class SurveyForm(FlaskForm):
-    mental = DecimalField(places=1,validators=[InputRequired()])
-    physical = DecimalField(places=1,validators=[InputRequired()])
-    temporal = DecimalField(places=1,validators=[InputRequired()])
-    performance = DecimalField(places=1,validators=[InputRequired()])
-    effort = DecimalField(places=1,validators=[InputRequired()])
-    frustration = DecimalField(places=1,validators=[InputRequired()])
+    mental = IntegerField(validators=[InputRequired(), NumberRange(min=1.0, max=10.0)])
+    physical = IntegerField(validators=[InputRequired(), NumberRange(min=1.0, max=10.0)])
+    temporal = IntegerField(validators=[InputRequired(), NumberRange(min=1.0, max=10.0)])
+    performance = IntegerField(validators=[InputRequired(), NumberRange(min=1.0, max=10.0)])
+    effort = IntegerField(validators=[InputRequired(), NumberRange(min=1.0, max=10.0)])
+    frustration = IntegerField(validators=[InputRequired(), NumberRange(min=1.0, max=10.0)])
     useful_info = TextAreaField(validators=[InputRequired()])
     feedback = TextAreaField()
 

@@ -9,3 +9,7 @@
 .nav-link {
     color: white !important;
 }
+
+.slider.slider-horizontal{
+    width: 100%;
+  }
