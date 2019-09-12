@@ -5,6 +5,7 @@ from flask_script import Manager, prompt_bool
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
+import models
 
 @manager.command
 def initdb():
