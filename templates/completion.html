@@ -5,9 +5,9 @@ Completion Code
 {% endblock %}
 
 {% block content %}
-<h1>Completion Code: {{ code }}</h1>
-<p>Please write down your name and the Completion Code on the slip of paper provided and hand it to the experiment
-    administrator.</p>
-<p>Thank you for your participation!</p>
-<button class="btn btn-primary" type="submit" onclick="location.href='{{ url_for('index') }}';">Return to homepage!</button>
+<h1>Thank you!</h1>
+<p>The experiment is complete. Please write down your username and completion code on the slip of papter and hand it to the proctor.</p>
+<p><strong>User: {{ current_user.username }}</strong></p>
+<p><strong>Completion code: {{ code }}</strong></p>
+<button class="btn btn-primary" type="submit" onclick="location.href='{{ url_for('index') }}';">Return to homepage</button>
 {% endblock %}
