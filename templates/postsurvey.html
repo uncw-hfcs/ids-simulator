@@ -5,75 +5,188 @@ Ending Survey
 {% endblock %}
 
 {% block content %}
-    <style>
-        table, th, td {
-            border: 1px solid black;
-            padding: 15px;
-        }
-    </style>
-    <main>
-        <header>
-            <h1>Ending Survey</h1>
-            <p>Please rate how you feel about the following.</p>
+<h1>Ending Survey</h1>
+<p>Please rate how you feel about the following.</p>
 
-            {% if form.mental.errors or form.physical.errors or form.temporal.errors or form.performance.errors or form.effort.errors or form.frustration.errors %}
-            <span style="color: red;">[Please ensure all table fields are filled out]</span>
-            {% endif %}
+{% if form.errors %}
+<div class="alert alert-danger">
+    Some fields do not have necessary responses. Please check for error messages below.
+</div>
+{% endif %}
 
-            <form action = "" method = "POST" id = "postsurvey">
-                <ol>
-                    <li>
-                        <table>
-                                <thead><tr><th>Title</th><th>Description</th><th>Scale</th><th>Rating</th></tr></thead>
-                                    <tbody>
-                                        <tr><td> Mental Demand</td><td> How much mental and perceptual activity was required (e.g. thinking, deciding, 
-                                                                        calculating, remembering, looking, searching, etc.)? Was the task easy or 
-                                                                        demanding, simple or complex?</td>
-                                            <td> 1 - 10 (Low / High)</td>
-                                            <td>{{ form.mental(size=3, maxlength=3) }}</td>
-                                        </tr>
-                                        <tr><td> Physical Demand</td><td> How much physical activity was required (e.g. pushing, pulling, turning, 
-                                                                          controlling, activating, etc.)? Was the task easy or demanding, slack or 
-                                                                          strenuous?</td>
-                                            <td> 1 - 10 (Low / High)</td>
-                                            <td>{{ form.physical(size=3, maxlength=3) }}</td>
-                                        </tr>
-                                        <tr><td> Temporal Demand</td><td> How much time pressure did you feel due to the rate or pace at which the 
-                                                                          tasks occurred? Was the pace slow and leisurely or rapid and frantic?</td>
-                                            <td> 1 - 10 (Low / High)</td>
-                                            <td>{{ form.temporal(size=3, maxlength=3) }}</td>
-                                        </tr>
-                                        <tr><td> Performance</td><td> How successful do you think you were in accomplishing the goals of the task set 
-                                                                      by the experimenter (or yourself)? How satisfied were you with your performance 
-                                                                      in accomplishing these goals?</td>
-                                            <td> 1 - 10 (Good / Bad)</td>
-                                            <td>{{ form.performance(size=3, maxlength=3) }}</td>
-                                        </tr>
-                                        <tr><td> Effort</td><td> How hard did you have to work (mentally and physically) to accomplish your level of performance?</td>
-                                            <td> 1 - 10 (Low / High)</td>
-                                            <td>{{ form.effort(size=3, maxlength=3) }}</td>
-                                        </tr>
-                                        <tr><td> Frustration Level</td><td> How insecure, discouraged, irritated, stressed, and annoyed versus secure, gratified, 
-                                                                            content, relaxed, and complacent did you feel during the task?</td>
-                                            <td> 1 - 10 (Low / High)</td>
-                                            <td>{{ form.frustration(size=3, maxlength=3) }}</td>
-                                        </tr>
-                                    </tbody>
-                        </table>
-                    </li>
-                    <li><h4>Which pieces of information were most useful in determining whether or not an alert should be escalated? What did you focus on the most? 
-                    You can refer back to the <a href="{{ url_for('reference') }}" target="_blank">reference page</a> to remind yourself of the alert details.</h4></li> 
-                        {% if form.useful_info.errors %}
-                        <span style="color: red;">[Please briefly state the information you found useful]</span>
-                        {% endif %}                       
-                        {{ form.useful_info(rows=4, cols=50) }}
-                        
-                    <li><h4>Is there any other feedback you would like to provide?</h4></li>                         
-                        {{ form.feedback(rows=4, cols=50) }}
-                </ol>
-                {{ form.csrf_token }}
-                <input type="submit" value="Submit">
-            </form>
-        </header>
-    </main>
+<form action="" method="POST" id="postsurvey">
+    <ol>
+        <li class="mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Mental Demand</h5>
+                    <p>How much mental and perceptual activity was required (e.g. thinking, deciding,
+                        calculating, remembering, looking, searching, etc.)? Was the task easy or
+                        demanding, simple or complex?</p>
+                    <div class="w-75 pl-2">
+                        <input id="mental" name="mental" type="text" />
+                    </div>
+                    <div class="clearfix w-75">
+                        <p class="float-left ml-5 pl-2">Very Low</p>
+                        <p class="float-right">Very High</p>
+                    </div>
+                    {% if form.mental.errors %}
+                    <div class="alert alert-danger">
+                        Please select a value from 1 to 10.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </li>
+
+        <li class="mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Physical Demand</h5>
+                    <p>How much physical activity was required (e.g. pushing, pulling, turning,
+                        controlling, activating, etc.)? Was the task easy or demanding, slack or
+                        strenuous?</p>
+                    <div class="w-75 pl-2">
+                        <input id="physical" name="physical" type="text" />
+                    </div>
+                    <div class="clearfix w-75">
+                        <p class="float-left ml-5 pl-2">Very Low</p>
+                        <p class="float-right">Very High</p>
+                    </div>
+                    {% if form.physical.errors %}
+                    <div class="alert alert-danger">
+                        Please select a value from 1 to 10.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </li>
+
+        <li class="mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Temporal Demand</h5>
+                    <p>How much time pressure did you feel due to the rate or pace at which the
+                        tasks occurred? Was the pace slow and leisurely or rapid and frantic?</p>
+                    <div class="w-75 pl-2">
+                        <input id="temporal" name="temporal" type="text" />
+                    </div>
+                    <div class="clearfix w-75">
+                        <p class="float-left ml-5 pl-2">Very Low</p>
+                        <p class="float-right">Very High</p>
+                    </div>
+                    {% if form.temporal.errors %}
+                    <div class="alert alert-danger">
+                        Please select a value from 1 to 10.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </li>
+
+        <li class="mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Performance</h5>
+                    <p>How successful do you think you were in accomplishing the goals of the task set
+                        by the experimenter (or yourself)? How satisfied were you with your performance
+                        in accomplishing these goals?</p>
+                    <div class="w-75 pl-2">
+                        <input id="performance" name="performance" type="text" />
+                    </div>
+                    <div class="clearfix w-75">
+                        <p class="float-left ml-5 pl-2">Failure</p>
+                        <p class="float-right">Perfect</p>
+                    </div>
+                    {% if form.performance.errors %}
+                    <div class="alert alert-danger">
+                        Please select a value from 1 to 10.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </li>
+
+        <li class="mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Effort</h5>
+                    <p>How hard did you have to work (mentally and physically) to accomplish your level of
+                        performance?</p>
+                    <div class="w-75 pl-2">
+                        <input id="effort" name="effort" type="text" />
+                    </div>
+                    <div class="clearfix w-75">
+                        <p class="float-left ml-5 pl-2">Very Low</p>
+                        <p class="float-right">Very High</p>
+                    </div>
+                    {% if form.effort.errors %}
+                    <div class="alert alert-danger">
+                        Please select a value from 1 to 10.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </li>
+
+        <li class="mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Frustration</h5>
+                    <p>How insecure, discouraged, irritated, stressed, and annoyed versus secure, gratified,
+                        content, relaxed, and complacent did you feel during the task?</p>
+                    <div class="w-75 pl-2">
+                        <input id="frustration" name="frustration" type="text" />
+                    </div>
+                    <div class="clearfix w-75">
+                        <p class="float-left ml-5 pl-2">Very Low</p>
+                        <p class="float-right">Very High</p>
+                    </div>
+                    {% if form.frustration.errors %}
+                    <div class="alert alert-danger">
+                        Please select a value from 1 to 10.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </li>
+
+        <li class="mt-5">
+            <p>Which pieces of information were most useful in determining whether or not an alert should be escalated?
+                What did you focus on the most?
+                You can refer back to the <a href="{{ url_for('reference') }}" target="_blank">Security Playbook</a> to
+                remind yourself of the alert details.</p>
+        </li>
+        {% if form.useful_info.errors %}
+        <div class="alert alert-danger">
+            Some fields do not have necessary responses. Please check for error messages below.
+        </div>
+        {% endif %}
+        {{ form.useful_info(rows=4, cols=50) }}
+
+        <li class="mt-5">
+            <p>Is there any other feedback you would like to provide?</p>
+        </li>
+        {{ form.feedback(rows=4, cols=50) }}
+    </ol>
+    {{ form.csrf_token }}
+    <input class="btn btn-primary" type="submit" value="Submit">
+
+</form>
+
+<script>
+    function create_slider(slider_id, value) {
+        return new Slider('#' + slider_id, {
+            ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            ticks_labels: ['', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            ticks_snap_bounds: 30,
+            value: value ? value : 0
+        });
+    }
+
+    var prev_values = {{ form.data | tojson }};
+
+    slider_ids = ["mental", "physical", "temporal", "performance", "effort", "frustration"];
+    sliders = slider_ids.map(x => create_slider(x, prev_values[x]));
+</script>
 {% endblock %}

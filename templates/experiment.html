@@ -60,19 +60,6 @@ Evaluate IDS Alerts
     {% endfor %}
 </table>
 
-<h1>Instructions:</h1>
-<ul>
-    <li>Click on the Event # to see more details about the network event. Your decision for each event will be posted
-        next to the event.</li>
-    <li>You are not required to evaluate every event, so take your time and reason about each event. Some events are
-        clear cut, and some are not.</li>
-    <li>Refer to the <a href="{{ url_for('reference') }}">Security Playbook</a> for help on how to evaluate the network
-        events. You may wish to open this in a new window on your browser.</li>
-    <li>Do not use the Internet. Do not discuss with anyone else. If you have a question, raise your hand.</li>
-    <li>Once you have evaluated all events, click the "Finished!" button at the bottom.</li>
-    <li>You may change your answers at any time.</li>
-</ul>
-
 
 {% if num_unprocessed_alerts > 0 %}
 <div class="alert alert-warning">
@@ -83,6 +70,8 @@ Evaluate IDS Alerts
     All alerts processed!
 </div>
 {% endif %}
+
+<p>Click the button below once you have finished evaluating the events.</p>
 
 
 <!-- Modal -->
