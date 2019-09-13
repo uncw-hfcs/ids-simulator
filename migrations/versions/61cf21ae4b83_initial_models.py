@@ -152,12 +152,12 @@ def upgrade():
         {
             'should_escalate' : '1',
             'country_of_authentication1' : "For this event",
-            'country_of_authentication2' : "please just",
-            'number_successful_logins1' : "select 'Escalate'",
-            'number_successful_logins2' : "for your",
-            'number_failed_logins1' : "decision",
-            'number_failed_logins2' : "and '2'",
-            'source_provider1' : "for",           
+            'country_of_authentication2' : "select 'Escalate",
+            'number_successful_logins1' : "decision",
+            'number_successful_logins2' : "for",
+            'number_failed_logins1' : "please just",
+            'number_failed_logins2' : "for your",
+            'source_provider1' : "and '2'",           
             'source_provider2' : "confidence",
             'time_between_authentications' : '0',
             'vpn_confidence' : '0'
