@@ -1,311 +1,328 @@
 {% extends "base.html" %}
 
 {% block title %}
-Reference Page
+Security Playbook
 {% endblock %}
 
 {% block content %}
 
-<style type="text/css">
-    .tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}
-    .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-    .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-    .tg .tg-wa1i{font-weight:bold;text-align:center;vertical-align:middle}
-    .tg .tg-nrix{text-align:center;vertical-align:middle}
-    </style>
-    <h1>The Security Playbook</h1>
-      <p>
-        This page provides guidelines that will help you determine whether an event should be escalated. It can be accessed at any time by clicking the link at the
-          top of any Event Details Page, or on the menu bar at the top of the page. As you will most likely reference this page often, it may benefit you to leave it open in
-          seperate tab.
-      </p>
-      <p> It contains descriptions of the network event data and other helpful information you will need. You
-          can always access the Security Playbook from the navigation bar. You will become more and more familiar with the
-          playbook as the experiment progresses. Take your time to understand what is in the Security Playbook and refer to it
-          often to help you.</p>
-    <h2>Event Data</h2>
-    <ul>
-        <li>"City of Authorization" - There will be two of these fields, one for each location that the IDS detected an
-            authorization from. It tells you
-            the location that the authorization came from.</li>
-        <li>"Number of Successful Logins" - There will be two of these fields, one for each location that the IDS detected
-            an authorization from. It tells
-            you how many times there was a successful login from this location in the past 24 hours.</li>
-        <li>"Number of Failed Logins" - There will be two of these fields, one for each location that the IDS detected an
-            authorization from. It tells
-            you how many times there was a failed login from this location in the past 24 hours.</li>
-        <li>"Source Provider" - There will be two of these fields, one for each location that the IDS detected an
-            authorization from. It tells you the type of
-            Internet Provider the authorizations came from.</li>
-        <li>"Time Between Authorizations" - This is the field that typically triggers the alarm. The IDS correlates an
-            authorization from each location
-            and determines that they happened too quickly.</li>
-        <li>"VPN Confidence" - This should be treated as the conclusion that you, the analyst/participant, came to that this
-            event involves a user utilizing
-            a Virtual Private Network (VPN).</li>
-    </ul>
-    <h2>How to evaluate an event</h2>
-      <ul>
-          <li>Look at the locations of the authorizations and consider the concern level for each location. This alone shouldn't be the deciding factor, but locations
-              with a high level of concern should be evaluated critically.
-          </li>
-          <li>Evaluate the time between authorizations. Authorizations from different locations in a short time could be an indication of account compromise.
-                Refer to the chart below for typical travel times between locations.</li>
-          <li>Analyze the ratio of successful logins to failed logins from each location. More failed logins than successful logins could be an indication of
-              password guessing.              
-          </li>
-          <li>Evaluate the source providers that the authorizations are coming from. "Telecoms" are traditional Internet Source Providers (ISPs), such as Spectrum and
-                U-verse. When you see "Mobile/cellular," think of companies such as Verison Wireless, AT&T, or Sprint. "Hosting/server" providers are companies that
-                provide a variey of services, such as Virtual Private Networks (VPN's), web hosting, and server space. There's nothing inherently safe or malicious about
-                any type of source provider, but knowing can help you determine if other information makes sense.
-          </li>
-          <li>
-              The number attributed to "VPN Confidence" should be treated as the conclusion that you, the analyst/participant, came to that this event
-                involves a user utilizing a VPN.
-          </li>
-      </ul> 
-    <h2>Things to keep in mind</h2>
-        <ul>
-            <li>Users visiting countries with restrictive governments will often use a VPN to get past that nation's firewall.</li>
-            <li>It's not unusual for a mobile device to ping in the country the mobile device is registered in when the user is traveling abroad.</li>
-            <li>The travel times listed in the table below are guidelines, not absolutes.</li>
-        </ul>
-    <h2>Concern Level for each location</h2>
-    <style type="text/css">
-      .tg  {border-collapse:collapse;border-spacing:0;}
-      .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-      .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-      .tg .tg-9wq8{border-color:inherit;text-align:center;vertical-align:middle}
-      .tg .tg-uzvj{font-weight:bold;border-color:inherit;text-align:center;vertical-align:middle}
-      .tg .tg-fymr{font-weight:bold;border-color:inherit;text-align:left;vertical-align:top}
-      .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-      </style>
-      <table class="tg">
-        <tr>
-          <th class="tg-9wq8"> </th>
-          <th class="tg-uzvj"> </th>
-          <th class="tg-uzvj">New<br>&nbsp;&nbsp;York</th>
-          <th class="tg-uzvj">Seattle</th>
-          <th class="tg-uzvj">Los<br>&nbsp;&nbsp;Angeles</th>
-          <th class="tg-uzvj">Miami</th>
-          <th class="tg-uzvj">Vancouver</th>
-          <th class="tg-fymr">Toronto</th>
-          <th class="tg-fymr">London</th>
-          <th class="tg-fymr">Paris</th>
-          <th class="tg-fymr">Berlin</th>
-          <th class="tg-fymr">Tokyo</th>
-          <th class="tg-fymr">Moscow</th>
-          <th class="tg-fymr">Beijing</th>
-        </tr>
-        <tr>
-          <td class="tg-uzvj">USA</td>
-          <td class="tg-uzvj">New York</td>
-          <td class="tg-9wq8">0</td>
-          <td class="tg-9wq8">6</td>
-          <td class="tg-9wq8">5.75</td>
-          <td class="tg-9wq8">3</td>
-          <td class="tg-9wq8">5.67</td>
-          <td class="tg-0pky">1.5</td>
-          <td class="tg-0pky">6.75</td>
-          <td class="tg-0pky">6.9</td>
-          <td class="tg-0pky">8</td>
-          <td class="tg-0pky">13.5</td>
-          <td class="tg-0pky">9.2</td>
-          <td class="tg-0pky">13.5</td>
-        </tr>
-        <tr>
-          <td class="tg-9wq8"> </td>
-          <td class="tg-uzvj">Seattle</td>
-          <td class="tg-9wq8">6</td>
-          <td class="tg-9wq8">0</td>
-          <td class="tg-9wq8">2.7</td>
-          <td class="tg-9wq8">5.85</td>
-          <td class="tg-9wq8">3</td>
-          <td class="tg-0pky">4.5</td>
-          <td class="tg-0pky">9.25</td>
-          <td class="tg-0pky">9.55</td>
-          <td class="tg-0pky">11.95</td>
-          <td class="tg-0pky">9.55</td>
-          <td class="tg-0pky">14.55</td>
-          <td class="tg-0pky">11.4</td>
-        </tr>
-        <tr>
-          <td class="tg-fymr"> </td>
-          <td class="tg-fymr">Los Angeles</td>
-          <td class="tg-0pky">5.75</td>
-          <td class="tg-0pky">2.7</td>
-          <td class="tg-0pky">0</td>
-          <td class="tg-0pky">5.15</td>
-          <td class="tg-0pky">2.75</td>
-          <td class="tg-0pky">4.5</td>
-          <td class="tg-0pky">10.25</td>
-          <td class="tg-0pky">10.5</td>
-          <td class="tg-0pky">12.67</td>
-          <td class="tg-0pky">11.15</td>
-          <td class="tg-0pky">11.25</td>
-          <td class="tg-0pky">12.67</td>
-        </tr>
-        <tr>
-          <td class="tg-fymr"> </td>
-          <td class="tg-fymr">Miami</td>
-          <td class="tg-0pky">3</td>
-          <td class="tg-0pky">5.85</td>
-          <td class="tg-0pky">5.15</td>
-          <td class="tg-0pky">0</td>
-          <td class="tg-0pky">8.25</td>
-          <td class="tg-0pky">3</td>
-          <td class="tg-0pky">8.33</td>
-          <td class="tg-0pky">8.85</td>
-          <td class="tg-0pky">11.5</td>
-          <td class="tg-0pky">16.33</td>
-          <td class="tg-0pky">11.25</td>
-          <td class="tg-0pky">17.5</td>
-        </tr>
-        <tr>
-          <td class="tg-fymr">Canada</td>
-          <td class="tg-fymr">Vancouver</td>
-          <td class="tg-0pky">5.67</td>
-          <td class="tg-0pky">3</td>
-          <td class="tg-0pky">2.75</td>
-          <td class="tg-0pky">8.25</td>
-          <td class="tg-0pky">0</td>
-          <td class="tg-0pky">4.33</td>
-          <td class="tg-0pky">9.25</td>
-          <td class="tg-0pky">9.5</td>
-          <td class="tg-0pky">11.85</td>
-          <td class="tg-0pky">10</td>
-          <td class="tg-0pky">14.5</td>
-          <td class="tg-0pky">10.67</td>
-        </tr>
-        <tr>
-          <td class="tg-fymr"> </td>
-          <td class="tg-fymr">Toronto</td>
-          <td class="tg-0pky">1.5</td>
-          <td class="tg-0pky">4.5</td>
-          <td class="tg-0pky">4.5</td>
-          <td class="tg-0pky">3</td>
-          <td class="tg-0pky">4.33</td>
-          <td class="tg-0pky">0</td>
-          <td class="tg-0pky">6.95</td>
-          <td class="tg-0pky">7.15</td>
-          <td class="tg-0pky">7.85</td>
-          <td class="tg-0pky">13</td>
-          <td class="tg-0pky">11.5</td>
-          <td class="tg-0pky">13.45</td>
-        </tr>
-        <tr>
-          <td class="tg-fymr">England</td>
-          <td class="tg-fymr">London</td>
-          <td class="tg-0pky">6.75</td>
-          <td class="tg-0pky">9.25</td>
-          <td class="tg-0pky">10.25</td>
-          <td class="tg-0pky">8.33</td>
-          <td class="tg-0pky">9.25</td>
-          <td class="tg-0pky">6.95</td>
-          <td class="tg-0pky">0</td>
-          <td class="tg-0pky">2.5</td>
-          <td class="tg-0pky">1.67</td>
-          <td class="tg-0pky">11.5</td>
-          <td class="tg-0pky">3.67</td>
-          <td class="tg-0pky">9.67</td>
-        </tr>
-        <tr>
-          <td class="tg-fymr">France</td>
-          <td class="tg-fymr">Paris</td>
-          <td class="tg-0pky">6.9</td>
-          <td class="tg-0pky">9.55</td>
-          <td class="tg-0pky">10.5</td>
-          <td class="tg-0pky">8.85</td>
-          <td class="tg-0pky">9.5</td>
-          <td class="tg-0pky">7.15</td>
-          <td class="tg-0pky">2.5</td>
-          <td class="tg-0pky">0</td>
-          <td class="tg-0pky">1.67</td>
-          <td class="tg-0pky">11.75</td>
-          <td class="tg-0pky">3.35</td>
-          <td class="tg-0pky">10.05</td>
-        </tr>
-        <tr>
-          <td class="tg-fymr">Germany</td>
-          <td class="tg-fymr">Berlin</td>
-          <td class="tg-0pky">8</td>
-          <td class="tg-0pky">11.95</td>
-          <td class="tg-0pky">12.67</td>
-          <td class="tg-0pky">11.5</td>
-          <td class="tg-0pky">11.85</td>
-          <td class="tg-0pky">7.85</td>
-          <td class="tg-0pky">1.67</td>
-          <td class="tg-0pky">1.67</td>
-          <td class="tg-0pky">0</td>
-          <td class="tg-0pky">11.85</td>
-          <td class="tg-0pky">2.45</td>
-          <td class="tg-0pky">9.15</td>
-        </tr>
-        <tr>
-          <td class="tg-fymr">Japan</td>
-          <td class="tg-fymr">Tokyo</td>
-          <td class="tg-0pky">13.5</td>
-          <td class="tg-0pky">9.55</td>
-          <td class="tg-0pky">11.15</td>
-          <td class="tg-0pky">16.33</td>
-          <td class="tg-0pky">10</td>
-          <td class="tg-0pky">13</td>
-          <td class="tg-0pky">11.5</td>
-          <td class="tg-0pky">11.75</td>
-          <td class="tg-0pky">11.85</td>
-          <td class="tg-0pky">0</td>
-          <td class="tg-0pky">9.85</td>
-          <td class="tg-0pky">3.15</td>
-        </tr>
-        <tr>
-          <td class="tg-fymr">Russia</td>
-          <td class="tg-fymr">Moscow</td>
-          <td class="tg-0pky">9.2</td>
-          <td class="tg-0pky">14.55</td>
-          <td class="tg-0pky">11.25</td>
-          <td class="tg-0pky">11.25</td>
-          <td class="tg-0pky">14.5</td>
-          <td class="tg-0pky">11.5</td>
-          <td class="tg-0pky">3.67</td>
-          <td class="tg-0pky">3.35</td>
-          <td class="tg-0pky">2.45</td>
-          <td class="tg-0pky">9.85</td>
-          <td class="tg-0pky">0</td>
-          <td class="tg-0pky">7.5</td>
-        </tr>
-        <tr>
-          <td class="tg-fymr">China</td>
-          <td class="tg-fymr">Beijing</td>
-          <td class="tg-0pky">13.5</td>
-          <td class="tg-0pky">11.4</td>
-          <td class="tg-0pky">12.67</td>
-          <td class="tg-0pky">17.5</td>
-          <td class="tg-0pky">10.67</td>
-          <td class="tg-0pky">13.45</td>
-          <td class="tg-0pky">9.67</td>
-          <td class="tg-0pky">10.05</td>
-          <td class="tg-0pky">9.15</td>
-          <td class="tg-0pky">3.15</td>
-          <td class="tg-0pky">7.5</td>
-          <td class="tg-0pky">0</td>
-        </tr>
-        <tr>
-          <td class="tg-0pky"> </td>
-          <td class="tg-0pky"> </td>
-          <td class="tg-fymr">New York</td>
-          <td class="tg-fymr">Seattle</td>
-          <td class="tg-fymr">Los Angeles</td>
-          <td class="tg-fymr">Miami</td>
-          <td class="tg-fymr">Vancouver</td>
-          <td class="tg-fymr">Toronto</td>
-          <td class="tg-fymr">London</td>
-          <td class="tg-fymr">Paris</td>
-          <td class="tg-fymr">Berlin</td>
-          <td class="tg-fymr">Tokyo</td>
-          <td class="tg-fymr">Moscow</td>
-          <td class="tg-fymr">Beijing</td>
-        </tr>
-      </table>
-    
+<h1>The Security Playbook</h1>
+<p>This Security Playbook contains descriptions of the network event data and other helpful information you will need.
+  Take your time to understand what is in the Security Playbook and refer to it
+  often to help you.</p>
+
+<p class="lead">Read this playbook carefully and refer to it often.</p>
+
+<h2>Scenario</h2>
+<p>
+  You are a junior cyber security analyst at XYZ Company -- a tech firm in the United States that provides business
+  intelligence, sales management, and human resources management systems to its customers.
+  Users connect to your services through personal computers, mobile devices, and hosted services (e.g., external
+  websites).
+  Much of the data XYZ Company keeps inside its network is sensitive to both its customers and employees.
+</p>
+<p>
+  You perform initial triage on incoming network events that your company's Intrusion Detection
+  System
+  (IDS) has deemed an alert. The network events assigned to you all deal with the notion of <em>impossible travel</em>
+  &ndash; when a
+  user accesses the network from two different geographical locations within a relatively short amount of time.</p>
+<p>
+  However, the IDS often yields false alarms, and many alerts are nothing to worry about.
+  Your job is to examine the network events to decide if:
+  <ol type="a">
+    <li>The alert correctly identifies an attack against the company and thus needs to be <em>escalated</em> to
+      senior security personnel; or</li>
+    <li>The alert is is a false alarm and the harmless network activity can be ignored.</li>
+  </ol>
+  In general, the senior security personnel are very busy, so simply escalating everything is not an option. Conversely,
+  ignoring all of the alerts is a bad idea. You have to use your best judgment.
+</p>
+<h2>Network Event Data</h2>
+<p>The IDS summarizes the "impossible travel" events as infomation about two locations:</p>
+<dl class="row">
+  <dt class="col-sm-3">City of Authorization</dt>
+  <dd class="col-sm-9">There will be two of these fields, one for each geographic location that the IDS
+    detected an authorization from.</dd>
+
+  <dt class="col-sm-3">Number of Successful Logins</dt>
+  <dd class="col-sm-9">The number of <em>successful</em> logins from each location in the past 24
+    hours. A successful login is one where a correct username+password combination was entered.</li>
+  </dd>
+  <dt class="col-sm-3">Number of Failed Logins</dt>
+  <dd class="col-sm-9">The number of failed login from this location in the past 24 hours. A failed login
+    is when an incorrect password was used for an account.</dd>
+  <dt class="col-sm-3">Source Provider</dt>
+  <dd class="col-sm-9">There will be two of these fields, one for each location that the IDS detected an
+    authorization from. It tells you the type of
+    Internet Provider the authorizations came from.
+    <dl class="row">
+      <dt class="col-sm-3">Telecom</dt>
+      <dd class="col-sm-9">traditional Internet Source Providers (ISPs), e.g., Spectrum and U-verse</dd>
+      <dt class="col-sm-3">Mobile/cellular</dt>
+      <dd class="col-sm-9">Wireless carriers, e.g., Verizon Wireless, AT&T, or Sprint</dd>
+      <dt class="col-sm-3">Hosting/server</dt>
+      <dd class="col-sm-9">Companies that provide hosted services, e.g., Virtual Private Networks (VPNs), web hosting,
+        and server space</dd>
+    </dl>
+  </dd>
+  <dt class="col-sm-3">Time Between Authorizations</dt>
+  <dd class="col-sm-9">This is the field that typically triggers the alarm. The IDS correlates an
+    authorization from each location
+    and determines that they happened too quickly.</dd>
+  <dt class="col-sm-3">VPN Confidence</dt>
+  <dd class="col-sm-9"> This should be treated as the conclusion that you, the analyst/participant, came to that this
+    event involves a user utilizing
+    a Virtual Private Network (VPN).
+  </dd>
+</dl>
+<h2>How to evaluate an event</h2>
+<ul>
+  <li>Look at the city of authorizations. XYZ Company is located in the USA, and has relatively few users from outside
+    the US. Location should not be a decidign factor as users travel legitimately and hosted services may conenct from
+    other countries. Nonetheless, certain locations may warrant a more critical evaluation.</li>
+  <li>Evaluate the time between authorizations. Authorizations from different locations in a short time could be an
+    indication of account compromise.
+    Refer to the chart below for typical travel times between locations.</li>
+  <li>Analyze the ratio of successful logins to failed logins from each location. More failed logins than successful
+    logins could be an indication of
+    password guessing.
+  </li>
+  <li>Evaluate the source providers that the authorizations are coming from. There is
+    nothing inherently safe or malicious about
+    any type of source provider, but knowing can help you determine if other information makes sense.
+  </li>
+  <li>
+    The number attributed to "VPN Confidence" should be treated as the conclusion that you, the analyst/participant,
+    came to that this event
+    involves a user utilizing a VPN.
+  </li>
+</ul>
+<h2>Things to keep in mind</h2>
+<ul>
+  <li>Users visiting countries with restrictive governments will often use a VPN to get past that nation's firewall.
+  </li>
+  <li>It's not unusual for a mobile device to ping in the country the mobile device is registered in when the user is
+    traveling abroad.</li>
+  <li>The travel times listed in the table below are guidelines, not absolutes.</li>
+</ul>
+
+
+<h2>Hours of travel time between locations</h2>
+
+<table class="table table-striped table-bordered table-sm text-right">
+  <thead>
+    <tr>
+      <th colspan="2"></th>
+      <th>New York</th>
+      <th>Seattle</th>
+      <th>Los Angeles</th>
+      <th>Miami</th>
+      <th>Vancouver</th>
+      <th>Toronto</th>
+      <th>London</th>
+      <th>Paris</th>
+      <th>Berlin</th>
+      <th>Tokyo</th>
+      <th>Moscow</th>
+      <th>Beijing</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">USA</th>
+      <th scope="row">New York</th>
+      <td>0</td>
+      <td>6</td>
+      <td>5.75</td>
+      <td>3</td>
+      <td>5.67</td>
+      <td>1.5</td>
+      <td>6.75</td>
+      <td>6.9</td>
+      <td>8</td>
+      <td>13.5</td>
+      <td>9.2</td>
+      <td>13.5</td>
+    </tr>
+    <tr>
+      <td></td>
+      <th scope="row">Seattle</th>
+      <td>6</td>
+      <td>0</td>
+      <td>2.7</td>
+      <td>5.85</td>
+      <td>3</td>
+      <td>4.5</td>
+      <td>9.25</td>
+      <td>9.55</td>
+      <td>11.95</td>
+      <td>9.55</td>
+      <td>14.55</td>
+      <td>11.4</td>
+    </tr>
+    <tr>
+      <td></td>
+      <th scope="row">Los Angeles</th>
+      <td>5.75</td>
+      <td>2.7</td>
+      <td>0</td>
+      <td>5.15</td>
+      <td>2.75</td>
+      <td>4.5</td>
+      <td>10.25</td>
+      <td>10.5</td>
+      <td>12.67</td>
+      <td>11.15</td>
+      <td>11.25</td>
+      <td>12.67</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <th scope="row">Miami</th>
+      <td>3</td>
+      <td>5.85</td>
+      <td>5.15</td>
+      <td>0</td>
+      <td>8.25</td>
+      <td>3</td>
+      <td>8.33</td>
+      <td>8.85</td>
+      <td>11.5</td>
+      <td>16.33</td>
+      <td>11.25</td>
+      <td>17.5</td>
+    </tr>
+    <tr>
+      <th scope="row">Canada</th>
+      <th scope="row">Vancouver</th>
+      <td>5.67</td>
+      <td>3</td>
+      <td>2.75</td>
+      <td>8.25</td>
+      <td>0</td>
+      <td>4.33</td>
+      <td>9.25</td>
+      <td>9.5</td>
+      <td>11.85</td>
+      <td>10</td>
+      <td>14.5</td>
+      <td>10.67</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <th scope="row">Toronto</th>
+      <td>1.5</td>
+      <td>4.5</td>
+      <td>4.5</td>
+      <td>3</td>
+      <td>4.33</td>
+      <td>0</td>
+      <td>6.95</td>
+      <td>7.15</td>
+      <td>7.85</td>
+      <td>13</td>
+      <td>11.5</td>
+      <td>13.45</td>
+    </tr>
+    <tr>
+      <th scope="row">England</th>
+      <th scope="row">London</th>
+      <td>6.75</td>
+      <td>9.25</td>
+      <td>10.25</td>
+      <td>8.33</td>
+      <td>9.25</td>
+      <td>6.95</td>
+      <td>0</td>
+      <td>2.5</td>
+      <td>1.67</td>
+      <td>11.5</td>
+      <td>3.67</td>
+      <td>9.67</td>
+    </tr>
+    <tr>
+      <th scope="row">France</th>
+      <th scope="row">Paris</th>
+      <td>6.9</td>
+      <td>9.55</td>
+      <td>10.5</td>
+      <td>8.85</td>
+      <td>9.5</td>
+      <td>7.15</td>
+      <td>2.5</td>
+      <td>0</td>
+      <td>1.67</td>
+      <td>11.75</td>
+      <td>3.35</td>
+      <td>10.05</td>
+    </tr>
+    <tr>
+      <th scope="row">Germany</th>
+      <th scope="row">Berlin</th>
+      <td>8</td>
+      <td>11.95</td>
+      <td>12.67</td>
+      <td>11.5</td>
+      <td>11.85</td>
+      <td>7.85</td>
+      <td>1.67</td>
+      <td>1.67</td>
+      <td>0</td>
+      <td>11.85</td>
+      <td>2.45</td>
+      <td>9.15</td>
+    </tr>
+    <tr>
+      <th scope="row">Japan</th>
+      <th scope="row">Tokyo</th>
+      <td>13.5</td>
+      <td>9.55</td>
+      <td>11.15</td>
+      <td>16.33</td>
+      <td>10</td>
+      <td>13</td>
+      <td>11.5</td>
+      <td>11.75</td>
+      <td>11.85</td>
+      <td>0</td>
+      <td>9.85</td>
+      <td>3.15</td>
+    </tr>
+    <tr>
+      <th scope="row">Russia</th>
+      <th scope="row">Moscow</th>
+      <td>9.2</td>
+      <td>14.55</td>
+      <td>11.25</td>
+      <td>11.25</td>
+      <td>14.5</td>
+      <td>11.5</td>
+      <td>3.67</td>
+      <td>3.35</td>
+      <td>2.45</td>
+      <td>9.85</td>
+      <td>0</td>
+      <td>7.5</td>
+    </tr>
+    <tr>
+      <th scope="row">China</th>
+      <th scope="row">Beijing</th>
+      <td>13.5</td>
+      <td>11.4</td>
+      <td>12.67</td>
+      <td>17.5</td>
+      <td>10.67</td>
+      <td>13.45</td>
+      <td>9.67</td>
+      <td>10.05</td>
+      <td>9.15</td>
+      <td>3.15</td>
+      <td>7.5</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
 
 {% endblock %}
