@@ -87,7 +87,9 @@ Evaluate IDS Alerts
             </div>
             <div class="modal-body">
                 {% if num_unprocessed_alerts > 0 %}
-                <p class="error"><strong>You have not made a decision on all events!</strong></p>
+                <div class="alert alert-danger">
+                        You have not made a decision on all events!
+                </div>
                 {% endif %}
                 <p>Are you sure you are finished with the experiment? You will not be able to go back!</p>
             </div>
