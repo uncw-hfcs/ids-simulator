@@ -50,12 +50,11 @@ Security Playbook
     hours. A successful login is one where a correct username+password combination was entered.</li>
   </dd>
   <dt class="col-sm-3">Number of Failed Logins</dt>
-  <dd class="col-sm-9">The number of failed login from this location in the past 24 hours. A failed login
+  <dd class="col-sm-9">The number of failed login from each location in the past 24 hours. A failed login
     is when an incorrect password was used for an account.</dd>
   <dt class="col-sm-3">Source Provider</dt>
-  <dd class="col-sm-9">There will be two of these fields, one for each location that the IDS detected an
-    authorization from. It tells you the type of
-    Internet Provider the authorizations came from.
+  <dd class="col-sm-9">The type of
+    Internet Provider the authorizations came from at each location.
     <dl class="row">
       <dt class="col-sm-3">Telecom</dt>
       <dd class="col-sm-9">traditional Internet Source Providers (ISPs), e.g., Spectrum and U-verse</dd>
@@ -71,16 +70,15 @@ Security Playbook
     authorization from each location
     and determines that they happened too quickly.</dd>
   <dt class="col-sm-3">VPN Confidence</dt>
-  <dd class="col-sm-9"> This should be treated as the conclusion that you, the analyst/participant, came to that this
-    event involves a user utilizing
-    a Virtual Private Network (VPN).
+  <dd class="col-sm-9">The conclusion that you, the analyst/participant, came to that this
+    event involves a user utilizing a Virtual Private Network (VPN).
   </dd>
 </dl>
 <h2>How to evaluate an event</h2>
 <ul>
-  <li>You may assume that one of the locations represents legitimate logins.</li>
+  <li>You may assume that one of the locations represents legitimate access.</li>
   <li>Look at the city of authorizations. XYZ Company is located in the USA, and has relatively few users from outside
-    the US. Location should not be a deciding factor as users travel legitimately and hosted services may conenct from
+    the US. Location should not be a deciding factor as users travel legitimately and hosted services may connect from
     other countries. Nonetheless, certain locations may warrant a more critical evaluation.</li>
   <li>Evaluate the time between authorizations. Authorizations from different locations in a short time could be an
     indication of account compromise.
@@ -101,16 +99,48 @@ Security Playbook
 </ul>
 <h2>Things to keep in mind</h2>
 <ul>
-  <li>The IDS is not accurate. It frequently alerts on network events that are normal. It could be that many or all of the alerts are actually false alarms!</li>
+  <li>The IDS is not accurate. It frequently alerts on network events that are normal. It could be that many or all of the alerts are false alarms!</li>
   <li>Users visiting countries with restrictive governments will often use a VPN to get past that nation's firewall.
   </li>
-  <li>It's not unusual for a mobile device to ping in the country the mobile device is registered in when the user is
+  <li>It is not unusual for a mobile device to ping in the country the mobile device is registered in when the user is
     traveling abroad.</li>
-  <li>The travel times listed in the table below are guidelines, not absolutes.</li>
 </ul>
 
 
+<h2>Concern Level for each location</h2>
+<p>Based on the past history of network events, and where XYZ Company's customers typically are, the senior security personnel have put together the following "concern level" chart for various locations. Location is not a deciding factor, but some locations warrant closer inspection.</p>
+    <table class="table table-bordered table-sm">
+      <tr>
+        <td class="table-danger">High</td>
+        <td>Moscow</td>
+        <td>Beijing</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="table-warning">Medium</td>
+        <td>London</td>
+        <td>Paris</td>
+        <td>Berlin</td>
+        <td>Tokyo</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="table-success">Low</td>
+        <td>New York</td>
+        <td>Seattle</td>
+        <td>Los Angeles</td>
+        <td>Miami</td>
+        <td>Vancouver</td>
+        <td>Toronto</td>
+      </tr>
+    </table>
+
 <h2>Hours of travel time between locations</h2>
+<p>The travel times listed in the table below are guidelines, not absolutes.</p>
 
 <table class="table table-striped table-bordered table-sm text-right">
   <thead>
