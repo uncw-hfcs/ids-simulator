@@ -43,12 +43,12 @@ def upgrade():
         values(
             {
                 'country_of_authentication1': op.inline_literal("For this event"),
-                'country_of_authentication2': op.inline_literal("select 'Escalate'"),
-                'number_successful_logins1': op.inline_literal("decision"),
-                'number_successful_logins2': op.inline_literal("for"),
-                'number_failed_logins1': op.inline_literal("please just"),
-                'number_failed_logins2': op.inline_literal("for your"),
-                'source_provider1': op.inline_literal("and '2'"),
+                'country_of_authentication2': op.inline_literal("please just"),
+                'number_successful_logins1': op.inline_literal('select "Don\'t Escalate"'),
+                'number_successful_logins2': op.inline_literal("for your"),
+                'number_failed_logins1': op.inline_literal("decision"),
+                'number_failed_logins2': op.inline_literal("and '4'"),
+                'source_provider1': op.inline_literal("for"),
                 'source_provider2': op.inline_literal("confidence"),
             }
         )
