@@ -66,22 +66,21 @@ Training and Examples
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="trainingConfirmLabel">Confirm</h5>
+                <h5 class="modal-title" id="trainingConfirmLabel">Import Note</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                {% if num_unprocessed_alerts > 0 %}
-                <p class="error"><strong>You have not made a decision on all events!</strong></p>
-                {% endif %}
-                <p>Are you sure you are ready to begin the experiment?</p>
+                <h2>About IDSes and this experiment</h2>
+                <p>IDSes have a high rate of false alarms. Only about half the alarms are malicious events for even the best IDSes. In many systems, 90%+ of alerts are false alarms.</p>
+                <p class="mb-3"><em>Evaluate each network event based on what you think it is!</em> A few, many, or all of the events you examine may be false alarms.</p>
+                <p>Are you ready to begin the experiment?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <form action="" method="POST">
-                    <!-- <input class="mt-md-3" type="submit" value="Take the experiment!"> -->
-                    <button type="submit" class="btn btn-primary">Yes, continue!</button>
+                    <button type="submit" class="btn btn-primary">Okay, begin!</button>
                 </form>
 
             </div>
