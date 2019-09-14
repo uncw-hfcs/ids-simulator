@@ -40,7 +40,7 @@ Introduction
 
         {% if current_user.questionnaire_complete == False %}
         <li>Training</li>
-        {% elif current_user.experiment_complete == False %}
+        {% elif current_user.training_complete == False %}
         <li><a href={{ url_for('training') }}>Training</a></li>
         {% else %}
         <li><strong>&lt;Completed&gt;</strong> <del>Training</del></li>
