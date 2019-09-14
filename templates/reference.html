@@ -78,15 +78,16 @@ Security Playbook
 </dl>
 <h2>How to evaluate an event</h2>
 <ul>
+  <li>You may assume that one of the locations represents legitimate logins.</li>
   <li>Look at the city of authorizations. XYZ Company is located in the USA, and has relatively few users from outside
-    the US. Location should not be a decidign factor as users travel legitimately and hosted services may conenct from
+    the US. Location should not be a deciding factor as users travel legitimately and hosted services may conenct from
     other countries. Nonetheless, certain locations may warrant a more critical evaluation.</li>
   <li>Evaluate the time between authorizations. Authorizations from different locations in a short time could be an
     indication of account compromise.
     Refer to the chart below for typical travel times between locations.</li>
-  <li>Analyze the ratio of successful logins to failed logins from each location. More failed logins than successful
-    logins could be an indication of
-    password guessing.
+  <li>Analyze the <em>ratio</em> of successful logins to failed logins from each location. More failed logins than
+    successful
+    logins could be an indication of password guessing, but people do often forget their passwords.
   </li>
   <li>Evaluate the source providers that the authorizations are coming from. There is
     nothing inherently safe or malicious about
@@ -100,6 +101,7 @@ Security Playbook
 </ul>
 <h2>Things to keep in mind</h2>
 <ul>
+  <li>The IDS is not accurate. It frequently alerts on network events that are normal. It could be that many or all of the alerts are actually false alarms!</li>
   <li>Users visiting countries with restrictive governments will often use a VPN to get past that nation's firewall.
   </li>
   <li>It's not unusual for a mobile device to ping in the country the mobile device is registered in when the user is
