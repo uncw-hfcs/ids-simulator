@@ -6,6 +6,25 @@ Event Details
 
 {% block content %}
 
+{% with messages = get_flashed_messages() %}
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+    {{message}}
+</div>
+{% endfor %}
+{% endwith %}
+
+{% if num_unprocessed_alerts > 0 %}
+<div class="alert alert-warning">
+    Number of alerts left to process: {{ num_unprocessed_alerts }}
+</div>
+{% else %}
+<div class="alert alert-success">
+    All events processed! Please return to the <a href={{ url_for('experiment') }}>Evaluate IDS
+        Alerts</a> to complete the experiment! 
+</div>
+{% endif %}
+
 {% if form.errors %}
 <div class="alert alert-danger" role="alert">
     Not all form fields were filled out. Please check for error messages below.

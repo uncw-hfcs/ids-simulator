@@ -1,9 +1,11 @@
+import models
 from forms import PrequestionnaireForm, SurveyForm, UserForm, eventDecisionForm
 import os
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from flask_migrate import Migrate
+from sqlalchemy import func, distinct
 import datetime
 
 
@@ -17,8 +19,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login_manager = LoginManager(app)
-
-import models
 
 
 @login_manager.user_loader
@@ -159,18 +159,25 @@ def trainingEventPage():
     return render_template('trainingEventPage.html', event=event, form=form)
 
 
+def get_event_list_for_user(user):
+    ids = [int(id) for id in user.events.split(",")]
+    # This is the most obvious "Escalate" event. Everyone sees this.
+    ids.insert(25, 73)
+    ids.insert(6, 74)  # This is the "Please just select 'Escalate' event"
+    # This is the "Please just select 'Don't escalate' event"
+    ids.insert(43, 75)
+    return ids
+
+
+def get_events_processed_for_user(current_user):
+    return db.session.query(func.count(distinct(models.EventDecision.event_id))).filter(
+        models.EventDecision.user == current_user.username).scalar()
 # ---------------------------------------------------------------------
 # ---------------------------Experiment Page---------------------------
 @app.route('/experiment', methods=["GET", "POST"])
 @login_required
 def experiment():
     user = models.User.query.filter_by(username=current_user.username).first()
-    if request.method == "GET" and user.time_begin == None:
-        local_user = db.session.merge(user)
-        local_user.time_begin = datetime.datetime.now()
-        db.session.add(local_user)
-        db.session.commit()
-
     if request.method == "POST":
         local_user = db.session.merge(user)
         local_user.experiment_complete = True
@@ -178,33 +185,30 @@ def experiment():
         db.session.commit()
         return redirect(url_for('postsurvey'))
 
-    ids = [int(id) for id in current_user.events.split(",")]
-    # This is the most obvious "Escalate" event. Everyone sees this.
-    ids.insert(25, 73)
-    ids.insert(6, 74)  # This is the "Please just select 'Escalate' event"
-    # This is the "Please just select 'Don't escalate' event"
-    ids.insert(43, 75)
-    if request.method == "GET":
-        num_processed_alerts = 0
-        for id in ids:
-            if models.EventDecision.query.filter_by(user=current_user.username, event_id=id).\
-                    order_by(models.EventDecision.time_event_decision.desc()).first() != None:
-                num_processed_alerts += 1
+    if user.time_begin == None:
+        local_user = db.session.merge(user)
+        local_user.time_begin = datetime.datetime.now()
+        db.session.add(local_user)
+        db.session.commit()
 
+    ids = get_event_list_for_user(current_user)
     eventsList = []  # This will store an eventID and eventDecision tuple
     for id in ids:
-        eventsList.append((models.Event.query.get(id),
-                           models.EventDecision.query.filter_by(user=current_user.username, event_id=id).
-                           order_by(models.EventDecision.time_event_decision.desc()).first())
-                          )
-    return render_template('experiment.html', eventsList=eventsList, num_unprocessed_alerts=(len(eventsList) - num_processed_alerts))
+        eventsList.append((
+            models.Event.query.get(id),
+            models.EventDecision.query.filter_by(user=current_user.username, event_id=id).order_by(
+                models.EventDecision.time_event_decision.desc()).first()
+            )
+        )
+    return render_template('experiment.html', eventsList=eventsList, num_unprocessed_alerts=(len(eventsList) - get_events_processed_for_user(current_user)))
 # ---------------------------------------------------------------------
 # ---------------------------Experiment Event Page---------------------
 @app.route('/eventPage', methods=["GET", "POST"])
 @login_required
 def eventPage():
     eventId = request.args.get('eventId')
-    number = request.args.get('index')
+    ids = get_event_list_for_user(current_user)
+    event_index = ids.index(int(eventId))
     event = models.Event.query.get(eventId)
     form = eventDecisionForm()
     decision = models.EventDecision.query.filter_by(user=current_user.username, event_id=eventId).\
@@ -231,25 +235,32 @@ def eventPage():
         )
         db.session.add(response)
         db.session.commit()
-        flash(f"Successfully recorded decision for Event {number}!")
-        return redirect(url_for("experiment"))
-    return render_template('eventPage.html', event=event, number=number, form=form)
+        flash(f"Successfully recorded decision for Event {event_index + 1}!")
+        if event_index == len(ids) - 1:
+            # TODO: Reached the end of the list. Say something in flash.
+            flash(f"You recorded a decision for the last event in the list. Click on specific Events below to revisit them if you like.")
+            return redirect(url_for("experiment"))
+        else:
+            next_event = models.Event.query.get(ids[event_index + 1]).id
+            return redirect(url_for('eventPage', eventId=next_event))
+
+    return render_template('eventPage.html', event=event, number=event_index + 1, num_unprocessed_alerts=len(ids) - get_events_processed_for_user(current_user), form=form)
 # ---------------------------------------------------------------------
 # ---------------------------Survey Page-------------------------------
 @app.route('/postsurvey', methods=["GET", "POST"])
 @login_required
 def postsurvey():
 
-    user = models.User.query.filter_by(username=current_user.username).first()
+    user=models.User.query.filter_by(username=current_user.username).first()
     if request.method == "GET" and user.time_end == None:
-        local_user = db.session.merge(user)
-        local_user.time_end = datetime.datetime.now()
+        local_user=db.session.merge(user)
+        local_user.time_end=datetime.datetime.now()
         db.session.add(local_user)
         db.session.commit()
 
-    form = SurveyForm()
+    form=SurveyForm()
     if form.validate_on_submit():
-        responses = models.SurveyAnswers(
+        responses=models.SurveyAnswers(
             user=current_user.username,
             timestamp=datetime.datetime.now(),
             mental=form.mental.data,
@@ -261,8 +272,8 @@ def postsurvey():
             useful_info=form.useful_info.data,
             feedback=form.feedback.data
         )
-        local_user = db.session.merge(user)
-        local_user.survey_complete = True
+        local_user=db.session.merge(user)
+        local_user.survey_complete=True
         db.session.add(responses, local_user)
         db.session.commit()
         return redirect(url_for('completion'))
@@ -271,7 +282,7 @@ def postsurvey():
 # ---------------------------Completion Page---------------------------
 @app.route("/completion")
 def completion():
-    code = current_user.completion_code
+    code=current_user.completion_code
     # logout_user()
     return render_template('completion.html', code=code)
 # ---------------------------------------------------------------------

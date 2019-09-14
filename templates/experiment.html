@@ -33,11 +33,11 @@ Evaluate IDS Alerts
 
 {% if num_unprocessed_alerts > 0 %}
 <div class="alert alert-warning">
-    <strong>Number of events left to process: {{ num_unprocessed_alerts }}</strong>
+    Number of events left to process: {{ num_unprocessed_alerts }}
 </div>
 {% else %}
 <div class="alert alert-success">
-    All events processed!
+    All events processed! Click on the 'Finish!' button at the bottom of the page if you are done.
 </div>
 {% endif %}
 
@@ -49,7 +49,7 @@ Evaluate IDS Alerts
 
     {% for event, decision in eventsList %}
     <tr>
-        <td><a href="{{ url_for('eventPage', eventId = event.id, index = loop.index) }}"> Event
+        <td><a href="{{ url_for('eventPage', eventId = event.id) }}"> Event
                 {{ loop.index }}</a></td>
         <td>{% if decision != None %}
             {{ decision }}
@@ -63,11 +63,11 @@ Evaluate IDS Alerts
 
 {% if num_unprocessed_alerts > 0 %}
 <div class="alert alert-warning">
-    <strong>Number of alerts left to process: {{ num_unprocessed_alerts }}</strong>
+    Number of alerts left to process: {{ num_unprocessed_alerts }}
 </div>
 {% else %}
 <div class="alert alert-success">
-    All alerts processed!
+    All events processed! Click on the 'Finish!' button at the bottom of the page if you are done.
 </div>
 {% endif %}
 
