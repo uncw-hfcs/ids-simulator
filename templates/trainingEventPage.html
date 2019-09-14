@@ -1,83 +1,122 @@
 {% extends "base.html" %}
 
 {% block title %}
-Event Details
+Training Event Details
 {% endblock %}
 
 {% block content %}
-    <style>
-        input {
-            color: black;
-            margin-left: 5px;
-        }   
-        
-        </style>
-    <article>  
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <h3>{{ message }}</h3>
-                {% endfor %}
-            {% endif %}    
-        {% endwith %}
-        <h4>Your goal is to correctly determine if this event should be escalated based on the the details provided. Remember, you can always access the 
-                Reference Page. It is linked on the menu bar and above the Event Details. The following information will be provided for each event:</h4>
-            <ul>
-                <li>"City of Authorization" - There will be two of these fields, one for each location that the IDS detected an authorization from. It tells you
-                        the location that the authorization came from.</li>
-                <li>"Number of Successful Logins" - There will be two of these fields, one for each location that the IDS detected an authorization from. It tells
-                        you how many times there was a successful login from this location in the past 24 hours.</li>
-                <li>"Number of Failed Logins" - There will be two of these fields, one for each location that the IDS detected an authorization from. It tells
-                        you how many times there was a failed login from this location in the past 24 hours.</li>
-                <li>"Source Provider" - There will be two of these fields, one for each location that the IDS detected an authorization from. It tells you the type of
-                        Internet Provider the authorizations came from.</li>
-                <li>"Time Between Authorizations" - This is the field that typically triggers the alarm. The IDS correlates an authorization from each location
-                        and determines that they happened too quickly.</li>
-                <li>"VPN Confidence" - This should be treated as the conclusion that you, the analyst/participant, came to that this event involves a user utilizing 
-                        a Virtual Private Network (VPN).</li>
-            </ul>       
-        <table>
-            <tr><td><a href="{{ url_for('reference') }}" target="_blank"><h3>Reference Page</h3></a></td></tr>
-            <tr><td>City of Authorization: </td> <td><pre>   </pre></td>   <td> {{event.country_of_authentication1}}</td></tr>
-            <tr><td>Number of Successful Logins: </td>  <td><pre>   </pre></td>  <td> {{event.number_successful_logins1}}</td></tr>
-            <tr><td>Number of Failed Logins: </td>  <td><pre>   </pre></td>  <td> {{event.number_failed_logins1}}</td></tr>
-            <tr><td>Source Provider: </td> <td><pre>   </pre></td>   <td> {{event.source_provider1}}</td></tr>
-            <tr><td>City of Authorization: </td>  <td><pre>   </pre></td>  <td> {{event.country_of_authentication2}}</td></tr>
-            <tr><td>Number of Successful Logins: </td>   <td><pre>   </pre></td> <td> {{event.number_successful_logins2}}</td></tr>
-            <tr><td>Number of Failed Logins: </td> <td><pre>   </pre></td>   <td> {{event.number_failed_logins2}}</td></tr>
-            <tr><td>Source Provider: </td>  <td><pre>   </pre></td> <td> {{event.source_provider2}} </td></tr>
-            <tr><td>Time Between Authentications: </td>  <td></td>  <td> {{event.time_between_authentications}} hrs</td></tr>
-            <tr><td>VPN Confidence: </td> <td><pre>   </pre></td>  <td> {{event.vpn_confidence}} </td></tr>
-        </table>
-    </article>
-    <aside>
-        
-        <p> Please determine if this event should be escalated.</p>
-        <p>A decision to "Escalate" means that there is either evidence to suggest that malicious behavior is occurring, or that there isn't enough 
-            information provided to dismiss the alert.</p>
-        <p>A decision of "Don't Escalate" means that there is evidence to suggest that the alert is a false alarm.</p>
-        <form action = "" method = "POST" id = "event_decision">
-            {% if form.escalate.errors %}
-            <p><span style="color: red;">[Please select a value.]</span></p>
-            {% endif %}
-            
-            {{ form.escalate }}
-            
-            <p> On a scale from 1 (low) to 5 (high), please rate your confidence in this decision. A decision of "I don't know" does not require a
-                    confidence rating.</p>
-            {% if form.confidence.errors %}
-            <p><span style="color: red;">[You must select a confidence level.]</span></p>
-            {% endif %}
-            {% for subfield in form.confidence %}
-            <tr>
-                <td>{{ subfield }}</td>
-                <td>{{ subfield.label }}</td>
-            </tr>
-            {% endfor %}
-            {{ form.csrf_token }}
-            <br><input type="submit" value="Submit"><input type="reset" value="Reset">
-        </form>
-    </aside>
 
-    
+{% with messages = get_flashed_messages() %}
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+    {{message}}
+    {% if event.id < 5 %}
+    <p><a href="{{ url_for('trainingEventPage', eventId = event.id+1) }}">Go to the next event</a></p>
+    {% endif %}
+    <p><a href="{{ url_for('training') }}">Go to the list of events</a></p>
+
+</div>
+{% endfor %}
+{% endwith %}
+
+{% if form.errors %}
+<div class="alert alert-danger" role="alert">
+    Not all form fields were filled out. Please check for error messages below.
+</div>
+{% endif %}
+
+<h1>Training Event #{{ event.id }}</h1>
+
+<table class="table">
+    <tr>
+        <th scope="row">City of Authorization</th>
+        <td>{{ event.country_of_authentication1 }}</td>
+        <td>{{ event.country_of_authentication2 }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Number of Successful Logins</th>
+        <td>{{ event.number_successful_logins1 }}</td>
+        <td>{{ event.number_successful_logins2 }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Number of Failed Logins</th>
+        <td>{{ event.number_failed_logins1 }}</td>
+        <td>{{ event.number_failed_logins2 }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Source Provider</th>
+        <td>{{ event.source_provider1 }}</td>
+        <td>{{ event.source_provider2 }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Time between Authentications</th>
+        <td colspan="2" class="text-center">{{event.time_between_authentications}} hrs</td>
+    </tr>
+    <tr>
+        <th scope="row">VPN Confidence</th>
+        <td colspan="2" class="text-center">{{event.vpn_confidence}}</td>
+    </tr>
+</table>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Event Decision Form</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Determine if this event should be escalated. </h6>
+
+        <form action="" method="POST" id="event_decision">
+            <div class="form-group">
+                {% if form.escalate.errors %}
+                <div class="alert alert-danger" role="alert">
+                    You must select a value.
+                </div>
+                {% endif %}
+                <ul class="list-unstyled">
+                    {% for subfield in form.escalate %}
+                    <li>{{ subfield }} {{ subfield.label }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="form-group">
+                <p> On a scale from 1 (low) to 5 (high), please rate your confidence in this decision. A decision of "I
+                    don't know" does not require a confidence rating.</p>
+                {% if form.confidence.errors %}
+                <div class="alert alert-danger" role="alert">
+                    You must select a confidence level.
+                </div>
+                {% endif %}
+                {% for subfield in form.confidence %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                {% endfor %}
+            </div>
+            {{ form.csrf_token }}
+            <input type="submit" value="Submit" class="btn btn-primary"><input type="reset" value="Reset" class="btn">
+        </form>
+    </div>
+</div>
+
+{% if event.rationale %}
+<div class="accordion mt-5" id="rationale">
+    <div class="card">
+        <div class="card-header" id="rationaleHeading">
+            <h2 class="mb-0">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#rationaleBody"
+                    aria-expanded="true" aria-controls="rationale">
+                    Show solution
+                </button>
+            </h2>
+        </div>
+
+        <div id="rationaleBody" class="collapse" aria-labelledby="rationaleHeading" data-parent="#rationale">
+            <div class="card-body">
+                {{ event.rationale }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
 {% endblock %}

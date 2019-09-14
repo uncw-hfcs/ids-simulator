@@ -56,6 +56,8 @@ class TrainingEvent(db.Model):
     source_provider2 = db.Column(db.String(50))
     time_between_authentications = db.Column(db.Float)
     vpn_confidence = db.Column(db.String(5))
+    rationale = db.Column(db.Text())
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
