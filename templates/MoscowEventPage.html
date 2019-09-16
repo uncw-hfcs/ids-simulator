@@ -88,10 +88,6 @@ Here are some considerations for the network event in the table above:
         its population's internet access. Russian users will often VPN out of the country to get
         around the national firewall. This should make you feel better about this event.</li>
     <li>Time between authorizations suggests "Impossible Travel" but this could be explained by the use of a VPN.</li>
-    <li>All things considered, you should feel confident that this event does <em>not</em> need to be escalated. Choose
-        "Don't
-        Escalate" and perhaps a "4" or "5" for confidence level.
-    </li>
 </ul>
 <p>All of these decisions are based on information in the Security Playbook, as well as your own technical savvy. Again,
     you will become more familiar with the Security Playbook and the information therein as the experiement progresses.
@@ -139,6 +135,26 @@ Here are some considerations for the network event in the table above:
             {{ form.csrf_token }}
             <input type="submit" value="Submit" class="btn btn-primary"><input type="reset" value="Reset" class="btn">
         </form>
+    </div>
+</div>
+
+<div class="accordion mt-5" id="rationale">
+    <div class="card">
+        <div class="card-header" id="rationaleHeading">
+            <h2 class="mb-0">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#rationaleBody"
+                    aria-expanded="true" aria-controls="rationale">
+                    Show solution
+                </button>
+            </h2>
+        </div>
+
+        <div id="rationaleBody" class="collapse" aria-labelledby="rationaleHeading" data-parent="#rationale">
+            <div class="card-body">
+                All things considered, you should feel confident that this event does <em>not</em> need to be escalated.
+                Choose "Don't Escalate" and perhaps a "4" or "5" for confidence level.
+            </div>
+        </div>
     </div>
 </div>
 

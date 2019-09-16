@@ -26,11 +26,13 @@ Event Details
 <h1>Training Event #{{ event.id }}</h1>
 
 <h3>Step 1 - Open the Security Playbook</h3>
-<p>If you have not already done so, open the <a href="{{url_for('reference')}}">Security Playbook</a> in a new window (Right click&rarr;Open Link
+<p>If you have not already done so, open the <a href="{{url_for('reference')}}">Security Playbook</a> in a new window
+    (Right click&rarr;Open Link
     in New Window).</p>
 
 <h3>Step 2 - Read over the network event details</h3>
-<p>Remember, the IDS alerts to what may be <em>Impossible Travel</em>, which occurs when someone tries to log in to a user account
+<p>Remember, the IDS alerts to what may be <em>Impossible Travel</em>, which occurs when someone tries to log in to a
+    user account
     (e.g., email, SeaNet) from different geographical locations.</p>
 
 <table class="table">
@@ -67,20 +69,20 @@ Event Details
 <h3>Step 3 - Evaluate the event</h3>
 
 <p>Is it a problem that needs to be escalated to senior personnel,
-    or is this a false alarm on normal activity? Again, refer to the <a
-        href="{{ url_for('reference')}}">Security Playbook</a> to help you make your decision.</p>
+    or is this a false alarm on normal activity? Again, refer to the <a href="{{ url_for('reference')}}">Security
+        Playbook</a> to help you make your decision.</p>
 
 <ul>
-        <li>One of the authentications came from Beijing. But where is your company (Company XYZ) located?</li>
-        <li>There are not many unsuccessful logins. Is this indicative of someone who is guessing passwords?</li>
-        <li>The source provider for both locations is a "Telecom" provider, meaning that login attempts are most likely coming a traditional Internet Service Provider. This increases the likelihood that attempts are coming from the actualy geographic location.</li>
-        <li>The VPN Confidence is 0%, meaning that you have no idea if the user is using a VPN.</li>
-        <li>Time between authorizations suggests "Impossible Travel" and the lack of failed logins from Beijing suggests that the user's credentials are
-            compromised.</li>
-        <li>For this event, there's not enough evidence to dismiss it. You should choose "Escalate" and perhaps a "4" or "5" for
-            confidence level.
-        </li>
-    </ul>
+    <li>One of the authentications came from Beijing. But where is your company (Company XYZ) located?</li>
+    <li>There are not many unsuccessful logins. Is this indicative of someone who is guessing passwords?</li>
+    <li>The source provider for both locations is a "Telecom" provider, meaning that login attempts are most likely
+        coming a traditional Internet Service Provider. This increases the likelihood that attempts are coming from the
+        actualy geographic location.</li>
+    <li>The VPN Confidence is 0%, meaning that you have no idea if the user is using a VPN.</li>
+    <li>Time between authorizations suggests "Impossible Travel" and the lack of failed logins from Beijing suggests
+        that the user's credentials are
+        compromised.</li>
+</ul>
 
 
 <h3>Step 4 - Make your decision</h3>
@@ -123,5 +125,25 @@ Event Details
     </div>
 </div>
 
-{% endblock %}
+<div class="accordion mt-5" id="rationale">
+    <div class="card">
+        <div class="card-header" id="rationaleHeading">
+            <h2 class="mb-0">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#rationaleBody"
+                    aria-expanded="true" aria-controls="rationale">
+                    Show solution
+                </button>
+            </h2>
+        </div>
 
+        <div id="rationaleBody" class="collapse" aria-labelledby="rationaleHeading" data-parent="#rationale">
+            <div class="card-body">
+                For this event, there's not enough evidence to dismiss it. You should choose "Escalate" and perhaps a
+                "4" or "5" for
+                confidence level.
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
