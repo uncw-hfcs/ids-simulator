@@ -12,7 +12,7 @@ class EventDecision(db.Model):
     user = db.Column(db.String(50))
     event_id = db.Column(db.Integer)
     escalate = db.Column(db.String(15))
-    confidence = db.Column(db.String(1))
+    confidence = db.Column(db.String(5))
     time_event_decision = db.Column(db.DateTime)
 
     def __repr__(self):
@@ -37,7 +37,7 @@ class TrainingEventDecision(db.Model):
     user = db.Column(db.String(50))
     event_id = db.Column(db.Integer)
     escalate = db.Column(db.String(15))
-    confidence = db.Column(db.String(1))
+    confidence = db.Column(db.String(5))
     time_event_decision = db.Column(db.DateTime)
 
     def __repr__(self):
