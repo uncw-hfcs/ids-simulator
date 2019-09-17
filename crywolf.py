@@ -1,4 +1,3 @@
-import models
 from forms import PrequestionnaireForm, SurveyForm, UserForm, eventDecisionForm
 import os
 from flask import Flask, render_template, url_for, redirect, flash, request
@@ -19,6 +18,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login_manager = LoginManager(app)
+
+import models
 
 
 @login_manager.user_loader
