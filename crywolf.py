@@ -1,3 +1,4 @@
+import models
 from forms import PrequestionnaireForm, SurveyForm, UserForm, eventDecisionForm
 import os
 from flask import Flask, render_template, url_for, redirect, flash, request
@@ -19,7 +20,6 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login_manager = LoginManager(app)
 
-import models
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -105,13 +105,6 @@ def prequestionnaire():
 @login_required
 def training():
     ids = [1, 2, 3, 4, 5]
-    # ids = [1, 2]
-    if request.method == "GET":
-        num_processed_alerts = 0
-        for id in ids:
-            if models.TrainingEventDecision.query.filter_by(user=current_user.username, event_id=id).\
-                    order_by(models.TrainingEventDecision.time_event_decision.desc()).first() != None:
-                num_processed_alerts += 1
     eventsList = []  # This will store an eventID and eventDecision tuple
     for id in ids:
         eventsList.append((models.TrainingEvent.query.get(id),
@@ -126,37 +119,47 @@ def training():
         db.session.commit()
         return redirect(url_for('experiment'))
 
-    return render_template('training.html', eventsList=eventsList, num_unprocessed_alerts=(len(eventsList) - num_processed_alerts))
+    return render_template('training.html', eventsList=eventsList, num_unprocessed_alerts=(len(eventsList) - get_events_processed_for_user(current_user, training=True)))
 # ---------------------------------------------------------------------
 # ---------------------------Training Event Pages----------------------
 @app.route('/trainingEventPage', methods=["GET", "POST"])
 @login_required
 def trainingEventPage():
-    eventId = request.args.get('eventId')
-    event = models.TrainingEvent.query.get(eventId)
+    event = models.TrainingEvent.query.get(request.args.get('eventId'))
+    num_training_events = db.session.query(func.count(models.TrainingEvent.id)).scalar()
     form = eventDecisionForm()
-    decision = models.TrainingEventDecision.query.filter_by(user=current_user.username, event_id=eventId).\
+    decision = models.TrainingEventDecision.query.filter_by(user=current_user.username, event_id=event.id).\
         order_by(models.TrainingEventDecision.time_event_decision.desc()).first()
     if request.method == 'GET' and decision is not None:
         form.escalate.data = decision.escalate
         form.confidence.data = decision.confidence
+
     if form.validate_on_submit():
         response = models.TrainingEventDecision(
             user=current_user.username,
-            event_id=eventId,
+            event_id=event.id,
             escalate=form.escalate.data,
             confidence=form.confidence.data,
             time_event_decision=datetime.datetime.now()
         )
         db.session.add(response)
         db.session.commit()
-        flash(f"Successfully recorded decision for Event {eventId}!")
+        flash(f"Successfully recorded decision for Training Event {event.id}!")
+        if event.id == 5:
+            flash(f"You recorded a decision for the last training event. Click on specific Events below to revisit them if you like.")
+            return redirect(url_for("training"))
+        else:
+            return redirect(url_for('trainingEventPage', eventId=event.id + 1))
 
+    
     if event.id == 1:
-        return render_template('MoscowEventPage.html', event=event, form=form)
+        page = 'MoscowEventPage.html'
     elif event.id == 2:
-        return render_template('BeijingEventPage.html', event=event, form=form)
-    return render_template('trainingEventPage.html', event=event, form=form)
+        page = 'BeijingEventPage.html'
+    else:
+        page = 'trainingEventPage.html'
+    print(f"{type(event.id+1)}: {(event.id+1)}")
+    return render_template(page, event=event, number=event.id + 1, num_unprocessed_alerts=num_training_events - get_events_processed_for_user(current_user, training=True), form=form)
 
 
 def get_event_list_for_user(user):
@@ -169,9 +172,13 @@ def get_event_list_for_user(user):
     return ids
 
 
-def get_events_processed_for_user(current_user):
-    return db.session.query(func.count(distinct(models.EventDecision.event_id))).filter(
-        models.EventDecision.user == current_user.username).scalar()
+def get_events_processed_for_user(current_user, training=False):
+    if training:
+        return db.session.query(func.count(distinct(models.TrainingEventDecision.event_id))).filter(
+            models.TrainingEventDecision.user == current_user.username).scalar()
+    else:
+        return db.session.query(func.count(distinct(models.EventDecision.event_id))).filter(
+            models.EventDecision.user == current_user.username).scalar()
 # ---------------------------------------------------------------------
 # ---------------------------Experiment Page---------------------------
 @app.route('/experiment', methods=["GET", "POST"])
@@ -198,7 +205,7 @@ def experiment():
             models.Event.query.get(id),
             models.EventDecision.query.filter_by(user=current_user.username, event_id=id).order_by(
                 models.EventDecision.time_event_decision.desc()).first()
-            )
+        )
         )
     return render_template('experiment.html', eventsList=eventsList, num_unprocessed_alerts=(len(eventsList) - get_events_processed_for_user(current_user)))
 # ---------------------------------------------------------------------
@@ -237,7 +244,6 @@ def eventPage():
         db.session.commit()
         flash(f"Successfully recorded decision for Event {event_index + 1}!")
         if event_index == len(ids) - 1:
-            # TODO: Reached the end of the list. Say something in flash.
             flash(f"You recorded a decision for the last event in the list. Click on specific Events below to revisit them if you like.")
             return redirect(url_for("experiment"))
         else:
@@ -251,16 +257,16 @@ def eventPage():
 @login_required
 def postsurvey():
 
-    user=models.User.query.filter_by(username=current_user.username).first()
+    user = models.User.query.filter_by(username=current_user.username).first()
     if request.method == "GET" and user.time_end == None:
-        local_user=db.session.merge(user)
-        local_user.time_end=datetime.datetime.now()
+        local_user = db.session.merge(user)
+        local_user.time_end = datetime.datetime.now()
         db.session.add(local_user)
         db.session.commit()
 
-    form=SurveyForm()
+    form = SurveyForm()
     if form.validate_on_submit():
-        responses=models.SurveyAnswers(
+        responses = models.SurveyAnswers(
             user=current_user.username,
             timestamp=datetime.datetime.now(),
             mental=form.mental.data,
@@ -272,8 +278,8 @@ def postsurvey():
             useful_info=form.useful_info.data,
             feedback=form.feedback.data
         )
-        local_user=db.session.merge(user)
-        local_user.survey_complete=True
+        local_user = db.session.merge(user)
+        local_user.survey_complete = True
         db.session.add(responses, local_user)
         db.session.commit()
         return redirect(url_for('completion'))
@@ -282,7 +288,7 @@ def postsurvey():
 # ---------------------------Completion Page---------------------------
 @app.route("/completion")
 def completion():
-    code=current_user.completion_code
+    code = current_user.completion_code
     # logout_user()
     return render_template('completion.html', code=code)
 # ---------------------------------------------------------------------

@@ -10,9 +10,6 @@ Event Details
 {% for message in messages %}
 <div class="alert alert-success" role="alert">
     {{message}}
-    <p><a href="{{ url_for('trainingEventPage', eventId = event.id+1) }}">Go to the next event</a></p>
-    <p><a href="{{ url_for('training') }}">Go to the list of events</a></p>
-
 </div>
 {% endfor %}
 {% endwith %}
@@ -23,7 +20,19 @@ Event Details
 </div>
 {% endif %}
 
+
+{% if num_unprocessed_alerts > 0 %}
+<div class="alert alert-warning">
+    Number of alerts left to process: {{ num_unprocessed_alerts }}
+</div>
+{% else %}
+<div class="alert alert-success">
+    All events processed! Please navigate to <a href={{ url_for('training') }}>Training page</a> to move on! 
+</div>
+{% endif %}
+
 <h1>Training Event #{{ event.id }}</h1>
+
 <p class="lead">Please read this entire page carefully.</p>
 
 <h3>Step 1 - Open the Security Playbook</h3>
