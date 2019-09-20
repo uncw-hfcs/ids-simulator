@@ -1,6 +1,8 @@
 from forms import PrequestionnaireForm, SurveyForm, UserForm, eventDecisionForm
 import os
-from flask import Flask, render_template, url_for, redirect, flash, request
+import re
+from bleach import clean
+from flask import Flask, render_template, url_for, redirect, flash, request, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from flask_migrate import Migrate
@@ -8,6 +10,7 @@ from dotenv import load_dotenv
 from sqlalchemy import func, distinct
 import datetime
 
+eventnum_pattern = re.compile("^[0-9]{1,2}$")
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
@@ -29,12 +32,20 @@ def load_user(user_id):
     return models.User.query.get(user_id)
 
 
-login_manager.login_view = "unauthorized"
-
-
-@app.route('/unauthorized')
-def unauthorized():
+@app.errorhandler(401)
+def unauthorized(error):
     return render_template('401.html')
+
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    return render_template('500.html'), 500
 
 
 @app.route("/reference")
@@ -128,6 +139,11 @@ def training():
 @app.route('/trainingEventPage', methods=["GET", "POST"])
 @login_required
 def trainingEventPage():
+
+    if not re.match(eventnum_pattern, request.args.get('eventId')) or not 0 < int(request.args.get('eventId')) <= 5:
+        abort(404)
+
+
     event = models.TrainingEvent.query.get(request.args.get('eventId'))
     num_training_events = db.session.query(func.count(models.TrainingEvent.id)).scalar()
     form = eventDecisionForm()
@@ -218,6 +234,9 @@ def experiment():
 def eventPage():
     eventId = request.args.get('eventId')
     ids = get_event_list_for_user(current_user)
+    if not re.match(eventnum_pattern, eventId) or int(eventId) not in ids:
+        abort(404)
+    
     event_index = ids.index(int(eventId))
     event = models.Event.query.get(eventId)
     form = eventDecisionForm()
@@ -278,8 +297,8 @@ def postsurvey():
             performance=form.performance.data,
             effort=form.effort.data,
             frustration=form.frustration.data,
-            useful_info=form.useful_info.data,
-            feedback=form.feedback.data
+            useful_info=clean(form.useful_info.data),
+            feedback=clean(form.feedback.data)
         )
         local_user = db.session.merge(user)
         local_user.survey_complete = True
@@ -303,3 +322,4 @@ def logout():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
