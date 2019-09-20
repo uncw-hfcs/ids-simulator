@@ -4,14 +4,16 @@ from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from flask_migrate import Migrate
+from dotenv import load_dotenv
 from sqlalchemy import func, distinct
 import datetime
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(os.path.join(basedir, '.env'))
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '+xjtZo+YaAWKhCSky9nLCubHvPCjhRRxN45niWNVaN4='
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     'DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'crywolf.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
