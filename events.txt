@@ -5,12 +5,12 @@
 0	Moscow	9	2	Telecom	Tokyo	7	3	Hosting/server	0.6	90%
 0	Beijing	9	0	Telecom	Tokyo	6	3	Hosting/server	0.79	90%
 0	Beijing	13	3	Telecom	Vancouver	9	0	Hosting/server	0.08	100%
-0	London	4	0	Telecom	Paris	13	1	Telecom	0.95	0%
-0	London	5	1	Telecom	Berlin	11	1	Telecom	1.22	0%
-0	Berlin	13	0	Telecom	Paris	11	1	Telecom	0.71	0%
+0	London	4	0	Telecom	Paris	13	1	Telecom	2.45	0%
+0	London	5	1	Telecom	Berlin	11	1	Telecom	1.41	0%
+0	Berlin	13	0	Telecom	Paris	11	1	Telecom	1.71	0%
 0	Paris	7	0	Telecom	Berlin	9	0	Telecom	1.3	0%
-0	Paris	7	1	Telecom	London	13	1	Telecom	0.47	0%
-0	Berlin	4	1	Telecom	London	4	3	Telecom	0.68	0%
+0	Paris	7	1	Telecom	London	13	1	Telecom	2.47	0%
+0	Berlin	4	1	Telecom	London	4	3	Telecom	1.50	0%
 0	New York	12	0	Mobile/Cellular	London	11	3	Telecom	1.28	0%
 0	New York	8	0	Mobile/Cellular	Paris	13	3	Telecom	0.37	0%
 0	New York	9	2	Mobile/Cellular	Berlin	3	0	Telecom	0.89	0%
