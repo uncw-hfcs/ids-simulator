@@ -1,13 +1,6 @@
-# ids-simulator
-    Environment Preparation:
+# The Cry Wolf IDS Simulator
+Cry Wolf provides an environment for conducting controlled experiments of cyber security analysis tasks. Cry Wolf supports studying the impact of *IDS false alarm rate* on human analyst's ability to correctly classify simulated alerts. 
 
-    Windows:
-    1) Navigate to the "crywolf" directory
-    2) type "virtualenv venv" into the cmd line -- create python virtual environment
-    3) type "venv\Scripts\activate" -- activates the virtual environment
-    4) type "pip install flask" -- installs flask into the virtual environment
-  
-    To start the local server: 
-    1) Ensure that virtual environment has been created and that flask has been installed
-    2) Navigate to the "crywolf" directory
-    3) python crywolf.py
+Please contact Lucas Layman (laymanl@uncw.edu) If you are interested in using Cry Wolf.
+
+# Screenshots
