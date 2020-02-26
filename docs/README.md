@@ -3,7 +3,7 @@ Cry Wolf provides an environment for conducting controlled experiments of cyber 
 
 More about Cry Wolf and it's uses:
 * [Cry Wolf: Toward an Experimentation Platform and Dataset for Human Factors in Cyber Security Analysis](https://arxiv.org/abs/2002.10530) - William Roden and Lucas Layman. In 2020 ACM Southeast Conference (ACMSE 2020), April 2–4, 2020, Tampa, FL,USA.ACM, New York, NY, USA, 4 pages. https://doi.org/10.1145/3374135.3385301
-* [The Cry Wolf Dataset) - a dataset of simulated IDS alerts](https://uncw-hfcs.github.io/ids-simulator-analysis/)
+* [The Cry Wolf Dataset](https://uncw-hfcs.github.io/ids-simulator-analysis/) - a dataset of simulated IDS alerts
 
 Please contact Lucas Layman (laymanl@uncw.edu) If you are interested in using Cry Wolf.
 
