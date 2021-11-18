@@ -1,11 +1,10 @@
-from crywolf import app, db, migrate
-from flask_migrate import Migrate, MigrateCommand
+from app import app, db
+from flask_migrate import MigrateCommand
 from flask_script import Manager, prompt_bool
 
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
-import models
 
 @manager.command
 def initdb():

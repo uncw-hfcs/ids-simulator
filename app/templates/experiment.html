@@ -48,7 +48,7 @@ Evaluate IDS Alerts
 
     {% for event, decision in eventsList %}
     <tr>
-        <td><a href="{{ url_for('eventPage', eventId = event.id) }}"> Event
+        <td><a href="{{ url_for('event_page', eventId = event.id) }}"> Event
                 {{ loop.index }}</a></td>
         <td>{% if decision != None %}
             {{ decision }}

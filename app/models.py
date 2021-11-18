@@ -1,11 +1,13 @@
-from crywolf import db
+from app import db
 from flask_login.mixins import UserMixin
+
 
 class EventClicked(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.String(50))
     event_id = db.Column(db.Integer)
     time_event_click = db.Column(db.DateTime)
+
 
 class EventDecision(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -17,6 +19,7 @@ class EventDecision(db.Model):
 
     def __repr__(self):
         return self.escalate
+
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -32,6 +35,7 @@ class Event(db.Model):
     time_between_authentications = db.Column(db.String(25))
     vpn_confidence = db.Column(db.String(5))
 
+
 class TrainingEventDecision(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.String(50))
@@ -42,6 +46,7 @@ class TrainingEventDecision(db.Model):
 
     def __repr__(self):
         return self.escalate
+
 
 class TrainingEvent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -88,6 +93,7 @@ class SurveyAnswers(db.Model):
     frustration = db.Column(db.Integer)
     useful_info = db.Column(db.Text())
     feedback = db.Column(db.Text())
+
 
 class PrequestionnaireAnswers(db.Model):
     id = db.Column(db.Integer, primary_key=True)

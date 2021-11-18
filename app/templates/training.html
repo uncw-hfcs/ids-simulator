@@ -39,7 +39,7 @@ Training and Examples
 
     {% for event, decision in eventsList %}
     <tr>
-        <td><a href="{{ url_for('trainingEventPage', eventId = event.id) }}"> Event
+        <td><a href="{{ url_for('training_event_page', eventId = event.id) }}"> Event
                 {{ loop.index }}</a></td>
         <td>{% if decision != None %}
             {{ decision }}
